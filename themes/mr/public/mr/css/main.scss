@@ -1,0 +1,151 @@
+
+/* Variables
+-------------------------------------*/
+$serif : "hoefler text", georgia, palatino, times, serif;
+$sans : "helvetica neue", helvetica, arial, sans-serif;
+$monospace : "Inconsolata", "Monaco", "Consolas", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace, serif;
+
+/* Mixins 
+-------------------------------------*/
+
+/* Vendor prefixes */
+@mixin prefixes($property, $value) {
+  -webkit-#{$property} : $value;
+  -moz-#{$property} : $value;
+  -o-#{$property} : $value;
+  #{$property} : $value;
+}
+
+@mixin transition($properties, $delay, $type) {
+  @include prefixes(transition, $properties $delay $type)
+}
+
+@mixin border-radius($radius) {
+  @include prefixes(border-radius, $radius);
+}
+/* Reset 
+-------------------------------------*/
+html,
+body {
+  height:100%;
+}
+* {
+  margin:0;
+  padding:0;
+  font-size:100%;
+} 
+/* Global Styles 
+-------------------------------------*/
+body {
+  background:#ffeaea;
+  color: #444;
+  font-family:$sans;
+  line-height:1.5;
+}
+a {
+  text-decoration:none;
+  color:#000;
+  border-bottom:1px solid #000;
+}
+h1 {
+  margin:0 0 1em;
+  font-size:1.5em;/* 24px */
+  line-height:1;
+  text-shadow:1px 1px 0 #fff;
+}
+nav ul {
+  list-style:none;
+}
+pre {
+  font-family: $monospace;
+  font-size:1em!important;
+  margin:0 0 .75em;
+  padding:.75em 1em;
+  @include border-radius(.25em);
+  white-space:pre-wrap;
+  background:#333;
+  color:#ccc;
+}
+/* Sidebar 
+-------------------------------------*/
+.aside {
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:160px;
+  height:100%;
+  color:#000;
+
+  #logo {
+    display:block;
+    text-align:center;
+    font:italic 48px/54px $serif;
+    text-decoration:none;
+    background:#666;
+    /* background:rgba(226, 46, 46, .67); */
+    box-shadow:0 0 100px #fff;
+    color:#fff;
+    width:60px;
+    height:60px;
+    border:0;
+    border-radius:30px;
+    margin:36px auto 48px;
+
+    &:hover {
+      box-shadow:0 0 30px #fff;
+      @include transition(box-shadow, .35s, linear);
+    }
+    span {
+      position:relative;
+      top:4px;
+      left:1px;
+      text-shadow:1px 1px 0 #aaa, 0 0 0 orange; 
+      @include transition(text-shadow, .35s, linear);
+    }
+    
+    &:hover span {
+      text-shadow:1px 1px 0 #aaa, 0 0 20px rgba(255,255,255,.75);
+    }
+  }
+}
+  .aside-nav {
+    a {
+      display:block;
+      border:none;
+      height:36px;
+      line-height:36px;
+      padding:0 0 0 50px;
+      color:#555;
+      
+      &:hover {
+        color:#000;
+      };
+      &:active span {
+        bottom:-1px;
+      }
+    }
+    span {
+      position:relative;
+    }
+    .current a {
+      color:#444;
+      text-decoration:none;
+      font-weight:bold;
+    }
+  }
+/* Content
+-------------------------------------*/
+#content {
+  float:left;
+  width:490px;
+  padding:3em 0;
+  margin:0 0 0 140px;
+  font-family: $serif;
+
+  p, li, h2 {
+    margin:0 0 .75em;
+  }
+}
+
+@import "grid.scss";

@@ -1,0 +1,21 @@
+# Book
+
+skeleton’s smiling
+
+Reasons to learn HTML?
+
+* With HTML alone you can easily do this:
+  Images of Different browsers and devices, and programms, that are all parsing and understanding HTML.
+  
+* HTML lets you structure information.
+* HTML is extendable and rich by design. (data-attr, microdata, microformats, semantic elements...)
+
+Reasons to learn CSS?
+
+* Adding some CSS to that HTML allows you to do this: 
+  Images of cool, gracefully degrading CSS on various devices.
+  
+Javascript?
+
+* Gmail, google Maps, other super cool things.
+

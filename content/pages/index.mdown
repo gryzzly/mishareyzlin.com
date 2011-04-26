@@ -1,0 +1,20 @@
+Pagetitle: Hello
+
+# Hello
+
+My name is Misha Reyzlin & I am professional web developer. If you want, you can read more [about me][1] or even look at my [resume][2]. I use [this website][3] to keep my [technical notes][4], to play with different [APIs][5] and as a playground.
+
+<dl>
+  <dt>You can also find me here:</dt>
+  <dd> http://twitter.com/gryzzly </dd>
+  <dd> [github](http://github.com/gryzzly) </dd>
+  <dd> http://facebook.com/gryzzly</dd>
+  <dd>http://linkedin.com/in/mrejzlin</dd>
+  <dd>http://friendfeed.com/gryzzly</dd>
+</dl>
+
+ [1]: /about
+ [2]: /cv
+ [3]: /colophon
+ [4]: /blog
+ [5]: /apis

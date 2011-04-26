@@ -1,0 +1,33 @@
+* Homepage
+  links to the main parts of the website and my links
+
+* Blog
+
+* 
+
+
+doesn't work:
+<object width="480" height="390">
+<param name="movie" value="http://www.youtube.com/v/IvK-IDFNrHU?fs=1&amp;hl=en_US&amp;rel=0">
+<param name="allowFullScreen" value="true">
+<param name="allowscriptaccess" value="always">
+<param name="wmode" value="opaque">
+<embed src="http://www.youtube.com/v/IvK-IDFNrHU?fs=1&amp;hl=en_US&amp;rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="390" wmode="opaque" style="position: relative; ">
+</object>
+
+
+works:
+<object width="480" height="390">
+<param name="allowFullScreen" value="true">
+<param name="allowscriptaccess" value="always">
+<param name="src" value="http://www.youtube-nocookie.com/v/1dKJZfjHJJs?fs=1&amp;hl=en_US&amp;rel=0">
+<param name="wmode" value="opaque">
+<param name="allowfullscreen" value="true">
+<embed type="application/x-shockwave-flash" width="480" height="390" src="http://www.youtube-nocookie.com/v/1dKJZfjHJJs?fs=1&amp;hl=en_US&amp;rel=0" wmode="opaque" allowscriptaccess="always" allowfullscreen="true" style="position: relative; ">
+</object>
+
+<object width="480" height="390">
+<param name="allowFullScreen" value="true">
+<param name="allowscriptaccess" value="always">
+<param name="src" value="http://www.youtube-nocookie.com/v/1dKJZfjHJJs?fs=1&amp;hl=en_US&amp;rel=0">
+<param name="wmode" value="opaque"><embed type="application/x-shockwave-flash" width="480" height="390" src="http://www.youtube-nocookie.com/v/1dKJZfjHJJs?fs=1&amp;hl=en_US&amp;rel=0" wmode="opaque" allowscriptaccess="always" allowfullscreen="true" style="position: relative; "></object>

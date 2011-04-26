@@ -1,0 +1,9 @@
+%nav.aside-nav
+  %ul
+    -# TODO: modify @menu_items to have "current" 
+    -# attribute (perhaps "current-branch" and "current-item")
+    - @menu_items.each do |item|
+      - category_slug = page.path.index('/') ? page.path[0..page.path.index('/') - 1] : page.path
+      %li{ :class => ("current" if item.abspath[1..-1] == category_slug) }
+        %a{ :href => item.abspath }
+          = item.metadata('pagetitle')

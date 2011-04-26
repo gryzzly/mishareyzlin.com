@@ -1,0 +1,19 @@
+- unless pages.empty?
+  - pages.each do |page|  
+    %article
+      %header
+        %h1
+          %a(href="#{page.abspath}")= page.heading
+      - if page.summary.nil? || page.summary.empty?
+        - if page.description.nil? || page.description.empty?
+          ~ html_truncate(page.body, 30, ' […]')
+        - else 
+          ~ page.description
+      - else
+        ~ page.summary
+
+      %p.read_more
+        %a(href="#{page.abspath}")
+          = "read on →"
+
+      = haml :page_meta, :layout => false, :locals => { :page => page }

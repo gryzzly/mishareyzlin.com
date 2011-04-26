@@ -1,0 +1,62 @@
+Date: 15 April 2011
+Categories: nesta, back-end
+Pagetitle: trulala
+
+# First steps in Nesta (and Ruby)
+
+In order to run some code based on the current path, we can use @page's path method:
+
+    - if ( @page.path == 'blog' ) 
+      -# blog logic here
+
+How do I debug / console.log objects in views?
+
+How do I use custom proccessor for markdown? (i.e. redcarpet from github?)
+In order to do that, I needed to extend Nesta's FileModel's to_html method, like so: 
+
+~~~ruby
+module Nesta 
+  class FileModel 
+    def to_html(scope = nil)
+      case @format
+        when :mdown
+          Redcarpet.new(markup).to_html
+        when :haml
+          Haml::Engine.new(markup).to_html(scope || Object.new)
+        when :textile
+          RedCloth.new(markup).to_html
+        end
+    end
+  end
+end
+~~~
+    
+In order to be able to use the Redcarpet filter in HAML, I needed to add Redcarpet filter:
+
+~~~ruby
+# Add Redcarpet HAML filter
+module Haml::Filters::Redcarpet
+  include Haml::Filters::Base
+
+  def render(text)
+    ::Redcarpet.new(text).to_html
+  end
+end
+~~~
+
+We can now use ":redcarpet" filter in HAML like so:
+
+~~~haml
+%p
+  :redcarpet
+    # Here goes markdown content
+~~~
+
+How do I highlight the code blocks using (https://github.com/nex3/rb-pygments)? 
+
+How do I add file formats (i.e. what if I want to use ".md" and not ".mdown") or whatever else?
+
+Sources
+-------
+
+https://github.com/gma/nesta/blob/master/lib/nesta/models.rb
