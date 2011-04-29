@@ -44,3 +44,10 @@ I also needed to adjust that daemon script (`/etc/init.d/php-fpm`) in order to u
     php_fpm_PID=${prefix}/logs/php-fpm.pid
 
 You should see errors output in the log (you can find the path to log in php-fpm.conf) for the debugging.
+
+Sources
+-------
+
+* http://stackoverflow.com/questions/5554705/imagecreatefromstring-function-imagecreatefromstring-no-jpeg-support-in-this
+* http://interfacelab.com/nginx-php-fpm-apc-awesome/
+* http://forum.nginx.org/read.php?3,82703,82705#msg-82705

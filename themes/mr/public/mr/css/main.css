@@ -1,1 +1,258 @@
-html,body{height:100%}*{margin:0;padding:0;font-size:100%}body{background:#ffeaea;color:#444;font-family:"helvetica neue", helvetica, arial, sans-serif;line-height:1.5}a{text-decoration:none;color:#000;border-bottom:1px solid #000}h1{margin:0 0 1em;font-size:1.5em;line-height:1;text-shadow:1px 1px 0 #fff}nav ul{list-style:none}pre{font-family:"Inconsolata", "Monaco", "Consolas", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace, serif;font-size:1em!important;margin:0 0 .75em;padding:.75em 1em;-webkit-border-radius:0.25em;-moz-border-radius:0.25em;-o-border-radius:0.25em;border-radius:0.25em;white-space:pre-wrap;background:#333;color:#ccc}.aside{position:fixed;left:0;top:0;bottom:0;width:160px;height:100%;color:#000}.aside #logo{display:block;text-align:center;font:italic 48px/54px "hoefler text", georgia, palatino, times, serif;text-decoration:none;background:#666;box-shadow:0 0 100px #fff;color:#fff;width:60px;height:60px;border:0;border-radius:30px;margin:36px auto 48px}.aside #logo:hover{box-shadow:0 0 30px #fff;-webkit-transition:box-shadow 0.35s linear;-moz-transition:box-shadow 0.35s linear;-o-transition:box-shadow 0.35s linear;transition:box-shadow 0.35s linear}.aside #logo span{position:relative;top:4px;left:1px;text-shadow:1px 1px 0 #aaa, 0 0 0 orange;-webkit-transition:text-shadow 0.35s linear;-moz-transition:text-shadow 0.35s linear;-o-transition:text-shadow 0.35s linear;transition:text-shadow 0.35s linear}.aside #logo:hover span{text-shadow:1px 1px 0 #aaaaaa, 0 0 20px rgba(255, 255, 255, 0.75)}.aside-nav a{display:block;border:none;height:36px;line-height:36px;padding:0 0 0 50px;color:#555}.aside-nav a:hover{color:#000}.aside-nav a:active span{bottom:-1px}.aside-nav span{position:relative}.aside-nav .current a{color:#444;text-decoration:none;font-weight:bold}#content{float:left;width:490px;padding:3em 0;margin:0 0 0 140px;font-family:"hoefler text", georgia, palatino, times, serif}#content p,#content li,#content h2{margin:0 0 .75em}#grid{width:980px;position:absolute;top:0;left:0}#grid div.vert{width:60px;border:solid darkturquoise;border-width:0 1px;margin-right:9px}#grid div.vert.first-line{margin-left:0px}#grid div.horiz{height:23px;border-bottom:1px dotted darkgray;margin:0;padding:0}#grid.grid-1 div.vert{border-color:darkturquoise}#grid.grid-2{padding:0 160px;width:660px}#grid.grid-2 div.vert{border-color:crimson}
+/* Variables
+-------------------------------------*/
+/* Mixins 
+-------------------------------------*/
+/* Vendor prefixes */
+/* Reset 
+-------------------------------------*/
+html,
+body {
+  height: 100%; }
+
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 100%; }
+
+/* Global Styles 
+-------------------------------------*/
+body {
+  background: #ffeaea;
+  color: #444;
+  font-family: "helvetica neue", helvetica, arial, sans-serif;
+  line-height: 1.5; }
+
+a {
+  text-decoration: none;
+  color: #444;
+  border-bottom: 1px solid #000; }
+  a:active {
+    /* 
+      unfortunately, only firefox applies translate 
+      to inline elements.
+     */
+    -webkit-transform: translate(0, 1px);
+    -moz-transform: translate(0, 1px);
+    -o-transform: translate(0, 1px);
+    transform: translate(0, 1px); }
+
+nav ul {
+  list-style: none; }
+
+/* inline code */
+p code {
+  background: #777;
+  color: #fff;
+  padding: .25em .5em;
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  border-radius: 0.25em; }
+
+.amp {
+  font-style: italic; }
+
+.caps {
+  font-variant: small-caps; }
+
+/* Sidebar 
+-------------------------------------*/
+.aside {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 140px;
+  height: 100%;
+  color: #000; }
+
+.logo {
+  display: block;
+  text-align: center;
+  font: italic 48px/54px "hoefler text", georgia, palatino, times, serif;
+  text-decoration: none;
+  background: #666;
+  /* background:rgba(226, 46, 46, .67); */
+  color: #fff;
+  width: 60px;
+  height: 60px;
+  border: 0;
+  border-radius: 30px;
+  margin: 36px auto 48px;
+  -webkit-box-shadow: 0 0 20px white;
+  -moz-box-shadow: 0 0 20px white;
+  -o-box-shadow: 0 0 20px white;
+  box-shadow: 0 0 20px white;
+  -webkit-transition: box-shadow 0.35s linear;
+  -moz-transition: box-shadow 0.35s linear;
+  -o-transition: box-shadow 0.35s linear;
+  transition: box-shadow 0.35s linear; }
+  .logo:hover {
+    -webkit-box-shadow: 0 0 50px white;
+    -moz-box-shadow: 0 0 50px white;
+    -o-box-shadow: 0 0 50px white;
+    box-shadow: 0 0 50px white; }
+  .logo span {
+    position: relative;
+    top: 4px;
+    left: 1px;
+    text-shadow: 1px 1px 0 #aaa, 0 0 0 orange;
+    -webkit-transition: text-shadow 0.35s linear;
+    -moz-transition: text-shadow 0.35s linear;
+    -o-transition: text-shadow 0.35s linear;
+    transition: text-shadow 0.35s linear; }
+  .logo:hover span {
+    text-shadow: 1px 1px 0 #aaaaaa, 0 0 20px rgba(255, 255, 255, 0.75); }
+
+.aside-nav a {
+  display: block;
+  border: none;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 0 0 50px;
+  color: #555; }
+  .aside-nav a:hover {
+    color: #000; }
+.aside-nav .current a {
+  color: #444;
+  text-decoration: none;
+  font-weight: bold; }
+
+/* Content
+-------------------------------------*/
+.main {
+  float: left;
+  position: relative;
+  width: 560px;
+  margin: 0 0 0 140px;
+  padding: 3.75em 0 0;
+  font-family: "hoefler text", georgia, palatino, times, serif;
+  /* entire scrollbar */
+  /* scrollbar thumb  */ }
+  .main h1 {
+    margin: 0 0 1em;
+    font-size: 1.5em;
+    /* 24px */
+    line-height: 1;
+    text-shadow: 1px 1px 0 #fff; }
+    .main h1 a {
+      border: none; }
+      .main h1 a:hover {
+        color: #000; }
+  .main p, .main li, .main h2, .main dt, .main dd {
+    margin: 0 0 .75em; }
+    .main p a, .main li a, .main h2 a, .main dt a, .main dd a {
+      -webkit-border-radius: 0.125em;
+      -moz-border-radius: 0.125em;
+      -o-border-radius: 0.125em;
+      border-radius: 0.125em; }
+      .main p a:hover, .main li a:hover, .main h2 a:hover, .main dt a:hover, .main dd a:hover {
+        background: #000;
+        color: #fff;
+        margin: -0.4ex -0.4ex -0.1ex;
+        padding: .4ex .4ex .1ex; }
+  .main dt {
+    margin: 0; }
+  .main pre {
+    font-family: "Inconsolata", "Monaco", "Consolas", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace, serif;
+    font-size: 1em!important;
+    background: #333;
+    color: #ccc;
+    margin: 0 0 1.5em;
+    padding: .75em 16px;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap !important;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    -webkit-border-radius: 0.25em;
+    -moz-border-radius: 0.25em;
+    -o-border-radius: 0.25em;
+    border-radius: 0.25em; }
+  .main ::-webkit-scrollbar {
+    height: 10px;
+    width: 10px; }
+  .main ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 5px; }
+
+.main-comments a {
+  border: none; }
+
+/* A note */
+.note-meta {
+  text-align: right;
+  color: #888;
+  margin: 0 0 1em; }
+
+/* Notes index page */
+/* index page headings */
+.articles h1 {
+  font-size: 1.25em;
+  line-height: 1.2;
+  margin: 0 0 .6em; }
+
+/* HASHGRID */
+/**
+ * Grid
+ */
+#grid {
+  /* Dimensions - same width as your grid with gutters */
+  width: 980px;
+  /* Grid (left-aligned) */
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Grid (centered) 
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -490px;
+  */ }
+
+/**
+ * Vertical grid lines
+ *
+ * Set the column width taking the borders into consideration,
+ * and use margins to set column gutters.
+ */
+#grid div.vert {
+  width: 60px;
+  border: solid darkturquoise;
+  border-width: 0 1px;
+  margin-right: 9px; }
+
+#grid div.vert.first-line {
+  margin-left: 0px; }
+
+/**
+ * Horizontal grid lines, defined by your base line height
+ *
+ * Remember, the CSS properties that define the box model:
+ * visible height = height + borders + margins + padding
+ */
+#grid div.horiz {
+  /* 24px line height */
+  height: 23px;
+  border-bottom: 1px dotted darkgray;
+  margin: 0;
+  padding: 0; }
+
+/**
+* Classes for multiple grids
+*
+* When using more than one grid, remember to set the numberOfGrids 
+* option in the hashgrid.js file.
+*/
+#grid.grid-1 div.vert {
+  /* Vertical grid line colour for grid 1 */
+  border-color: darkturquoise; }
+
+#grid.grid-2 {
+  /* Adjustments */
+  padding: 0 160px;
+  width: 660px; }
+
+#grid.grid-2 div.vert {
+  /* Vertical grid line colour for grid 2 */
+  border-color: crimson; }

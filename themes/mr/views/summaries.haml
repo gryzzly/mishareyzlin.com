@@ -1,9 +1,10 @@
 - unless pages.empty?
   - pages.each do |page|  
-    %article
+    %article.main-note
       %header
         %h1
           %a(href="#{page.abspath}")= page.heading
+
       - if page.summary.nil? || page.summary.empty?
         - if page.description.nil? || page.description.empty?
           ~ html_truncate(page.body, 30, ' […]')

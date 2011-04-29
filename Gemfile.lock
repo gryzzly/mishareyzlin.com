@@ -14,6 +14,7 @@ GEM
     nokogiri (1.4.4)
     rack (1.2.1)
     redcarpet (1.9.0)
+    rubypants (0.2.0)
     shotgun (0.8)
       rack (>= 1.0)
     sinatra (1.1.2)
@@ -21,6 +22,8 @@ GEM
       tilt (~> 1.2)
     syntax (1.0.0)
     tilt (1.2.2)
+    typogruby (1.0.11)
+      rubypants
 
 PLATFORMS
   ruby
@@ -29,3 +32,4 @@ DEPENDENCIES
   nesta (= 0.9.4)
   nokogiri
   redcarpet
+  typogruby

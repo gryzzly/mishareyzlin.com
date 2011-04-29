@@ -1,1 +1,7 @@
 ~ @page.to_html(self)
+
+= haml :page_meta, :layout => false, :locals => { :page => @page }
+
+- if @page.path.include? "notes/"
+  %aside.main-comments
+    = haml :comments, :layout => false

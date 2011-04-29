@@ -5,7 +5,7 @@
 module Nesta 
   class FileModel 
     def to_html(scope = nil)
-      case @format
+      html = case @format
         when :mdown
           Redcarpet.new(markup, :smart, :autolink, :fenced_code, :lax_htmlblock).to_html
         when :haml
@@ -13,6 +13,7 @@ module Nesta
         when :textile
           RedCloth.new(markup).to_html
         end
+      Typogruby.improve(html)
     end
   end
 end

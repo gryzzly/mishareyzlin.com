@@ -22,16 +22,14 @@
     %link(href="/articles.xml" rel="alternate" type="application/atom+xml")
     = haml :analytics, :layout => false
   %body
-    #container
-      %aside.aside
-        %a(href="/" id="logo")
-          %span m
-        = haml :nav, :layout => false, :locals => { :page => @page }
-      %section(id="content")
-        = yield
-        -# if this page has children, show summaries
-        - if ( @page.metadata('summary') == 'true' )
-          %section.articles= article_summaries(latest_articles)
+    %aside.aside
+      %a.logo(href="/")
+        %span m
+      = haml :nav, :layout => false, :locals => { :page => @page }
+    %section.main
+      = yield
+      -# if this page has children, show summaries
+      - if ( @page.metadata('summary') == 'true' )
+        %section.articles= article_summaries(latest_articles)
     %script(src="http://code.jquery.com/jquery-1.5.1.min.js")
     %script(src="/mr/js/hashgrid.js")
-
