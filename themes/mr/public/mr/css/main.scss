@@ -1,9 +1,10 @@
 
 /* Variables
 -------------------------------------*/
-$serif : "hoefler text", georgia, palatino, times, serif;
-$sans : "helvetica neue", helvetica, arial, sans-serif;
+$serif : "calluna-1","calluna-2", "hoefler text", palatino, georgia, times, serif;
+$sans : "calluna-sans-1","calluna-sans-2", "helvetica neue", helvetica, arial, sans-serif;
 $monospace : "Inconsolata", "Monaco", "Consolas", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace, serif;
+/* http://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/ */
 
 /* Mixins 
 -------------------------------------*/
@@ -20,19 +21,26 @@ $monospace : "Inconsolata", "Monaco", "Consolas", "Andale Mono", "Bitstream Vera
   @include prefixes(transition, $properties $delay $type)
 }
 
-@mixin border-radius($radius) {
-  @include prefixes(border-radius, $radius);
+@mixin grid1 {
+  width:160px;
+  float:left;
+  clear:left;
 }
+@mixin grid2 {
+  float:left;
+  width:310px;    
+}
+
 /* Reset 
 -------------------------------------*/
 html,
 body {
   height:100%;
+  font-size:100%;
 }
 * {
   margin:0;
   padding:0;
-  font-size:100%;
 } 
 /* Global Styles 
 -------------------------------------*/
@@ -58,14 +66,23 @@ a {
 nav ul {
   list-style:none;
 }
+code {
+  font-family: $monospace;
+  font-size: 13px;/* I won't be damned for this shortcut */
+}
 /* inline code */
 p code {
   background: #777;
   color: #fff;
   padding:.25em .5em;
-  @include border-radius(.25em);
+  @include prefixes(border-radius, .25em);
+}
+abbr {
+  border-bottom:1px dashed #000;
+  cursor:help;
 }
 .amp {
+  font-family:"hoefler text", palatino, palatino lynotype, georgia, times, serif;
   font-style:italic;
 }
 .caps {
@@ -73,7 +90,7 @@ p code {
 }
 /* Sidebar 
 -------------------------------------*/
-.aside {
+.header {
   position:fixed;
   left:0;
   top:0;
@@ -85,7 +102,7 @@ p code {
   .logo {
     display:block;
     text-align:center;
-    font:italic 48px/54px $serif;
+    font:italic 48px/54px "Hoefler Text";
     text-decoration:none;
     background:#666;
     /* background:rgba(226, 46, 46, .67); */
@@ -93,8 +110,8 @@ p code {
     width:60px;
     height:60px;
     border:0;
-    border-radius:30px;
     margin:36px auto 48px;
+    @include prefixes(border-radius, 30px);
     @include prefixes(box-shadow, 0 0 20px #fff);
     @include transition(box-shadow, .35s, linear);
 
@@ -114,13 +131,14 @@ p code {
     }
   }
 
-  .aside-nav {
+  .header-nav {
     a {
       display:block;
       border:none;
+      font-size:17px;
       height:36px;
       line-height:36px;
-      padding:0 0 0 50px;
+      padding:0 0 0 38px;
       color:#555;
       
       &:hover {
@@ -161,12 +179,12 @@ p code {
     margin:0 0 .75em;
 
     a {
-      @include border-radius(.125em);
+      @include prefixes(border-radius, .125em);
       &:hover {
         background:#000;
         color:#fff;
-        margin:-.4ex -.4ex -.1ex;
-        padding:.4ex .4ex .1ex;
+        margin:0 -.3em;
+        padding:.3em .3em .1em;
       } 
     }
   }
@@ -174,10 +192,7 @@ p code {
   dt {
     margin: 0;
   }
-  
   pre {
-    font-family: $monospace;
-    font-size:1em!important;
     background:#333;
     color:#ccc;
     margin:0 0 1.5em;
@@ -188,7 +203,7 @@ p code {
     white-space: -o-pre-wrap;
     word-wrap: break-word;
     
-    @include border-radius(.25em);
+    @include prefixes(border-radius, .25em);
   }
   
   /* entire scrollbar */
@@ -202,26 +217,155 @@ p code {
     border-radius: 5px;
   }
 }
-  .main-comments {
-    a {
-      border:none;
-    }
-  }
-/* A note */
-.note-meta {
-    text-align:right;
-    color:#888;
-    margin:0 0 1em;
-}
-
-/* Notes index page */
+/* Notes 
+-------------------------------------*/
 /* index page headings */
-.articles {
+.main-notes {
   h1 {
     font-size:1.25em;
     line-height:1.2;
     margin:0 0 .6em;
   }
 }
+/* note footer */
+.note-meta {
+    text-align:right;
+    color:#888;
+    margin:0 0 1em;
+}
+/* sidebar */
+.secondary-promotejs {
+  position:absolute;
+  top:3em;
+  left:740px;
+  opacity:.5;
+  
+  a {
+    border:none;
+  }
+}
+/* comments */
+.main-comments {
+  a {
+    border:none;
+  }
+  .dsq-trackback-url input {
+    width: 200px;
+  }
+}
+/* CV 
+-------------------------------------*/
+.cv {
+  li {
+    list-style:none;
+    overflow:hidden;
+  }
+  
+ .comment {
+   margin:-1.715em 0 0;
+   font-size:.875em;/* 14px */
+   line-height:1.715;
+   color:#777;
+   font-weight:normal;
+   span {
+     font-style:italic;
+   }
+ }
 
+ .quote {
+   text-align:right;
+ }
+
+ .main {
+   width:auto;
+   
+   section {
+    margin:0 0 1.5em;
+    overflow:auto;
+   }
+     .section-title {
+       font-size:1em;
+       line-height:1.5;
+       margin:0 0 1.5em;
+       float:left;
+       width:200px;
+     }
+     .section-content {
+       float:left;
+       width:480px;
+     }
+  .contacts {
+    dt {
+      float:left;
+      &:after {
+        content: ': ';
+        margin-right:.3em;
+      }
+    }
+    dd {
+      margin:0;
+    }
+  }
+  .objective {
+    padding:.4em;
+    margin:-.4em -.4em 1.1em;
+    background:#fff;
+    @include prefixes(border-radius, 2px);
+    @include prefixes(box-shadow, 0 0 5px #fff);
+  }
+    .objective p {
+      margin:0;
+    }
+  .exp {
+    dt {
+      @include grid1;
+      font-weight:bold;
+      font-size:.875em;
+      line-height:1.715;
+    }
+    dd {
+      @include grid2;
+    }
+  }
+  .employment {
+    li {
+      overflow:hidden;
+      border-bottom:1px dashed #ccc;
+      padding:0 0 23px;
+      &:last-child {
+        border:none;
+        padding:0;
+      }
+    }
+  }
+  .employment,
+  .edu {
+    h2 {
+      font-weight:bold;
+      font-size:.875em;
+      line-height:1.715;
+      margin:0 0 .429em;
+    }
+    .period {
+      @include grid1;
+    }
+    .description {
+      @include grid2;
+      p {
+        margin:0;
+      }
+    }
+    .sum {
+      display:block;
+    }
+  }
+  .lang li,
+  .links li {
+    margin:0;
+    overflow:visible;
+  }
+  
+ }
+
+}
 @import "grid.scss";

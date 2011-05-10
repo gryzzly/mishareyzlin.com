@@ -1,5 +1,6 @@
 /* Variables
 -------------------------------------*/
+/* http://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/ */
 /* Mixins 
 -------------------------------------*/
 /* Vendor prefixes */
@@ -7,19 +8,19 @@
 -------------------------------------*/
 html,
 body {
-  height: 100%; }
+  height: 100%;
+  font-size: 100%; }
 
 * {
   margin: 0;
-  padding: 0;
-  font-size: 100%; }
+  padding: 0; }
 
 /* Global Styles 
 -------------------------------------*/
 body {
   background: #ffeaea;
   color: #444;
-  font-family: "helvetica neue", helvetica, arial, sans-serif;
+  font-family: "calluna-sans-1", "calluna-sans-2", "helvetica neue", helvetica, arial, sans-serif;
   line-height: 1.5; }
 
 a {
@@ -39,6 +40,11 @@ a {
 nav ul {
   list-style: none; }
 
+code {
+  font-family: "Inconsolata", "Monaco", "Consolas", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace, serif;
+  font-size: 13px;
+  /* I won't be damned for this shortcut */ }
+
 /* inline code */
 p code {
   background: #777;
@@ -49,7 +55,12 @@ p code {
   -o-border-radius: 0.25em;
   border-radius: 0.25em; }
 
+abbr {
+  border-bottom: 1px dashed #000;
+  cursor: help; }
+
 .amp {
+  font-family: "hoefler text", palatino, palatino lynotype, georgia, times, serif;
   font-style: italic; }
 
 .caps {
@@ -57,7 +68,7 @@ p code {
 
 /* Sidebar 
 -------------------------------------*/
-.aside {
+.header {
   position: fixed;
   left: 0;
   top: 0;
@@ -69,7 +80,7 @@ p code {
 .logo {
   display: block;
   text-align: center;
-  font: italic 48px/54px "hoefler text", georgia, palatino, times, serif;
+  font: italic 48px/54px "Hoefler Text";
   text-decoration: none;
   background: #666;
   /* background:rgba(226, 46, 46, .67); */
@@ -77,8 +88,11 @@ p code {
   width: 60px;
   height: 60px;
   border: 0;
-  border-radius: 30px;
   margin: 36px auto 48px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -o-border-radius: 30px;
+  border-radius: 30px;
   -webkit-box-shadow: 0 0 20px white;
   -moz-box-shadow: 0 0 20px white;
   -o-box-shadow: 0 0 20px white;
@@ -104,16 +118,17 @@ p code {
   .logo:hover span {
     text-shadow: 1px 1px 0 #aaaaaa, 0 0 20px rgba(255, 255, 255, 0.75); }
 
-.aside-nav a {
+.header-nav a {
   display: block;
   border: none;
+  font-size: 17px;
   height: 36px;
   line-height: 36px;
-  padding: 0 0 0 50px;
+  padding: 0 0 0 38px;
   color: #555; }
-  .aside-nav a:hover {
+  .header-nav a:hover {
     color: #000; }
-.aside-nav .current a {
+.header-nav .current a {
   color: #444;
   text-decoration: none;
   font-weight: bold; }
@@ -126,7 +141,7 @@ p code {
   width: 560px;
   margin: 0 0 0 140px;
   padding: 3.75em 0 0;
-  font-family: "hoefler text", georgia, palatino, times, serif;
+  font-family: "calluna-1", "calluna-2", "hoefler text", palatino, georgia, times, serif;
   /* entire scrollbar */
   /* scrollbar thumb  */ }
   .main h1 {
@@ -149,13 +164,11 @@ p code {
       .main p a:hover, .main li a:hover, .main h2 a:hover, .main dt a:hover, .main dd a:hover {
         background: #000;
         color: #fff;
-        margin: -0.4ex -0.4ex -0.1ex;
-        padding: .4ex .4ex .1ex; }
+        margin: 0 -0.3em;
+        padding: .3em .3em .1em; }
   .main dt {
     margin: 0; }
   .main pre {
-    font-family: "Inconsolata", "Monaco", "Consolas", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace, serif;
-    font-size: 1em!important;
     background: #333;
     color: #ccc;
     margin: 0 0 1.5em;
@@ -176,21 +189,128 @@ p code {
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px; }
 
-.main-comments a {
-  border: none; }
+/* Notes 
+-------------------------------------*/
+/* index page headings */
+.main-notes h1 {
+  font-size: 1.25em;
+  line-height: 1.2;
+  margin: 0 0 .6em; }
 
-/* A note */
+/* note footer */
 .note-meta {
   text-align: right;
   color: #888;
   margin: 0 0 1em; }
 
-/* Notes index page */
-/* index page headings */
-.articles h1 {
-  font-size: 1.25em;
-  line-height: 1.2;
-  margin: 0 0 .6em; }
+/* sidebar */
+.secondary-promotejs {
+  position: absolute;
+  top: 3em;
+  left: 740px;
+  opacity: .5; }
+  .secondary-promotejs a {
+    border: none; }
+
+/* comments */
+.main-comments a {
+  border: none; }
+.main-comments .dsq-trackback-url input {
+  width: 200px; }
+
+/* CV 
+-------------------------------------*/
+.cv li {
+  list-style: none;
+  overflow: hidden; }
+.cv .comment {
+  margin: -1.715em 0 0;
+  font-size: .875em;
+  /* 14px */
+  line-height: 1.715;
+  color: #777;
+  font-weight: normal; }
+  .cv .comment span {
+    font-style: italic; }
+.cv .quote {
+  text-align: right; }
+.cv .main {
+  width: auto; }
+  .cv .main section {
+    margin: 0 0 1.5em;
+    overflow: auto; }
+  .cv .main .section-title {
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 0 0 1.5em;
+    float: left;
+    width: 200px; }
+  .cv .main .section-content {
+    float: left;
+    width: 480px; }
+  .cv .main .contacts dt {
+    float: left; }
+    .cv .main .contacts dt:after {
+      content: ': ';
+      margin-right: .3em; }
+  .cv .main .contacts dd {
+    margin: 0; }
+  .cv .main .objective {
+    padding: .4em;
+    margin: -0.4em -0.4em 1.1em;
+    background: #fff;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -o-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 0 5px white;
+    -moz-box-shadow: 0 0 5px white;
+    -o-box-shadow: 0 0 5px white;
+    box-shadow: 0 0 5px white; }
+  .cv .main .objective p {
+    margin: 0; }
+  .cv .main .exp dt {
+    width: 160px;
+    float: left;
+    clear: left;
+    font-weight: bold;
+    font-size: .875em;
+    line-height: 1.715; }
+  .cv .main .exp dd {
+    float: left;
+    width: 310px; }
+  .cv .main .employment li {
+    overflow: hidden;
+    border-bottom: 1px dashed #ccc;
+    padding: 0 0 23px; }
+    .cv .main .employment li:last-child {
+      border: none;
+      padding: 0; }
+  .cv .main .employment h2,
+  .cv .main .edu h2 {
+    font-weight: bold;
+    font-size: .875em;
+    line-height: 1.715;
+    margin: 0 0 .429em; }
+  .cv .main .employment .period,
+  .cv .main .edu .period {
+    width: 160px;
+    float: left;
+    clear: left; }
+  .cv .main .employment .description,
+  .cv .main .edu .description {
+    float: left;
+    width: 310px; }
+    .cv .main .employment .description p,
+    .cv .main .edu .description p {
+      margin: 0; }
+  .cv .main .employment .sum,
+  .cv .main .edu .sum {
+    display: block; }
+  .cv .main .lang li,
+  .cv .main .links li {
+    margin: 0;
+    overflow: visible; }
 
 /* HASHGRID */
 /**

@@ -1,8 +1,14 @@
 # TODO
 
-* CV
-* vcards
-* microdata
+---- before the launch
+
+* TEST print styles online
+* go through content and links
+* coffeescript for age
+* setup redirects
+* description metas
+
+----- later on
 * page with APIS
   * twitter
   * last.fm

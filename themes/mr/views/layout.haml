@@ -9,10 +9,16 @@
     %title
       - if @page.metadata('pagetitle')
         = @site_title + ' – ' + @page.metadata('pagetitle')
-      - else 
+      - elsif @page.heading
+        = @site_title + ' - ' + @page.heading
+      - else
         = @site_title
     <!--[if ! lte IE 6]><!-->
     %link(href="/mr/css/main.css" media="screen" rel="stylesheet")
+    %link(href="/mr/css/print.css" media="print" rel="stylesheet")
+    %script(src="http://use.typekit.com/grk3csh.js")
+    :javascript
+      try{Typekit.load();}catch(e){}
     <!--<![endif]-->
     /[if lte IE 6]
       %link(rel="stylesheet" href="http://universal-ie6-css.googlecode.com/files/ie6.1.1.css" media="screen, projection")
@@ -21,8 +27,12 @@
     = local_stylesheet_link_tag('local')
     %link(href="/articles.xml" rel="alternate" type="application/atom+xml")
     = haml :analytics, :layout => false
-  %body
-    %aside.aside
+  -# get page class from page's metadata
+  - page_class = @page.metadata('pageclass')
+  - page_action = @page.metadata('pageaction')
+  %body{:class => (page_class if page_class && !page_class.empty?),  
+        :data => { :action => ( page_action if page_action && !page_action.empty? ) } }
+    %header.header
       %a.logo(href="/")
         %span m
       = haml :nav, :layout => false, :locals => { :page => @page }
@@ -30,6 +40,12 @@
       = yield
       -# if this page has children, show summaries
       - if ( @page.metadata('summary') == 'true' )
-        %section.articles= article_summaries(latest_articles)
-    %script(src="http://code.jquery.com/jquery-1.5.1.min.js")
+        .main-notes 
+          = article_summaries(latest_articles)
+    - if (@page.path.include? 'notes')
+      %aside.secondary
+        %div.secondary-promotejs
+          = promotejs()
+    %script(src="http://code.jquery.com/jquery-1.5.2.min.js")
     %script(src="/mr/js/hashgrid.js")
+    %script(src="/mr/js/main.js")

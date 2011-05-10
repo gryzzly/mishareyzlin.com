@@ -1,0 +1,11 @@
+PageTitle: About me
+PageClass: about-me 
+PageAction: age
+
+# About me
+
+I am <span class="years-age">22 years</span> old geek, currently living with [my beautiful wife](http://www.flickr.com/photos/tataata/4356139052/) in sunny Israel, the Holy-Moly land. Historically, we both come from [Siberia](http://goo.gl/maps/88n9) (yes, it is very cold there). In the future, we will be growing all kinds of greenish stuff somewhere in the mountains.
+
+Mainly, I code <abbr title="HyperText Markup Language">HTML</abbr>, <abbr title="Cascading Style Sheets">CSS</abbr> and JavaScript. I am also interested in typography, UI and graphic design very much.
+
+![CSS rules](http://mishareyzlin.com/imgs/css_rules.jpg)

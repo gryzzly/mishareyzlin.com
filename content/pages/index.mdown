@@ -1,13 +1,17 @@
 Pagetitle: Hello
+Pageclass: home
+PageAction: availability
 
 # Hello
 
 My name is Misha Reyzlin & I am professional web developer. If you want, you can read more [about me][1] or even look at my [resume][2]. I use [this website][3] to keep my [technical notes][4], to play with different [APIs][5] and as a playground.
+
+If you want to hire me, I'm available from <span class="home-availability">June 2011</span>.
 
 Me elsewhere: [twitter](http://twitter.com/gryzzly), [github](http://github.com/gryzzly), [stackoverflow](http://stackoverflow.com/users/236135/gryzzly), [linkedin](http://linkedin.com/in/mrejzlin), [friendfeed](http://friendfeed.com/gryzzly)
 
  [1]: /about
  [2]: /cv
  [3]: /colophon
- [4]: /blog
+ [4]: /notes
  [5]: /apis

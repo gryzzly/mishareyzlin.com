@@ -1,6 +1,3 @@
-#  TODO: 
-#  * use http://avdgaag.github.com/typogruby
-
 # Add Redcarpet support
 module Nesta 
   class FileModel 
@@ -92,18 +89,22 @@ module Nesta
         doc.root.children.first.inner_html
       end # html_truncate
       
-=begin
-      def display_menu( menu_items, page )
-        menu_items.each do |href, title|
-          category_slug = page.path.include? "/" ? page.path[0..page.path.index('/')] : page.path
-          haml_tag :li, :class => ("current" if href[1..-1] == category_slug) do
-            haml_tag :a, :href => href do
-              haml_concat title
-            end
-          end
+      def promotejs
+        begin
+          resp = Net::HTTP.get_response(URI.parse('http://promotejs.com/plz')).body
+          result = JSON.parse(resp)
+        rescue Exception => e
+          # in case of error set default values
+          result = {
+            :href => 'https://developer.mozilla.org/en/JavaScript',
+            :src => 'http://static.jsconf.us/promotejsh.gif',
+            :alt => 'JS reference'
+          }
         end
-      end
-=end
+        "<a href='#{ result['href'] }'>\
+          <img src='#{ result['src'] }' alt='#{ result['alt'] }'>\
+        </a>"
+      end # promotejs
     end
 
     # Add new routes here.
