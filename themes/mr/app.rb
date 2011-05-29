@@ -130,6 +130,22 @@ module Nesta
       end
     end
     
+    get '/index.html' do
+      redirect '/', 301
+    end
+    
+    get '/works.html' do
+      redirect '/works', 301
+    end
+    
+    get '/cv.html' do
+      redirect '/cv', 301
+    end
+    
+    get '/contact.html' do
+      halt 410
+    end
+    
     # Add new routes here.
     # get "/blog/" do
     # end

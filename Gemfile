@@ -5,7 +5,7 @@ gem 'nokogiri'
 gem 'redcarpet'
 gem 'typogruby'
 gem 'json'
-gem 'rack-rewrite', '~> 1.0.0'
+gem "rack-force_domain", "~> 0.2.0"
 
 # gem (RUBY_VERSION =~ /^1.9/) ? 'ruby-debug19': 'ruby-debug'
 
