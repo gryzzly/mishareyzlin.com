@@ -1,8 +1,8 @@
 
 /* Variables
 -------------------------------------*/
-$serif : "calluna-1","calluna-2", "hoefler text", palatino, georgia, times, serif;
-$sans : "calluna-sans-1","calluna-sans-2", "helvetica neue", helvetica, arial, sans-serif;
+$serif : "PT Serif", "hoefler text", palatino, georgia, times, serif;
+$sans : "PT Sans", "helvetica neue", helvetica, arial, sans-serif;
 $monospace : "Inconsolata", "Monaco", "Consolas", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace, serif;
 /* http://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/ */
 
@@ -322,7 +322,7 @@ abbr {
    
    section {
     margin:0 0 1.5em;
-    overflow:auto;
+    overflow:hidden;
    }
      .section-title {
        font-size:1em;

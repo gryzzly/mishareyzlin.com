@@ -20,7 +20,7 @@ body {
 body {
   background: #ffeaea;
   color: #444;
-  font-family: "calluna-sans-1", "calluna-sans-2", "helvetica neue", helvetica, arial, sans-serif;
+  font-family: "PT Sans", "helvetica neue", helvetica, arial, sans-serif;
   line-height: 1.5; }
 
 a {
@@ -80,7 +80,7 @@ abbr {
 .logo {
   display: block;
   text-align: center;
-  font: italic 48px/54px "calluna-1", "calluna-2", "hoefler text", palatino, georgia, times, serif;
+  font: italic 48px/54px "PT Serif", "hoefler text", palatino, georgia, times, serif;
   text-decoration: none;
   background: #666;
   /* background:rgba(226, 46, 46, .67); */
@@ -141,7 +141,7 @@ abbr {
   width: 560px;
   margin: 0 0 0 140px;
   padding: 3.75em 0 0;
-  font-family: "calluna-1", "calluna-2", "hoefler text", palatino, georgia, times, serif;
+  font-family: "PT Serif", "hoefler text", palatino, georgia, times, serif;
   /* entire scrollbar */
   /* scrollbar thumb  */ }
   .main h1 {
@@ -278,7 +278,7 @@ abbr {
   width: auto; }
   .cv .main section {
     margin: 0 0 1.5em;
-    overflow: auto; }
+    overflow: hidden; }
   .cv .main .section-title {
     font-size: 1em;
     line-height: 1.5;
