@@ -1,6 +1,5 @@
 Date: 20 October 2010
 Categories: mobile development, configuration, environment
-Pagetitle: trulala
 
 # Testing local running websites on Android Emulator, in OS X environment
 

@@ -1,8 +1,7 @@
 Date: 7 April 2011
 Categories: PHP, configuration, nginx
-Pagetitle: something
 
-# Re-compiling PHP on a linux machine
+# Re-compiling PHP to be used with FPM and Nginx
 
 If you are just like me, not really a server-side guy and you've suddenly got a need to recompile PHP that you have on your server (in my case, when I first configured my virtual server I followed some tutorial and didn't pay too much attention to what modules I've compiled with, except for php-fpm, that was needed to make things work fast. And so I found myself in a situation where I was getting the following error:
 
@@ -48,6 +47,6 @@ You should see errors output in the log (you can find the path to log in php-fpm
 Sources
 -------
 
-* http://stackoverflow.com/questions/5554705/imagecreatefromstring-function-imagecreatefromstring-no-jpeg-support-in-this
-* http://interfacelab.com/nginx-php-fpm-apc-awesome/
-* http://forum.nginx.org/read.php?3,82703,82705#msg-82705
+1. http://stackoverflow.com/questions/5554705/imagecreatefromstring-function-imagecreatefromstring-no-jpeg-support-in-this
+2. http://interfacelab.com/nginx-php-fpm-apc-awesome/
+3. http://forum.nginx.org/read.php?3,82703,82705#msg-82705

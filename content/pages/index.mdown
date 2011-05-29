@@ -1,14 +1,15 @@
-Pagetitle: Hello
-Pageclass: home
+PageTitle: Hello
+PageClass: home
 PageAction: availability
+Description: Misha Reyzlin, HTML, CSS, JavaScript Developer
 
 # Hello
 
-My name is Misha Reyzlin & I am professional web developer. If you want, you can read more [about me][1] or even look at my [resume][2]. I use [this website][3] to keep my [technical notes][4], to play with different [APIs][5] and as a playground.
+My name is Misha Reyzlin & I am professional web developer. If you want, you can read more [about me][1] or take a look at my [resume][2]. I use [this website][3] to keep my [technical notes][4] and to play with all kinds of things.
 
-If you want to hire me, I'm available from <span class="home-availability">June 2011</span>.
+I'm available for hiring from <span class="home-availability-date">June 2011</span>.
 
-Me elsewhere: [twitter](http://twitter.com/gryzzly), [github](http://github.com/gryzzly), [stackoverflow](http://stackoverflow.com/users/236135/gryzzly), [linkedin](http://linkedin.com/in/mrejzlin), [friendfeed](http://friendfeed.com/gryzzly)
+Me elsewhere: [twitter](http://twitter.com/gryzzly), [github](http://github.com/gryzzly), [stackoverflow](http://stackoverflow.com/users/236135/gryzzly), [jsfiddle](http://jsfiddle.net/user/gryzzly), [linkedin](http://linkedin.com/in/mrejzlin), [friendfeed](http://friendfeed.com/gryzzly)
 
  [1]: /about
  [2]: /cv

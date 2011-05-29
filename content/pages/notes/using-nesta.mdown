@@ -4,15 +4,7 @@ Pagetitle: trulala
 
 # First steps in Nesta (and Ruby)
 
-In order to run some code based on the current path, we can use @page's path method:
-
-    - if ( @page.path == 'blog' ) 
-      -# blog logic here
-
-How do I debug / console.log objects in views?
-
-How do I use custom proccessor for markdown? (i.e. redcarpet from github?)
-In order to do that, I needed to extend Nesta's FileModel's to_html method, like so: 
+In order to use custom content processing libarary (I wanted to try out new markdown lib from github, Redcarpet) I needed to extend [Nesta](http://nestacms.com)'s FileModel's `to_html` method, like so: 
 
 ~~~ruby
 module Nesta 
@@ -30,8 +22,8 @@ module Nesta
   end
 end
 ~~~
-    
-In order to be able to use the Redcarpet filter in HAML, I needed to add Redcarpet filter:
+
+That allows me to parse content files with Redcarpet. But what I also want to use `:redcarpet` as a filter in HAML? In order to do that, I needed to add new HAML filter:
 
 ~~~ruby
 # Add Redcarpet HAML filter
@@ -44,7 +36,7 @@ module Haml::Filters::Redcarpet
 end
 ~~~
 
-We can now use ":redcarpet" filter in HAML like so:
+We can now use `:redcarpet` filter in HAML like so:
 
 ~~~haml
 %p
@@ -52,11 +44,16 @@ We can now use ":redcarpet" filter in HAML like so:
     # Here goes markdown content
 ~~~
 
-How do I highlight the code blocks using (https://github.com/nex3/rb-pygments)? 
+Another useful note: @page.metadata() method is exposed, i.e. you can specify any key in the top of your pages and you'll be able to access that data in your templates like so:
 
-How do I add file formats (i.e. what if I want to use ".md" and not ".mdown") or whatever else?
+~~~haml
+- if @page.metadata('foo')
+  %h1 @page.metadata('foo')
+~~~
+
+It's important to note, that if you are going to retrieve values from `@page` in layout, guard yourself with `if`s, because there are pages like 404, that are using layout – in that case you wont have `@page` defined, and calling `@page.method` will break.
 
 Sources
 -------
-
-https://github.com/gma/nesta/blob/master/lib/nesta/models.rb
+1. https://github.com/gma/nesta/blob/master/lib/nesta/models.rb
+2. https://github.com/gma/nesta/issues#issue/21

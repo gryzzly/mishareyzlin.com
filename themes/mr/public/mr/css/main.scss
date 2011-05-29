@@ -72,7 +72,7 @@ code {
 }
 /* inline code */
 p code {
-  background: #777;
+  background: #444;
   color: #fff;
   padding:.25em .5em;
   @include prefixes(border-radius, .25em);
@@ -102,7 +102,7 @@ abbr {
   .logo {
     display:block;
     text-align:center;
-    font:italic 48px/54px "Hoefler Text";
+    font:italic 48px/54px $serif;
     text-decoration:none;
     background:#666;
     /* background:rgba(226, 46, 46, .67); */
@@ -120,8 +120,8 @@ abbr {
     }
     span {
       position:relative;
-      top:4px;
-      left:1px;
+      top:3px;
+      left:0;
       text-shadow:1px 1px 0 #aaa, 0 0 0 orange; 
       @include transition(text-shadow, .35s, linear);
     }
@@ -239,10 +239,19 @@ abbr {
   top:3em;
   left:740px;
   opacity:.5;
-  
+  @include transition(opacity, .35s, linear);
+  &:hover {
+      opacity:1;
+  }
   a {
     border:none;
   }
+}
+.note-end {
+  text-align:center;
+  font-size:2em;
+  color:#555;
+  text-shadow:1px 1px 0 #fff;
 }
 /* comments */
 .main-comments {
@@ -256,7 +265,39 @@ abbr {
 /* CV 
 -------------------------------------*/
 .cv {
-  li {
+  .cv-download {
+      background:#eee;
+      display:inline-block;
+      text-align:center;
+      width:32px;
+      height:44px;
+      line-height:44px;
+      border:1px solid #ccc;
+      font-size:10px;
+      font-weight:normal!important;
+      margin:6px 0 0 38px;
+      padding:0;
+      position:relative;
+      &:after {
+          $gradient: 45deg, #ebebeb 6px, #999 6px, #FFEAEA 7px;
+          
+          content:'';
+          position:absolute;
+          top:-1px;
+          right:-1px;
+          border:solid #ccc;
+          border-width:0 0 1px 1px;
+          width:10px;
+          height:10px;
+          background:#FFEAEA;
+          background:-webkit-linear-gradient($gradient);
+          background:-moz-linear-gradient($gradient);
+          background:-o-linear-gradient($gradient);
+          background:linear-gradient($gradient);
+          z-index:1;
+      }
+  }
+  .main li {
     list-style:none;
     overflow:hidden;
   }

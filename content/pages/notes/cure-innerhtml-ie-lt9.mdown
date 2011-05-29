@@ -1,0 +1,33 @@
+Date: 26 May 2011
+Categories: jquery, ie, html5
+
+# Cure HTML5 elements inserted through innerHTML
+
+If you are using HTML5 like all the cool kids do, you are probably using [the HTML5 shiv](http://html5shim.googlecode.com/svn/trunk/html5.js) built by amazing [webdev community](http://paulirish.com/2011/the-history-of-the-html5-shiv/) in order for new semantic elements, such as `<header>` to be stylable in IE < 9.
+    
+This is great, but what if you generate your HTML5 content with JavaScript (getting your content using ajax for example)? Whenever you will be using innerHTML in order to apply that HTML to the page (jQuery uses innerHTML in its `.html()` method, which is used in many-many other methods internally), your HTML5 elements will not be attached and styled properly. Meet [Innershiv](http://jdbartlett.github.com/innershiv/).
+
+So, in order to apply `innershiv()` to the content that is being returned from ajax calls for all the ajax requests, you can do this once before you issue these requests and then not to care about applying it individually:
+
+~~~js
+// if IE < 9, cure innerHTML for HTML5 elements in AJAX response
+// for the reference regarding jscript versions see http://en.wikipedia.org/wiki/JavaScript#Versions
+// at this point you have jQuery and innerShiv code loaded
+/*@cc_on
+  @if ( @_jscript_version < 9 ) 
+  $.ajaxSetup({
+    dataFilter : function(data) {
+      return innerShiv(data);
+    }
+  });
+})
+  @end
+@*/
+~~~
+
+Sources
+-------
+1. http://paulirish.com/2011/the-history-of-the-html5-shiv/
+2. http://jdbartlett.github.com/innershiv/
+3. http://api.jquery.com/jQuery.ajaxSetup/
+4. http://en.wikipedia.org/wiki/JavaScript#Versions

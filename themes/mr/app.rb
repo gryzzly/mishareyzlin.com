@@ -24,6 +24,7 @@ module Haml::Filters::Redcarpet
   end
 end
 
+# Helpers and own routes
 module Nesta
   class App
     #
@@ -107,6 +108,28 @@ module Nesta
       end # promotejs
     end
 
+    # robots / humans .txt (served from content folder)
+    get '*.txt' do
+      file = Nesta::Config.content_path(params[:splat][0] + '.txt')
+      if File.exist?(file)
+        content_type 'text/plain', :charset => 'utf-8'
+        File.open(file).read
+      else
+        halt 404
+      end
+    end
+    
+    # CV pdf
+    get '/MishaReyzlinCV.pdf' do
+      file = Nesta::Config.content_path('MishaReyzlinCV.pdf')
+      if File.exist?(file)
+        content_type 'application/pdf'
+        File.open(file).read
+      else
+        halt 404
+      end
+    end
+    
     # Add new routes here.
     # get "/blog/" do
     # end

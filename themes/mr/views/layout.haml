@@ -1,18 +1,19 @@
 !!! 5
 %html(lang="en")
   %head
+    %title
+      - if @page
+        - pagetitle = @page.metadata('pagetitle') || @page.heading
+      - if pagetitle 
+        = @site_title + ': ' + pagetitle
+      - else
+        = @site_title
     %meta(charset="utf-8")
     - if @description
       %meta(name="description" content=@description)
     - if @keywords
       %meta(name="keywords" content=@keywords)
-    %title
-      - if @page.metadata('pagetitle')
-        = @site_title + ' – ' + @page.metadata('pagetitle')
-      - elsif @page.heading
-        = @site_title + ' - ' + @page.heading
-      - else
-        = @site_title
+    %link(rel="shortcut icon" href="/attachments/favicon.ico")
     <!--[if ! lte IE 6]><!-->
     %link(href="/mr/css/main.css" media="screen" rel="stylesheet")
     %link(href="/mr/css/print.css" media="print" rel="stylesheet")
@@ -24,12 +25,12 @@
       %link(rel="stylesheet" href="http://universal-ie6-css.googlecode.com/files/ie6.1.1.css" media="screen, projection")
     /[if lt IE 9]
       %script(src="//html5shim.googlecode.com/svn/trunk/html5.js")
-    = local_stylesheet_link_tag('local')
+    -# feed
     %link(href="/articles.xml" rel="alternate" type="application/atom+xml")
-    = haml :analytics, :layout => false
-  -# get page class from page's metadata
-  - page_class = @page.metadata('pageclass')
-  - page_action = @page.metadata('pageaction')
+  -# get page class and data-action from page metadata
+  - if @page
+    - page_class = @page.metadata('pageclass') if @page.metadata('pageclass') 
+    - page_action = @page.metadata('pageaction') if @page.metadata('pageaction')
   %body{:class => (page_class if page_class && !page_class.empty?),  
         :data => { :action => ( page_action if page_action && !page_action.empty? ) } }
     %header.header
@@ -38,14 +39,26 @@
       = haml :nav, :layout => false, :locals => { :page => @page }
     %section.main
       = yield
-      -# if this page has children, show summaries
-      - if ( @page.metadata('summary') == 'true' )
+      - if @page && @page.metadata('summary') == 'true'
         .main-notes 
           = article_summaries(latest_articles)
-    - if (@page.path.include? 'notes')
-      %aside.secondary
-        %div.secondary-promotejs
-          = promotejs()
+    - if @page
+      - if @page.path.include? 'notes'
+        %aside.secondary
+          %div.secondary-promotejs
+            = promotejs()
     %script(src="http://code.jquery.com/jquery-1.5.2.min.js")
     %script(src="/mr/js/hashgrid.js")
     %script(src="/mr/js/main.js")
+    -# analytics
+    %script
+      :plain
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    %script
+      :plain
+        try {
+          var pageTracker = _gat._getTracker("UA-11517311-1");
+          pageTracker._trackPageview();
+        } catch(err) {}
+    

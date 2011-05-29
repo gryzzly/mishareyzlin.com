@@ -1,4 +1,13 @@
 (function() {
+  var Bob, Human, bob;
+  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+    for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+    function ctor() { this.constructor = child; }
+    ctor.prototype = parent.prototype;
+    child.prototype = new ctor;
+    child.__super__ = parent.prototype;
+    return child;
+  };
   window.UTIL = {
     fire: function(func, args) {
       if (func !== '' && typeof MR[func] === 'function') {
@@ -6,9 +15,11 @@
       }
     },
     load: function() {
-      return $.each($('body').data('action').split(/\s+/), function(i, action) {
-        return UTIL.fire(action);
-      });
+      if ($('body').data('action')) {
+        return $.each($('body').data('action').split(/\s+/), function(i, action) {
+          return UTIL.fire(action);
+        });
+      }
     }
   };
   window.MR = {
@@ -37,8 +48,29 @@
       if (nextMonth === 11) {
         nextMonth = 0;
       }
-      return $('.home-availability').text(months[nextMonth] + ' ' + now.getFullYear());
+      return $('.home-availability-date').text(months[nextMonth] + ' ' + now.getFullYear());
     }
   };
   $(document).ready(UTIL.load);
+  Human = (function() {
+    function Human(name, saying) {
+      this.name = name;
+      this.saying = saying;
+    }
+    Human.prototype.say = function(saying) {
+      return alert(this.name + "says " + saying + "!");
+    };
+    return Human;
+  })();
+  Bob = (function() {
+    __extends(Bob, Human);
+    function Bob() {
+      Bob.__super__.constructor.apply(this, arguments);
+    }
+    Bob.prototype.say = function(saying) {
+      return alert(this.name + "sings " + saying);
+    };
+    return Bob;
+  })();
+  bob = new Bob("Bob");
 }).call(this);

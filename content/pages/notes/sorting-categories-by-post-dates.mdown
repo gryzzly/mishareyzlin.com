@@ -1,10 +1,9 @@
 Date: 20 April 2011
 Categories: wordpress, php, back-end
-Pagetitle: Custom sorting of WordPress categories
 
-# Sort categories by the recency of their updates in wordpress
+# Sort WordPress categories by the recency of their updates
 
-One of our recent clients has a nice blog, where homepage shows most recent post from each of the categories. This is done pretty simple in WordPress:
+One of our recent clients has a [nice blog](http://www.omami.ru), where homepage shows most recent post from each of the categories. This is done pretty simple in WordPress:
 
     $categories = get_categories();
     

@@ -1,9 +1,3 @@
-How to use custom "metadata" in posts. Specify variable key-value on
-the page, use it in the template.
-
-  use @page.metadata('key');
-  https://github.com/gma/nesta/issues#issue/21
-
 How to set a title for pages other than predefined "@title" (which is
 constructed in a strange, undocumented way)?
 
@@ -11,11 +5,6 @@ constructed in a strange, undocumented way)?
   with the combination of @page.metadata('pagetitle') or any other key
   you fancy
 
-  ! note 
-  Generally, any kind of global variables list, and how are they
-conctructed and how they could be overriden would be really helpful
-(@title, for example. on my install it was contructed from the h1 of the
-page "dash" and the h1 of the "index" page in the same level).
 
-
-
+How do I highlight the code blocks using (https://github.com/nex3/rb-pygments)? 
+How do I add file formats (i.e. what if I want to use ".md" and not ".mdown") or whatever else?
