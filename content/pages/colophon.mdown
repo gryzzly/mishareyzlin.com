@@ -6,4 +6,4 @@ On the client side this website is built with [HAML](http://haml-lang.com/) for 
 
 All the code is handwritten in [TextMate](http://macromates.com/) and [Vim](http://www.vim.org/). You can find the source for this website on [github](https://github.com/gryzzly/mishareyzlin.com) – you can use whatever code you find there for whatever purpose.
 
-Typefaces are [Calluna](http://www.exljbris.com/calluna.html) and [Calluna Sans](http://www.exljbris.com/callunasans.html) by  Jos Buivenga's [exljbris Font Foundry](http://www.exljbris.com/) served through excellent [Typekit](http://typekit.com/).
+Typefaces are excellent [PT Sans and PT Serif](http://www.paratype.com/public/) by [ParaType Inc.](http://www.paratype.com/). They are served through [Google’s Web Fonts API](http://www.google.com/webfonts).
