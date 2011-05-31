@@ -25,6 +25,7 @@
       %script(src="//html5shim.googlecode.com/svn/trunk/html5.js")
     -# feed
     %link(href="/articles.xml" rel="alternate" type="application/atom+xml")
+    %link(href="http://mishareyzlin.com/humans.txt" rel="author" type="text/plain")
   -# get page class and data-action from page metadata
   - if @page
     - page_class = @page.metadata('pageclass') if @page.metadata('pageclass') 

@@ -1,0 +1,12 @@
+/* TEAM */
+Developer: Misha Reyzlin
+Contact: hello@mishareyzlin.com
+Twitter: @gryzzly
+From: Everywhere
+
+/* SITE */
+Language: English
+Doctype: HTML5
+IDE: Vim, Textmate
+Type: PT Sans, PT Serif
+Publishing System: Nesta CMS <http://nestacms.com>
