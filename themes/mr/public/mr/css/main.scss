@@ -266,7 +266,7 @@ abbr {
 -------------------------------------*/
 .cv {
   .cv-download {
-      background:#eee;
+      background:#fefefe;
       display:inline-block;
       text-align:center;
       width:32px;
@@ -407,6 +407,13 @@ abbr {
   }
   
  }
-
+/* About Me 
+-------------------------------------*/
+}
+.about-me-image {
+    img {
+        display:block;
+        margin:.5em;
+    }
 }
 @import "grid.scss";

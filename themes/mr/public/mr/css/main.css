@@ -232,125 +232,132 @@ abbr {
 
 /* CV 
 -------------------------------------*/
-.cv .cv-download {
-  background: #eee;
-  display: inline-block;
-  text-align: center;
-  width: 32px;
-  height: 44px;
-  line-height: 44px;
-  border: 1px solid #ccc;
-  font-size: 10px;
-  font-weight: normal!important;
-  margin: 6px 0 0 38px;
-  padding: 0;
-  position: relative; }
-  .cv .cv-download:after {
-    content: '';
-    position: absolute;
-    top: -1px;
-    right: -1px;
-    border: solid #ccc;
-    border-width: 0 0 1px 1px;
-    width: 10px;
-    height: 10px;
-    background: #FFEAEA;
-    background: -webkit-linear-gradient(45deg, #ebebeb 6px, #999999 6px, #ffeaea 7px);
-    background: -moz-linear-gradient(45deg, #ebebeb 6px, #999999 6px, #ffeaea 7px);
-    background: -o-linear-gradient(45deg, #ebebeb 6px, #999999 6px, #ffeaea 7px);
-    background: linear-gradient(45deg, #ebebeb 6px, #999999 6px, #ffeaea 7px);
-    z-index: 1; }
-.cv .main li {
-  list-style: none;
-  overflow: hidden; }
-.cv .comment {
-  margin: -1.715em 0 0;
-  font-size: .875em;
-  /* 14px */
-  line-height: 1.715;
-  color: #777;
-  font-weight: normal; }
-  .cv .comment span {
-    font-style: italic; }
-.cv .quote {
-  text-align: right; }
-.cv .main {
-  width: auto; }
-  .cv .main section {
-    margin: 0 0 1.5em;
+.cv {
+  /* About Me 
+  -------------------------------------*/ }
+  .cv .cv-download {
+    background: #fefefe;
+    display: inline-block;
+    text-align: center;
+    width: 32px;
+    height: 44px;
+    line-height: 44px;
+    border: 1px solid #ccc;
+    font-size: 10px;
+    font-weight: normal!important;
+    margin: 6px 0 0 38px;
+    padding: 0;
+    position: relative; }
+    .cv .cv-download:after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      border: solid #ccc;
+      border-width: 0 0 1px 1px;
+      width: 10px;
+      height: 10px;
+      background: #FFEAEA;
+      background: -webkit-linear-gradient(45deg, #ebebeb 6px, #999999 6px, #ffeaea 7px);
+      background: -moz-linear-gradient(45deg, #ebebeb 6px, #999999 6px, #ffeaea 7px);
+      background: -o-linear-gradient(45deg, #ebebeb 6px, #999999 6px, #ffeaea 7px);
+      background: linear-gradient(45deg, #ebebeb 6px, #999999 6px, #ffeaea 7px);
+      z-index: 1; }
+  .cv .main li {
+    list-style: none;
     overflow: hidden; }
-  .cv .main .section-title {
-    font-size: 1em;
-    line-height: 1.5;
-    margin: 0 0 1.5em;
-    float: left;
-    width: 200px; }
-  .cv .main .section-content {
-    float: left;
-    width: 480px; }
-  .cv .main .contacts dt {
-    float: left; }
-    .cv .main .contacts dt:after {
-      content: ': ';
-      margin-right: .3em; }
-  .cv .main .contacts dd {
-    margin: 0; }
-  .cv .main .objective {
-    padding: .4em;
-    margin: -0.4em -0.4em 1.1em;
-    background: #fff;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -o-border-radius: 2px;
-    border-radius: 2px;
-    -webkit-box-shadow: 0 0 5px white;
-    -moz-box-shadow: 0 0 5px white;
-    -o-box-shadow: 0 0 5px white;
-    box-shadow: 0 0 5px white; }
-  .cv .main .objective p {
-    margin: 0; }
-  .cv .main .exp dt {
-    width: 160px;
-    float: left;
-    clear: left;
-    font-weight: bold;
+  .cv .comment {
+    margin: -1.715em 0 0;
     font-size: .875em;
-    line-height: 1.715; }
-  .cv .main .exp dd {
-    float: left;
-    width: 310px; }
-  .cv .main .employment li {
-    overflow: hidden;
-    border-bottom: 1px dashed #ccc;
-    padding: 0 0 23px; }
-    .cv .main .employment li:last-child {
-      border: none;
-      padding: 0; }
-  .cv .main .employment h2,
-  .cv .main .edu h2 {
-    font-weight: bold;
-    font-size: .875em;
+    /* 14px */
     line-height: 1.715;
-    margin: 0 0 .429em; }
-  .cv .main .employment .period,
-  .cv .main .edu .period {
-    width: 160px;
-    float: left;
-    clear: left; }
-  .cv .main .employment .description,
-  .cv .main .edu .description {
-    float: left;
-    width: 310px; }
-    .cv .main .employment .description p,
-    .cv .main .edu .description p {
+    color: #777;
+    font-weight: normal; }
+    .cv .comment span {
+      font-style: italic; }
+  .cv .quote {
+    text-align: right; }
+  .cv .main {
+    width: auto; }
+    .cv .main section {
+      margin: 0 0 1.5em;
+      overflow: hidden; }
+    .cv .main .section-title {
+      font-size: 1em;
+      line-height: 1.5;
+      margin: 0 0 1.5em;
+      float: left;
+      width: 200px; }
+    .cv .main .section-content {
+      float: left;
+      width: 480px; }
+    .cv .main .contacts dt {
+      float: left; }
+      .cv .main .contacts dt:after {
+        content: ': ';
+        margin-right: .3em; }
+    .cv .main .contacts dd {
       margin: 0; }
-  .cv .main .employment .sum,
-  .cv .main .edu .sum {
-    display: block; }
-  .cv .main .lang li,
-  .cv .main .links li {
-    margin: 0;
-    overflow: visible; }
+    .cv .main .objective {
+      padding: .4em;
+      margin: -0.4em -0.4em 1.1em;
+      background: #fff;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -o-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-shadow: 0 0 5px white;
+      -moz-box-shadow: 0 0 5px white;
+      -o-box-shadow: 0 0 5px white;
+      box-shadow: 0 0 5px white; }
+    .cv .main .objective p {
+      margin: 0; }
+    .cv .main .exp dt {
+      width: 160px;
+      float: left;
+      clear: left;
+      font-weight: bold;
+      font-size: .875em;
+      line-height: 1.715; }
+    .cv .main .exp dd {
+      float: left;
+      width: 310px; }
+    .cv .main .employment li {
+      overflow: hidden;
+      border-bottom: 1px dashed #ccc;
+      padding: 0 0 23px; }
+      .cv .main .employment li:last-child {
+        border: none;
+        padding: 0; }
+    .cv .main .employment h2,
+    .cv .main .edu h2 {
+      font-weight: bold;
+      font-size: .875em;
+      line-height: 1.715;
+      margin: 0 0 .429em; }
+    .cv .main .employment .period,
+    .cv .main .edu .period {
+      width: 160px;
+      float: left;
+      clear: left; }
+    .cv .main .employment .description,
+    .cv .main .edu .description {
+      float: left;
+      width: 310px; }
+      .cv .main .employment .description p,
+      .cv .main .edu .description p {
+        margin: 0; }
+    .cv .main .employment .sum,
+    .cv .main .edu .sum {
+      display: block; }
+    .cv .main .lang li,
+    .cv .main .links li {
+      margin: 0;
+      overflow: visible; }
+
+.about-me-image img {
+  display: block;
+  margin: .5em; }
 
 /* HASHGRID */
 /**

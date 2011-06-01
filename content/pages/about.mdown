@@ -8,4 +8,7 @@ I am <span class="years-age">22 years</span> old geek, currently living with [my
 
 Mainly, I code <abbr title="HyperText Markup Language">HTML</abbr>, <abbr title="Cascading Style Sheets">CSS</abbr> and JavaScript. I am also interested in typography, UI and graphic design very much.
 
-![CSS rules](http://mishareyzlin.com/imgs/css_rules.jpg)
+<p class="about-me-image">
+    <img src="/attachments/css_rules.jpg" alt="css rules">
+    <em>“css rules!”, shoot by <a href="http://flickr.com/photos/tataata/">tataata</a></em>
+</p>      

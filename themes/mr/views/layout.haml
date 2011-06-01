@@ -47,7 +47,8 @@
           %div.secondary-promotejs
             = promotejs()
     %script(src="http://code.jquery.com/jquery-1.5.2.min.js")
-    %script(src="/mr/js/hashgrid.js")
+    - if ENV['ENVIRONMENT'] != 'production'
+      %script(src="/mr/js/hashgrid.js")
     %script(src="/mr/js/main.js")
     -# analytics
     %script

@@ -38,17 +38,3 @@ window.MR =
     $('.home-availability-date').text months[nextMonth] + ' ' + now.getFullYear()
 
 $(document).ready UTIL.load
-
-
-
-class Human
-  constructor: (@name, @saying) ->
-    
-  say: (saying) ->
-    alert @name + "says " + saying + "!"
-    
-class Bob extends Human
-  say:(saying) ->
-    alert @name + "sings " + saying
-  
-bob = new Bob("Bob")
