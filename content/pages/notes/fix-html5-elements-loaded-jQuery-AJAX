@@ -1,13 +1,13 @@
 Date: 26 May 2011
 Categories: jquery, ie, html5
 
-# Cure HTML5 elements inserted through innerHTML
+# Fix HTML5 elements loaded with jQuery AJAX
 
 If you are using HTML5 like all the cool kids do, you are probably using [the HTML5 shiv](http://html5shim.googlecode.com/svn/trunk/html5.js) built by amazing [webdev community](http://paulirish.com/2011/the-history-of-the-html5-shiv/) in order for new semantic elements, such as `<header>` to be stylable in IE < 9.
     
 This is great, but what if you generate your HTML5 content with JavaScript (getting your content using ajax for example)? Whenever you will be using innerHTML in order to apply that HTML to the page (jQuery uses innerHTML in its `.html()` method, which is used in many-many other methods internally), your HTML5 elements will not be attached and styled properly. Meet [Innershiv](http://jdbartlett.github.com/innershiv/).
 
-So, in order to apply `innershiv()` to the content that is being returned from ajax calls for all the ajax requests, you can do this once before you issue these requests and then not to care about applying it individually:
+In [one of the recent projects](http://www,omami.ru) I've used jQuery and there was going a lot of asynchronous loading in different places on the same page, so I wanted to find a general way of filtering all incoming content. Well, it turns out that jQuery has a great connivence method with property that allows you to do just that. Here's the code I've used in order to apply innershiv in IE < 9 (you have to call `$.ajaxSetup()` before all of you AJAX code is run):
 
 ~~~js
 // if IE < 9, cure innerHTML for HTML5 elements in AJAX response
