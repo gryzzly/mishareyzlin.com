@@ -21,6 +21,7 @@ body {
   background: #ffeaea;
   color: #444;
   font-family: "PT Sans", "helvetica neue", helvetica, arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
   line-height: 1.5; }
 
 a {

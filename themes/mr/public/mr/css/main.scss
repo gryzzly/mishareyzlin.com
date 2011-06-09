@@ -1,4 +1,3 @@
-
 /* Variables
 -------------------------------------*/
 $serif : "PT Serif", "hoefler text", palatino, georgia, times, serif;
@@ -48,6 +47,7 @@ body {
   background:#ffeaea;
   color: #444;
   font-family:$sans;
+  -webkit-font-smoothing: antialiased;
   line-height:1.5;
 }
 a {
