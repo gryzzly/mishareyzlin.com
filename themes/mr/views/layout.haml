@@ -32,6 +32,7 @@
     - page_action = @page.metadata('pageaction') if @page.metadata('pageaction')
   %body{:class => (page_class if page_class && !page_class.empty?),  
         :data => { :action => ( page_action if page_action && !page_action.empty? ) } }
+    .decoration
     %header.header
       %a.logo(href="/")
         %img(src="/mr/i/logo.png" alt="mishareyzlin.com logo")

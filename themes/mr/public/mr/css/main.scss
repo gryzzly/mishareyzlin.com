@@ -43,8 +43,43 @@ body {
 } 
 /* Global Styles 
 -------------------------------------*/
+.decoration {
+  /* Cicada principle */
+  background-image:
+    -webkit-linear-gradient(left, rgba(127, 63, 63, .23) 50%, transparent 50%),
+    -webkit-linear-gradient(left, rgba(191, 95, 95, .29) 50%, transparent 50%),
+    -webkit-linear-gradient(left, rgba(255, 127, 127, .31) 50%, transparent 50%),
+    -webkit-linear-gradient(left, rgba(64, 32, 32, .23) 50%, transparent 50%),
+    -webkit-linear-gradient(left, rgba(229, 114, 114, .29) 50%, transparent 50%);
+  background-image:
+    -moz-linear-gradient(left, rgba(127, 63, 63, .23) 50%, transparent 50%),
+    -moz-linear-gradient(left, rgba(191, 95, 95, .29) 50%, transparent 50%),
+    -moz-linear-gradient(left, rgba(255, 127, 127, .31) 50%, transparent 50%),
+    -moz-linear-gradient(left, rgba(64, 32, 32, .23) 50%, transparent 50%),
+    -moz-linear-gradient(left, rgba(229, 114, 114, .29) 50%, transparent 50%);
+  background-image:
+    -o-linear-gradient(left, rgba(127, 63, 63, .23) 50%, transparent 50%),
+    -o-linear-gradient(left, rgba(191, 95, 95, .29) 50%, transparent 50%),
+    -o-linear-gradient(left, rgba(255, 127, 127, .31) 50%, transparent 50%),
+    -o-linear-gradient(left, rgba(64, 32, 32, .23) 50%, transparent 50%),
+    -o-linear-gradient(left, rgba(229, 114, 114, .29) 50%, transparent 50%);
+  background-image:
+    linear-gradient(left, rgba(127, 63, 63, .23) 50%, transparent 50%),
+    linear-gradient(left, rgba(191, 95, 95, .29) 50%, transparent 50%),
+    linear-gradient(left, rgba(255, 127, 127, .31) 50%, transparent 50%),
+    linear-gradient(left, rgba(64, 32, 32, .23) 50%, transparent 50%),
+    linear-gradient(left, rgba(229, 114, 114, .29) 50%, transparent 50%);
+  background-size:23px, 31px, 41px, 53px, 59px;
+  height:5px;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:99;
+  box-shadow:0 0 3px rgba(0, 0, 0, .5);
+}
 body {
-  background:#ffeaea;
+  background:#FFE9E9;
   color: #444;
   font-family:$sans;
   -webkit-font-smoothing: antialiased;
@@ -179,12 +214,12 @@ abbr {
     margin:0 0 .75em;
 
     a {
-      @include prefixes(border-radius, .125em);
       &:hover {
         background:#000;
         color:#fff;
         margin:0 -.3em;
         padding:.3em .3em .1em;
+        @include prefixes(border-radius, .125em);
       } 
     }
   }

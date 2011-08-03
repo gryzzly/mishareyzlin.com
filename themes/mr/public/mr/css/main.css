@@ -17,8 +17,23 @@ body {
 
 /* Global Styles 
 -------------------------------------*/
+.decoration {
+  /* Cicada principle */
+  background-image: -webkit-linear-gradient(left, rgba(127, 63, 63, 0.23) 50%, transparent 50%), -webkit-linear-gradient(left, rgba(191, 95, 95, 0.29) 50%, transparent 50%), -webkit-linear-gradient(left, rgba(255, 127, 127, 0.31) 50%, transparent 50%), -webkit-linear-gradient(left, rgba(64, 32, 32, 0.23) 50%, transparent 50%), -webkit-linear-gradient(left, rgba(229, 114, 114, 0.29) 50%, transparent 50%);
+  background-image: -moz-linear-gradient(left, rgba(127, 63, 63, 0.23) 50%, transparent 50%), -moz-linear-gradient(left, rgba(191, 95, 95, 0.29) 50%, transparent 50%), -moz-linear-gradient(left, rgba(255, 127, 127, 0.31) 50%, transparent 50%), -moz-linear-gradient(left, rgba(64, 32, 32, 0.23) 50%, transparent 50%), -moz-linear-gradient(left, rgba(229, 114, 114, 0.29) 50%, transparent 50%);
+  background-image: -o-linear-gradient(left, rgba(127, 63, 63, 0.23) 50%, transparent 50%), -o-linear-gradient(left, rgba(191, 95, 95, 0.29) 50%, transparent 50%), -o-linear-gradient(left, rgba(255, 127, 127, 0.31) 50%, transparent 50%), -o-linear-gradient(left, rgba(64, 32, 32, 0.23) 50%, transparent 50%), -o-linear-gradient(left, rgba(229, 114, 114, 0.29) 50%, transparent 50%);
+  background-image: linear-gradient(left, rgba(127, 63, 63, 0.23) 50%, transparent 50%), linear-gradient(left, rgba(191, 95, 95, 0.29) 50%, transparent 50%), linear-gradient(left, rgba(255, 127, 127, 0.31) 50%, transparent 50%), linear-gradient(left, rgba(64, 32, 32, 0.23) 50%, transparent 50%), linear-gradient(left, rgba(229, 114, 114, 0.29) 50%, transparent 50%);
+  background-size: 23px, 31px, 41px, 53px, 59px;
+  height: 5px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5); }
+
 body {
-  background: #ffeaea;
+  background: #FFE9E9;
   color: #444;
   font-family: "PT Sans", "helvetica neue", helvetica, arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -157,16 +172,15 @@ abbr {
         color: #000; }
   .main p, .main li, .main h2, .main dt, .main dd {
     margin: 0 0 .75em; }
-    .main p a, .main li a, .main h2 a, .main dt a, .main dd a {
+    .main p a:hover, .main li a:hover, .main h2 a:hover, .main dt a:hover, .main dd a:hover {
+      background: #000;
+      color: #fff;
+      margin: 0 -0.3em;
+      padding: .3em .3em .1em;
       -webkit-border-radius: 0.125em;
       -moz-border-radius: 0.125em;
       -o-border-radius: 0.125em;
       border-radius: 0.125em; }
-      .main p a:hover, .main li a:hover, .main h2 a:hover, .main dt a:hover, .main dd a:hover {
-        background: #000;
-        color: #fff;
-        margin: 0 -0.3em;
-        padding: .3em .3em .1em; }
   .main dt {
     margin: 0; }
   .main pre {
