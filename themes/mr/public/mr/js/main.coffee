@@ -10,7 +10,8 @@ window.UTIL =
 
 # main object
 window.MR =
-  # full years of age 
+
+  # full years of age
   age : ->
     dob = new Date( 1988, 08, 23 )
     ageElem  = $ ".years-age"
@@ -24,7 +25,7 @@ window.MR =
           age -= 1
       age += if ( age + '' ).slice(-1) is '1' then ' year' else ' years'
       
-  # next month 
+  # next month
   availability : ->
     now = new Date()
     months = [

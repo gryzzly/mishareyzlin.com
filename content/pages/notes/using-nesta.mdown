@@ -1,6 +1,5 @@
 Date: 15 April 2011
 Categories: nesta, back-end
-Pagetitle: trulala
 
 # First steps in Nesta (and Ruby)
 

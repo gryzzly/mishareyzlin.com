@@ -1,5 +1,6 @@
 Date: 9 June 2011
 Categories: jquery, ie, html5
+Status: published
 
 # Fix HTML5 elements loaded with jQuery AJAX
 
