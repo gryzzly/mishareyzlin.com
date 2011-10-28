@@ -1,16 +1,24 @@
 # Add Redcarpet support
 module Nesta 
   class FileModel 
-    def to_html(scope = nil)
+    def to_html ( scope = nil )
       html = convert_to_html @format, scope, markup
       # enable syntax highlighting
       Typogruby.improve html
     end
     
-    def convert_to_html(format, scope, text)
+    def convert_to_html ( format, scope, text )
+      @markdown = Redcarpet::Markdown.new(
+                    Redcarpet::Render::HTML,
+                    :no_intra_emphasis => true,
+                    :lax_html_blocks => true,
+                    :autolink => true, 
+                    :space_after_headers => true
+                  )
+                
       case format
         when :mdown
-          Redcarpet.new( text, :smart, :autolink, :fenced_code, :lax_htmlblock).to_html
+          @markdown.render( text )
           # Maruku.new( text ).to_html
         when :haml
           Haml::Engine.new( text ).to_html(scope || Object.new)
@@ -38,9 +46,17 @@ end
 # Add Redcarpet HAML filter
 module Haml::Filters::Redcarpet
   include Haml::Filters::Base
-
-  def render(text)
-    ::Redcarpet.new(text, :smart, :autolink, :fenced_code, :lax_htmlblock).to_html
+  
+  @markdown = Redcarpet::Markdown.new(
+                Redcarpet::Render::HTML,
+                :no_intra_emphasis => true,
+                :lax_html_blocks => true,
+                :autolink => true, 
+                :space_after_headers => true
+              )
+  
+  def render ( text )
+    @markdown.render text
   end
 end
 

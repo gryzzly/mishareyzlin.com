@@ -11,4 +11,4 @@ Mainly, I code <abbr title="HyperText Markup Language">HTML</abbr>, <abbr title=
 <p class="about-me-image">
     <img src="/attachments/css_rules.jpg" alt="css rules">
     <em>“css rules!”, shoot by <a href="http://flickr.com/photos/tataata/">tataata</a></em>
-</p>      
+</p>
