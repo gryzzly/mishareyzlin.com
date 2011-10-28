@@ -1,0 +1,44 @@
+GIT
+  remote: git://github.com/tanoku/redcarpet.git
+  revision: 6ed6b917399557160903e13c442b9f6719d6a00b
+  specs:
+    redcarpet (2.0.0b5)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    RedCloth (4.2.3)
+    haml (3.0.25)
+    json (1.5.1)
+    maruku (0.6.0)
+      syntax (>= 1.0.0)
+    nesta (0.9.4)
+      haml (~> 3.0)
+      maruku (>= 0.6.0)
+      shotgun (>= 0.8)
+      sinatra (= 1.1.2)
+    nokogiri (1.4.4)
+    rack (1.2.1)
+    rack-force_domain (0.2.0)
+    rubypants (0.2.0)
+    shotgun (0.8)
+      rack (>= 1.0)
+    sinatra (1.1.2)
+      rack (~> 1.1)
+      tilt (~> 1.2)
+    syntax (1.0.0)
+    tilt (1.2.2)
+    typogruby (1.0.11)
+      rubypants
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  RedCloth (= 4.2.3)
+  json
+  nesta (= 0.9.4)
+  nokogiri
+  rack-force_domain (~> 0.2.0)
+  redcarpet!
+  typogruby
