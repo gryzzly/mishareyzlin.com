@@ -451,4 +451,32 @@ abbr {
         margin:0 0 .5em;
     }
 }
+/* Salaries Page
+-------------------------------------*/
+.salaries {
+  .canvas {
+    position:relative;
+    height:478px;
+    margin:0 0 24px;
+  }
+  .legend {
+    width:200px;
+    position:absolute;
+    left:100%;
+    margin-top:-500px;
+    margin-left:50px;
+    p {
+      font-style:italic;
+    }
+  }
+  .controls {
+    list-style:none;
+    span {
+      cursor:pointer;
+      text-decoration:none;
+      color:#444;
+      border-bottom:1px dashed #000;
+    }
+  }
+}
 @import "grid.scss";
