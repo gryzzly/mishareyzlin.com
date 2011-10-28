@@ -8,23 +8,29 @@ If you are using HTML5 like all the cool kids do, you are probably using [the HT
     
 This is great, but what if you generate your HTML5 content with JavaScript (getting your content using ajax for example)? Whenever you will be using innerHTML in order to apply that HTML to the page (jQuery uses innerHTML in its `.html()` method, which is used in many-many other methods internally), your HTML5 elements will not be attached and styled properly. Meet [Innershiv](http://jdbartlett.github.com/innershiv/).
 
-In [one of the recent projects](http://www,omami.ru) I've used jQuery and there was going a lot of asynchronous loading in different places on the same page, so I wanted to find a general way of filtering all incoming content. Well, it turns out that jQuery has a great connivence method with property that allows you to do just that. Here's the code I've used in order to apply innershiv in IE < 9 (you have to call `$.ajaxSetup()` before all of you AJAX code is run):
+In [one of the recent projects](http://www,omami.ru) I've used jQuery and there was going a lot of asynchronous loading in different places on the same page, so I wanted to find a general way of filtering all incoming content. Well, it turns out that jQuery has a great convenience method with property that allows you to do just that. Here's the code I've used in order to apply innershiv in IE < 9 (you have to call `$.ajaxSetup()` before all of you AJAX code is run):
 
-~~~js
-// if IE < 9, cure innerHTML for HTML5 elements in AJAX response
-// for the reference regarding jscript versions see http://en.wikipedia.org/wiki/JavaScript#Versions
-// at this point you have jQuery and innerShiv code loaded
-/*@cc_on
-  @if ( @_jscript_version < 9 ) 
-  $.ajaxSetup({
-    dataFilter : function(data) {
-      return innerShiv(data);
+    // if IE < 9, cure innerHTML for HTML5 elements in AJAX response
+    // for the reference regarding jscript versions see http://en.wikipedia.org/wiki/JavaScript#Versions
+    // at this point you have jQuery and innerShiv code loaded
+    /*@cc_on
+      @if ( @_jscript_version < 9 ) 
+      $.ajaxSetup({
+        dataFilter : function(data) {
+          return innerShiv(data);
+        }
+      });
+    })
+      @end
+    @*/
+    
+**UPD.** As Matt Curtis points out in his [comment](http://mishareyzlin.com/notes/fix-html5-elements-loaded-jQuery-AJAX#comment-347432129) in case you are fetching data of other type than HTML (such as JSON or XML) you will break this data by processing it with `innerShiv` function. So you'd better only process HTML, here the bits you'd need to change for that:
+
+    dataFilter : function(data, type) {
+      // if there is no type assume it's html
+      return ( type === 'html' || !type ) ? innerShiv ( data ) : data;
     }
-  });
-})
-  @end
-@*/
-~~~
+
 
 Sources
 -------
