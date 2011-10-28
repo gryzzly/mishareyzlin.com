@@ -1,0 +1,541 @@
+Date: 2 July 2011
+Status: draft
+PageClass: salaries
+PageAction: salaries
+
+# Front-End Developer Salary in Israel, Survey.
+
+Around three months ago I have been chatting with a friend of mine about the current state of web development industry in Israel. Of course, as it is an important subject, we have also discussed the average salary offers we were both getting. (We are both front-end developers, that is HTML, CSS, JavaScript and all the surroundings, such as templating engines, web pages loading optimization, cross-browser quirks etc.) Well, two heads are good, but 50 heads are better. 
+
+So I have conducted a little survey with a short set of questions (I know it's not too comprehensive, but it was put together rather quick). 
+
+These are the questions that were asked:
+
+1. Your current salary in New Israeli Shekel
+2. Your hourly rate in USD for hour-based projects
+3. Sex
+4. Years of experience in the field (HTML, CSS and JavaScript)
+5. Full years of age
+6. Level of expertise in JavaScript
+
+I have put the level of expertise in JavaScript as a separate question, as from experience this is a rather important point that has significant impact on the final salary (this has proved to be true).
+
+30 professionals have filled the form, the survey was anonymous, all answers were optional.
+
+So, here's some of the information:
+
+<div class="canvas"></div>
+<div class="legend">
+  <p>The white circles represent the developers who have participated in the survey.</p>
+  <ul class="controls">
+    <li><span class="first">Current Salary, in NIS</span></li>
+    <li><span class="second">Hourly rate, in USD</span></li>
+    <li><span class="third">Years of exprience</span></li>
+    <li><span class="fourth">Level of expertise in JavaScript</span></li>
+  </ul>
+</div>
+
+Average age is 28.5, most of the applicants are male (only 2 female developers participated). Average salary is around 17500 NIS. 
+
+19% of the applicants are freelancers who don't have set monthly salary. 81% are employees.
+
+All of the applicants have worked more than 2 years in the field:
+42% have more than 5 years of experience.
+19% have 3-4 years of exp.
+14% have 4-5 years of exp.
+6% have 2-3 years of exp.
+
+As you may have guessed, more years of experience and the better expertise in JS results in the highest salary:
+the average salary among these who has more than 5 years of experience appears to be 21,800. 
+Among these devs 70% have indicated their knowledge of JavaScript as "professional" (can build web application that will work fast and will be easy to maintain).
+
+Graphics description:
+29 "dots" symbolizing the devs. Pseudo-links that allow to switch between the questions and see how the devs move among the canvas, highlighting background in sections corresponding to the options.
+<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<script src="/mr/js/d3.js"></script>
+<script>
+!function () {
+  var devs = [{
+        age : 25,
+        sex : 'Male'
+      }, {
+        age : 29,
+        sex : 'Male'
+      }, {
+        age : 25,
+        sex : 'Male'
+      }, {
+        age : 24,
+        sex : 'Female'
+      }, {
+        age : 28,
+        sex : 'Male'
+      }, {
+        age : 28,
+        sex : 'Male'
+      }, {
+        age : 22,
+        sex : 'Male'
+      }, {
+        age : '-',
+        sex : 'Male'
+      }, {
+        age : 21,
+        sex : 'Male'
+      }, {
+        age : 31,
+        sex : 'Male'
+      }, {
+        age : 29,
+        sex : 'Male'
+      }, {
+        age : 26,
+        sex : 'Male'
+      }, {
+        age : 23,
+        sex : 'Male'
+      }, {
+        age : 30,
+        sex : 'Male'
+      }, {
+        age : 28,
+        sex : 'Male'
+      }, {
+        age : 37,
+        sex : 'Male'
+      }, {
+        age : 30,
+        sex : 'Male'
+      }, {
+        age : 25,
+        sex : 'Male'
+      }, {
+        age : 25,
+        sex : 'Male'
+      }, {
+        age : 24,
+        sex : 'Male'
+      }, {
+        age : 34,
+        sex : 'Male'
+      }, {
+        age : 34,
+        sex : 'Male'
+      }, {
+        age : 30,
+        sex : 'Male'
+      }, {
+        age : 27,
+        sex : 'Male'
+      }, {
+        age : 38,
+        sex : 'Male'
+      }, {
+        age : 26,
+        sex : 'Male'
+      }, {
+        age : 29,
+        sex : 'Male'
+      }, {
+        age : 30,
+        sex : 'Female'
+      }, {
+        age : 39,
+        sex : 'Male'
+      }, {
+        age : 26,
+        sex : 'Male'
+      }],
+      questions = [{
+        name : "Current Salary, in NIS",
+        options : [
+          "< ₪ 7000",
+          "₪ 7000 – 8000",
+          "₪ 9000 – 10000",
+          "₪ 10000 – 12000",
+          "₪ 12000 – 14000",
+          "₪ 14000 – 16000",
+          "₪ 16000 – 18000",
+          "₪ 18000 – 20000",
+          "₪ 20000 – 22000",
+          "₪ 22000 – 24000",
+          "₪ 24000 – 26000",
+          "> ₪ 26000",
+          "Not applicable"
+        ],
+        answers : [ 1, 0, 1, 3, 3, 1, 2, 2, 4, 1, 3, 2, 7 ]
+      }, {
+        name : "Hourly rate, in USD",
+        options : [
+          "< $10"          , 
+          "$10 - $15"      ,
+          "$15 - $20"      ,
+          "$20 - $25"      ,
+          "$25 - $30"      ,
+          "$30 - $35"      ,
+          "$35 - $40"      ,
+          "$40 - $45"      ,
+          "$45 - $50"      ,
+          "$50 - $60"      ,
+          "$60 - $70"      ,
+          "$70 - $80"      ,
+          "$80 - $90"      ,
+          "$90 - $100"     ,
+          "> $100"         ,
+          "Not applicable" 
+        ],
+        answers : [ 0, 0, 0, 0, 1, 2, 3, 1, 4, 4, 0, 2, 1, 0, 2, 10 ]
+      }, {
+        name : "Years of exprience",
+        options : [
+          "< 1",
+          "1 – 2",
+          "2 – 3",
+          "3 – 4",
+          "4 – 5", 
+          " > 5",
+          "no answer"
+        ],
+        answers : [ 0, 0, 2, 7, 5, 15, 1 ]
+      }, {
+        name : "Level of expertise in JavaScript",
+        options : [
+          "Beginner",
+          "Intermediate",
+          "Pro"
+        ],
+        answers : [ 2, 11, 17 ]
+      }];
+  
+  var $canvas = $('.canvas');
+  
+  var canvas = d3.select('.canvas'),
+      width = $canvas.width(),
+      height = $canvas.height();
+
+  canvas = canvas.append('svg:svg').attr('width', width).attr('height', height);
+
+  /* Radial Gradient */
+  var gradient = canvas.append("svg:defs")
+    .append("svg:radialGradient")
+      .attr("id", "gradient")
+      .attr("x1", "50%")
+      .attr("y1", "50%")
+      .attr("x2", "50%")
+      .attr("y2", "50%")
+      .attr("spreadMethod", "pad");
+
+  gradient.append("svg:stop")
+      .attr("offset", "75%")
+      .attr("stop-color", "#fff")
+      .attr("stop-opacity", 1);
+
+  gradient.append("svg:stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#fff")
+      .attr("stop-opacity", 0);
+      
+  var dropShadow = canvas.select('defs')
+    .append('svg:filter')
+    .attr('id', 'drop-shadow');
+  
+  dropShadow
+      .append('svg:feGaussianBlur')
+      .attr('in', 'SourceAlpha')
+      .attr('stdDeviation', 4);
+     
+//     feBlend in="SourceGraphic" in2="blur-out" mode="normal"/ 
+  // dropShadow
+  //   .append('svg;')
+
+  var tooltip = canvas
+    .append("svg:g")
+    .style("visibility", "hidden")
+    .attr(
+      'transform', 
+      'translate( 0, 0 )'
+    );
+    
+  tooltip
+    .append('svg:rect')
+    .attr('width', 100)
+    .attr('height', 70)
+    .attr('rx', 10)
+    .attr('ry', 10)
+    .style('fill','#333')
+    .style('opacity', 0.7);
+    
+  tooltip
+    .append('svg:text')
+    .attr('class','age')
+    .style( 'fill', '#fff' )
+    .attr("text-anchor", "start")
+    .attr('dx', 10 )
+    .attr('dy', 30 );
+  
+  tooltip
+    .append('svg:text')
+    .attr('class', 'sex')
+    .style( 'fill', '#fff' )
+    .attr("text-anchor", "start")
+    .attr('dx', 10 )
+    .attr('dy', 50 );
+    
+  // # Initial Frame
+  // create circles symbolizing devs
+  var circles;
+  
+  circles = canvas
+            .selectAll('circle')
+            .data( devs )
+            .enter()
+            .insert( 'svg:circle', 'g' )
+            .attr('class', 'dev')
+            .attr( 'r', 10 )
+            .attr(
+              "cx", 
+              function () {
+                return d3.scale.linear().domain([ 0, devs.length ]).rangeRound([ 22, width - 22 ])( ~~( Math.random() * 29 ) );
+              }
+            )
+            .attr( 
+              "cy",
+              function () {
+                return d3.scale.linear().domain([ 0, devs.length ]).rangeRound([ 22, height - 22 ])( ~~( Math.random() * 29 ) );
+              }
+            )
+            .style("fill", function( d ) {
+              return d.sex === 'Male' ? '#B6CDF2' : '#F2B6C5';
+            })
+            .style("opacity", 0.75);
+
+    circles
+        .on("mouseover", function ( d ) {
+          tooltip
+            .select('text.age')
+            .text( "Age: " + d.age );
+          tooltip
+            .select('text.sex')
+            .text('Sex: ' + d.sex );
+          // add box-shadow
+          // d3.select( this ).attr('filter', 'url(#drop-shadow)');
+          d3.select( this )
+            .style('fill', 'url(#gradient)')
+            .transition()
+            .duration( 250 )
+            .attr('r', 11 );
+          
+          return tooltip.style("visibility", "visible");
+        })
+        .on("mousemove", function () {
+          return tooltip
+            .attr( 
+              "transform", 
+              "translate(" + 
+                ( d3.event.pageX - $canvas.offset().left + 10 ) + ", " + 
+                ( d3.event.pageY - $canvas.offset().top - 70 ) + 
+              ")");
+        })
+        .on("mouseout", function () {
+          // remove box-shadow
+          // d3.select( this ).attr('filter', null );
+          d3.select( this )
+            .style("fill", function( d ) {
+              return d.sex === 'Male' ? '#B6CDF2' : '#F2B6C5';
+            })
+            .transition()
+            .duration( 250 )
+            .attr('r', 10 );
+
+          return tooltip.style("visibility", "hidden");
+        });
+
+  // First question
+  // draw backgrounds as stripes with different colors *animated
+  // reposition circles according to the numbers
+  // on hover over the stripe show label saying boldly what answer is that
+  var drawFrame = function ( settings ) {
+    /* 
+    options:
+      questionNumber {Number} index is 1-based
+      hue {Number} 1..360
+      saturation {Number} 1..100
+      startLightness {Number} 1..100
+      endLightness {Number} 1..100
+      textPadding {Number}
+    */
+    
+    // in options, question number's index is 1-based, but it's really 0-based
+    settings.questionNumber -= 1;
+
+    d3.event && d3.event.preventDefault();
+    
+    var opts = questions[ settings.questionNumber ].options,
+        answers = questions[ settings.questionNumber ].answers.slice(),
+        optsLength = opts.length;
+        
+    
+    var step = ~~( height / optsLength ), 
+        // how many developers have chosen the most popular option?
+        // we set this as an x-scale factor
+        xScale = Math.max.apply( Math, answers );
+    
+    canvas.selectAll('g.option').remove();
+    
+    var rects = canvas
+      .selectAll( 'g.option' )
+      .data( opts )
+    .enter()
+      .insert( 'svg:g', 'circle' )
+      .attr( 'class', 'option' )
+      .attr(
+        'transform', 
+        function ( d, i ) {
+          return  "translate( 0," + i * step + " )";
+        }
+      )
+      .style( 'opacity', 0.01 );
+      
+    rects
+      .transition()
+      .duration( 1000 )
+      .style( 'opacity', 0.95 )
+
+    
+    rects
+      .append( 'svg:rect' )
+      .attr( 'height', step )
+      .attr( 'width', width )
+      .style(
+        "fill", 
+        function ( d, i ) {
+          var hsl, lightness;
+          
+          lightness = settings.startLightness + 
+                      ( optsLength - i ) * ~~( settings.endLightness / optsLength );
+
+          hsl = 'hsl('
+          hsl += settings.hue + ',';
+          hsl += settings.saturation + '%,';
+          hsl += ( d !== 'Not applicable' ? lightness : lightness - 10 ) + '%';
+          hsl += ')';
+
+          return hsl;
+        }
+      );
+      
+    rects
+      .append( 'svg:text' )
+      .style( 'fill', '#fff' )
+      .attr("text-anchor", "start")
+      .attr('dx', settings.textPadding )
+      .attr('dy', step / 2 + 8 )
+      .text( function ( d ) { return d; } );
+      
+    // Animate rectangles
+    rects
+      .selectAll('rect')
+      .transition()
+      .duration( 500 )
+      .delay( function( d, i ) {
+        return i * 200;
+      } )
+      .style( 'opacity', 0.8 )
+    
+    // Animate containers too
+    d3.select('.canvas')
+      .transition()
+      .duration( 1000 )
+      .style( 'height', step * optsLength + 'px' );
+
+    canvas
+      .transition()
+      .duration( 1000 )
+      .attr( 'height', step * optsLength );
+
+    // move the cirlces according to the amount of answers on each option
+    circles
+      .transition()
+      .duration( 1000 )
+      .attr(
+        'cy', 
+        function ( d, index ) {
+          for ( var i = 0; i < answers.length; i += 1 ) {
+            if ( answers[ i ] !== 0 ) {
+              return d3.scale.linear().domain([ 0, optsLength ]).rangeRound([ 0, step * optsLength ])( i ) + step / 2 ;
+            }
+          }
+        }
+      )
+      .attr(
+        'cx', 
+        function ( d, index ) {
+          var x = 0;
+          
+          for ( var i = 0; i < answers.length; i += 1 ) {
+            if ( answers[ i ] !== 0 ) {
+              x += d3.scale.linear().domain([ 0, xScale ]).rangeRound([ 120, width - 30 ])( answers[ i ] );
+              answers[ i ] -= 1;
+              return x;
+            }
+          }
+        }
+      )
+  };
+  
+  d3.select('.controls').select('.first').on('click', function() {
+    drawFrame({
+      questionNumber : 1,
+      hue : 210,
+      saturation : 80,
+      startLightness : 30,
+      endLightness : 50,
+      textPadding : 15
+    });
+  });
+  
+  d3.select('.controls').select('.second').on('click', function() {
+    drawFrame({
+      questionNumber : 2,
+      hue : 120,
+      saturation : 60,
+      startLightness : 30,
+      endLightness : 50,
+      textPadding : 15
+    });
+  });
+  
+  d3.select('.controls').select('.third').on('click', function() {
+    drawFrame({
+      questionNumber : 3,
+      hue : 300,
+      saturation : 70,
+      startLightness : 30,
+      endLightness : 40,
+      textPadding : 15
+    });
+  });
+  
+  d3.select('.controls').select('.fourth').on('click', function() {
+    drawFrame({
+      questionNumber : 4,
+      hue : 10,
+      saturation : 100,
+      startLightness : 30,
+      endLightness : 35,
+      textPadding : 15
+    });
+  });
+  
+  // draw first frame initially 
+  drawFrame({
+    questionNumber : 1,
+    hue : 210,
+    saturation : 80,
+    startLightness : 30,
+    endLightness : 50,
+    textPadding : 15
+  });
+  
+}();
+</script>

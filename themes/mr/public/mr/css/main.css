@@ -374,6 +374,28 @@ abbr {
   display: block;
   margin: 0 0 .5em; }
 
+/* Salaries Page
+-------------------------------------*/
+.salaries .canvas {
+  position: relative;
+  height: 478px;
+  margin: 0 0 24px; }
+.salaries .legend {
+  width: 200px;
+  position: absolute;
+  left: 100%;
+  margin-top: -500px;
+  margin-left: 50px; }
+  .salaries .legend p {
+    font-style: italic; }
+.salaries .controls {
+  list-style: none; }
+  .salaries .controls span {
+    cursor: pointer;
+    text-decoration: none;
+    color: #444;
+    border-bottom: 1px dashed #000; }
+
 /* HASHGRID */
 /**
  * Grid
