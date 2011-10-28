@@ -1,6 +1,8 @@
 # this is needed for YAML to work on ruby > 1.9.2
-require 'yaml'
-YAML::ENGINE.yamler= 'syck'
+if RUBY_VERSION == "1.9.2"
+  require 'yaml'
+  YAML::ENGINE.yamler= 'syck'
+end
 
 require 'rubygems'
 require 'bundler/setup'
