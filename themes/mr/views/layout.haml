@@ -51,6 +51,10 @@
     - if ENV['ENVIRONMENT'] != 'production'
       %script(src="/mr/js/hashgrid.js")
     %script(src="/mr/js/main.js")
+    - if @page && @page.metadata('scripts')
+      - scripts = @page.metadata('scripts').split /, */
+      - scripts.each do |script|
+        %script(src="/mr/js/#{script}.js")
     -# analytics
     %script
       :plain
