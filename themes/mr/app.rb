@@ -210,7 +210,7 @@ module Nesta
     end
     
     get '/notes/front-end-developer-israel-servey' do
-      redirect '/front-end-developer-israel-survey', 301
+      redirect '/notes/front-end-developer-israel-survey', 301
     end
     
     get '/contact.html' do
