@@ -284,7 +284,7 @@
           // tooltip's height is 70
           var tooltipY = d3.event.pageY > canvasY + 70 ? 
                   d3.event.pageY - canvasY - 70 :
-                  d3.event.pageY - canvasY;
+                  d3.event.pageY - canvasY + 10;
           // tooltip's width is 100 ( +10 margin )
           var tooltipX = d3.event.pageX < canvasCX - 110 ?
                   d3.event.pageX - canvasX + 10 :
