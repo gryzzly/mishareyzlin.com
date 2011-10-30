@@ -209,6 +209,10 @@ module Nesta
       redirect '/cv', 301
     end
     
+    get '/front-end-developer-israel-servey'
+      redirect '/front-end-developer-israel-survey', 301
+    end
+    
     get '/contact.html' do
       halt 410
     end
