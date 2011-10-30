@@ -1,5 +1,4 @@
 Date: 2 July 2011
-Status: draft
 PageClass: salaries
 PageAction: salaries
 
