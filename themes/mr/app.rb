@@ -209,7 +209,7 @@ module Nesta
       redirect '/cv', 301
     end
     
-    get '/front-end-developer-israel-servey'
+    get '/front-end-developer-israel-servey' do
       redirect '/front-end-developer-israel-survey', 301
     end
     
