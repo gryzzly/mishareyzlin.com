@@ -51,6 +51,8 @@
     - if ENV['ENVIRONMENT'] != 'production'
       %script(src="/mr/js/hashgrid.js")
     %script(src="/mr/js/main.js")
+    -# When a page requires custom scripts, 
+    -# put them in metadata separated by a comma
     - if @page && @page.metadata('scripts')
       - scripts = @page.metadata('scripts').split /, */
       - scripts.each do |script|
