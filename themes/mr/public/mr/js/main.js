@@ -32,14 +32,16 @@
       });
     },
     availability: function() {
-      var months, nextMonth, now;
+      var months, nextMonth, now, year;
       now = new Date();
+      year = now.getFullYear();
       months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
       nextMonth = now.getMonth() + 1;
       if (nextMonth === 12) {
         nextMonth = 0;
+        year += 1;
       }
-      return $('.home-availability-date').text(months[nextMonth] + ' ' + now.getFullYear());
+      return $('.home-availability-date').text("" + months[nextMonth] + " " + year);
     }
   };
   $(document).ready(UTIL.load);

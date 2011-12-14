@@ -28,14 +28,17 @@ window.MR =
   # next month
   availability : ->
     now = new Date()
+    year = now.getFullYear()
     months = [
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
     ]
     nextMonth = now.getMonth() + 1
     # in December, select January
-    nextMonth = 0 if nextMonth is 12
+    if nextMonth is 12
+      nextMonth = 0
+      year += 1
     # returns "%Month% %YEAR%"
-    $('.home-availability-date').text months[nextMonth] + ' ' + now.getFullYear()
+    $('.home-availability-date').text "#{months[nextMonth]} #{year}"
 
 $(document).ready UTIL.load
