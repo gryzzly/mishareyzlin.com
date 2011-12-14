@@ -36,7 +36,7 @@
       now = new Date();
       months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
       nextMonth = now.getMonth() + 1;
-      if (nextMonth === 11) {
+      if (nextMonth === 12) {
         nextMonth = 0;
       }
       return $('.home-availability-date').text(months[nextMonth] + ' ' + now.getFullYear());

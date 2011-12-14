@@ -34,7 +34,7 @@ window.MR =
     ]
     nextMonth = now.getMonth() + 1
     # in December, select January
-    nextMonth = 0 if nextMonth is 11
+    nextMonth = 0 if nextMonth is 12
     # returns "%Month% %YEAR%"
     $('.home-availability-date').text months[nextMonth] + ' ' + now.getFullYear()
 
