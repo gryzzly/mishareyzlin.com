@@ -27,20 +27,6 @@ module Nesta
         end
     end
   end
-  
-  class Page 
-    def body(scope = nil)
-      body_text = case @format
-        when :mdown
-          markup.sub(/^#[^#].*$\r?\n(\r?\n)?/, "")
-        when :haml
-          markup.sub(/^\s*%h1\s+.*$\r?\n(\r?\n)?/, "")
-        when :textile
-          markup.sub(/^\s*h1\.\s+.*$\r?\n(\r?\n)?/, "")
-        end
-      self.convert_to_html @format, scope, body_text
-    end
-  end
 end
   
 # Add Redcarpet HAML filter
