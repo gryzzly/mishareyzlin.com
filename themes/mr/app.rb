@@ -1,3 +1,8 @@
+# http://librelist.com/browser/nesta/2012/1/4/will-paginate-revisited/
+require 'will_paginate'
+require 'will_paginate/array'
+require 'will_paginate/view_helpers/sinatra'
+
 # Add Redcarpet support
 module Nesta 
   class FileModel 
@@ -53,6 +58,8 @@ module Nesta
     # Put your assets in themes/mr/public/mr.
     #
     use Rack::Static, :urls => ["/mr"], :root => "themes/mr/public"
+
+    helpers WillPaginate::Sinatra::Helpers
     
     helpers do
       # from here: http://benjaminthomas.org/2009-01-30/smart-html-truncate.html

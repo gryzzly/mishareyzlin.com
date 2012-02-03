@@ -252,6 +252,38 @@ abbr {
     border-radius: 5px;
   }
 }
+
+/* Pagination 
+-------------------------------------*/
+.pagination {
+  font-size:.875em;
+  line-height:1.784;
+  margin:47px 0 3em;
+  text-align:center;
+
+  span, em, a {
+    display:inline-block;
+    padding:0 .5em;
+    background:rgba(255,255,255,.3);
+    border:1px solid #ddd;
+  }
+  .disabled, .current {
+    background:none;
+    border-color:transparent;
+    color:#aaa;
+  }
+  .current {
+    font-weight:bold;
+    font-style:normal;
+    color:#000;
+  }
+  .previous_page {
+    margin-right:1.5em;
+  }
+  .next_page {
+    margin-left:1.5em;
+  }
+}
 /* Notes 
 -------------------------------------*/
 /* index page headings */

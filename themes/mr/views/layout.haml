@@ -41,7 +41,9 @@
       = yield
       - if @page && @page.metadata('summary') == 'true'
         .main-notes 
-          = article_summaries(latest_articles)
+          - pages = Nesta::Page.find_articles.paginate(:page => params[:page] ? params[:page] : 1, :per_page => 8)
+          = haml :summaries, :layout => false, :locals => { :pages => pages }
+        = will_paginate pages
     - if @page
       - if @page.path.include? 'notes'
         %aside.secondary

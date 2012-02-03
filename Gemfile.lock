@@ -30,6 +30,7 @@ GEM
     tilt (1.2.2)
     typogruby (1.0.11)
       rubypants
+    will_paginate (3.0.3)
 
 PLATFORMS
   ruby
@@ -42,3 +43,4 @@ DEPENDENCIES
   rack-force_domain (~> 0.2.0)
   redcarpet!
   typogruby
+  will_paginate

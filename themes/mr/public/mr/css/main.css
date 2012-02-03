@@ -204,6 +204,31 @@ abbr {
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px; }
 
+/* Pagination 
+-------------------------------------*/
+.pagination {
+  font-size: .875em;
+  line-height: 1.784;
+  margin: 47px 0 3em;
+  text-align: center; }
+  .pagination span, .pagination em, .pagination a {
+    display: inline-block;
+    padding: 0 .5em;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid #ddd; }
+  .pagination .disabled, .pagination .current {
+    background: none;
+    border-color: transparent;
+    color: #aaa; }
+  .pagination .current {
+    font-weight: bold;
+    font-style: normal;
+    color: #000; }
+  .pagination .previous_page {
+    margin-right: 1.5em; }
+  .pagination .next_page {
+    margin-left: 1.5em; }
+
 /* Notes 
 -------------------------------------*/
 /* index page headings */
