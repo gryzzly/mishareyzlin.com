@@ -1,8 +1,8 @@
 GIT
-  remote: git://github.com/tanoku/redcarpet.git
-  revision: 6ed6b917399557160903e13c442b9f6719d6a00b
+  remote: git://github.com/vmg/redcarpet.git
+  revision: 9132288fd1eb29f67c7e38ba6543575324b79185
   specs:
-    redcarpet (2.0.0b5)
+    redcarpet (2.2.2)
 
 GEM
   remote: http://rubygems.org/

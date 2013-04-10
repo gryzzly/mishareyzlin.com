@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'nesta', '0.9.4'
 gem 'nokogiri'
-gem 'redcarpet', :git => 'git://github.com/tanoku/redcarpet.git'
+gem 'redcarpet', :git => 'git://github.com/vmg/redcarpet.git'
 gem 'RedCloth', '4.2.3'
 gem 'typogruby'
 gem 'json'
