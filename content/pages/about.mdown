@@ -4,6 +4,6 @@ PageAction: age
 
 # About me
 
-I am <span class="years-age">22 years</span> old geek, currently in Berlin. Historically, I come from [Siberia](http://goo.gl/maps/88n9) (yes, it is very cold there).
+I am <span class="years-age">22 years</span> old geek, currently in Berlin. Historically, I come from [Siberia](https://www.google.com/maps/place/Siberia/@57.3300054,84.3825794,5z/data=!4m2!3m1!1s0x5c87ebbaf5e77a3b:0x2c4412982b67464c) (yes, it is very cold there).
 
 Mainly, I code <abbr title="HyperText Markup Language">HTML</abbr>, <abbr title="Cascading Style Sheets">CSS</abbr> and JavaScript. I am also interested in typography, UI and graphic design very much.
