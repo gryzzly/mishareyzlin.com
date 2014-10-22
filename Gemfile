@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby "1.9.3"
 
 gem 'nesta', '0.9.4'
 gem 'nokogiri'

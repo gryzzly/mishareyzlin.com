@@ -6,3 +6,10 @@ Built with: [Nesta CMS](http://nestacms.com), [Markdown](http://daringfireball.n
 Hosted on [heroku](http://heroku.com).
 
 Theme code can be found [in theme folder](https://github.com/gryzzly/mishareyzlin.com/tree/master/themes/mr).
+
+Running the site
+----------------
+
+```
+bundle exec rackup -p 9292 config.ru &
+```
