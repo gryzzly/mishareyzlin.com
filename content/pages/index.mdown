@@ -5,7 +5,7 @@ Description: Misha Reyzlin, HTML, CSS, JavaScript Developer
 
 # Hello
 
-My name is Misha Reyzlin & I am professional web developer. If you want, you can read more [about me][1] or take a look at my [resume][2]. I use [this website][3] to keep my [technical notes][4] and to play with all kinds of things.
+My name is Misha Reyzlin & I am professional web developer. You may want to take a look at my [resume][2]. I use [this website][3] to keep my [technical notes][4] and to play with all kinds of things.
 
 Me elsewhere: [twitter](http://twitter.com/gryzzly), [github](http://github.com/gryzzly), [stackoverflow](http://stackoverflow.com/users/236135/gryzzly), [jsfiddle](http://jsfiddle.net/user/gryzzly), [linkedin](http://linkedin.com/in/mrejzlin), [friendfeed](http://friendfeed.com/gryzzly)
 
