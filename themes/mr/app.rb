@@ -166,6 +166,11 @@ module Nesta
           <img src='#{ result['src'] }' alt='#{ result['alt'] }'>\
         </a>"
       end # promotejs
+
+      # Years Old
+      def years_old
+        (DateTime.now - DateTime.new(1988,8,23)).to_i / 365
+      end
     end
 
     # robots / humans .txt (served from content folder)

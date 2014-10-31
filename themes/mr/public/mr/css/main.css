@@ -15,22 +15,28 @@ body {
   margin: 0;
   padding: 0; }
 
-/* Global Styles 
+/* Global Styles
 -------------------------------------*/
 .decoration {
-  /* Cicada principle */
-  background-image: -webkit-linear-gradient(left, rgba(127, 63, 63, 0.23) 50%, transparent 50%), -webkit-linear-gradient(left, rgba(191, 95, 95, 0.29) 50%, transparent 50%), -webkit-linear-gradient(left, rgba(255, 127, 127, 0.31) 50%, transparent 50%), -webkit-linear-gradient(left, rgba(64, 32, 32, 0.23) 50%, transparent 50%), -webkit-linear-gradient(left, rgba(229, 114, 114, 0.29) 50%, transparent 50%);
-  background-image: -moz-linear-gradient(left, rgba(127, 63, 63, 0.23) 50%, transparent 50%), -moz-linear-gradient(left, rgba(191, 95, 95, 0.29) 50%, transparent 50%), -moz-linear-gradient(left, rgba(255, 127, 127, 0.31) 50%, transparent 50%), -moz-linear-gradient(left, rgba(64, 32, 32, 0.23) 50%, transparent 50%), -moz-linear-gradient(left, rgba(229, 114, 114, 0.29) 50%, transparent 50%);
-  background-image: -o-linear-gradient(left, rgba(127, 63, 63, 0.23) 50%, transparent 50%), -o-linear-gradient(left, rgba(191, 95, 95, 0.29) 50%, transparent 50%), -o-linear-gradient(left, rgba(255, 127, 127, 0.31) 50%, transparent 50%), -o-linear-gradient(left, rgba(64, 32, 32, 0.23) 50%, transparent 50%), -o-linear-gradient(left, rgba(229, 114, 114, 0.29) 50%, transparent 50%);
-  background-image: linear-gradient(left, rgba(127, 63, 63, 0.23) 50%, transparent 50%), linear-gradient(left, rgba(191, 95, 95, 0.29) 50%, transparent 50%), linear-gradient(left, rgba(255, 127, 127, 0.31) 50%, transparent 50%), linear-gradient(left, rgba(64, 32, 32, 0.23) 50%, transparent 50%), linear-gradient(left, rgba(229, 114, 114, 0.29) 50%, transparent 50%);
-  background-size: 23px, 31px, 41px, 53px, 59px;
-  height: 5px;
+  background-image:
+      linear-gradient(to right, rgba(127, 63, 63, 0.23) 50%, transparent 50%),
+      linear-gradient(to right, rgba(255, 127, 127, 0.31) 50%, transparent 50%),
+      linear-gradient(to right, rgba(64, 32, 32, 0.23) 50%, transparent 50%),
+      linear-gradient(to right, rgba(229, 114, 114, 0.29) 50%, transparent 50%);
+  background-size:
+      41px 5px,
+      53px 5px,
+      59px 5px,
+      61px 5px,
+      71px 5px;
+  background-repeat: repeat;
+  height: 3px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 99;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5); }
+}
 
 body {
   background: #FFE9E9;
@@ -44,8 +50,8 @@ a {
   color: #444;
   border-bottom: 1px solid #000; }
   a:active {
-    /* 
-      unfortunately, only firefox applies translate 
+    /*
+      unfortunately, only firefox applies translate
       to inline elements.
      */
     -webkit-transform: translate(0, 1px);
@@ -82,7 +88,7 @@ abbr {
 .caps {
   font-variant: small-caps; }
 
-/* Sidebar 
+/* Sidebar
 -------------------------------------*/
 .header {
   position: fixed;
@@ -225,7 +231,7 @@ abbr {
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px; }
 
-/* Pagination 
+/* Pagination
 -------------------------------------*/
 .pagination {
   font-size: .875em;
@@ -250,7 +256,7 @@ abbr {
   .pagination .next_page {
     margin-left: 1.5em; }
 
-/* Notes 
+/* Notes
 -------------------------------------*/
 /* index page headings */
 .main-notes h1 {
@@ -291,10 +297,10 @@ abbr {
 .main-comments .dsq-trackback-url input {
   width: 200px; }
 
-/* CV 
+/* CV
 -------------------------------------*/
 .cv {
-  /* About Me 
+  /* About Me
   -------------------------------------*/ }
   .cv .cv-download {
     background: #fefefe;
@@ -416,6 +422,10 @@ abbr {
       margin: 0;
       overflow: visible; }
 
+    .cv-job-details {
+      margin: -160px
+    }
+
 .about-me-image img {
   display: block;
   margin: 0 0 .5em; }
@@ -453,7 +463,7 @@ abbr {
   position: absolute;
   top: 0;
   left: 0;
-  /* Grid (centered) 
+  /* Grid (centered)
   position: absolute;
   top: 0;
   left: 50%;
@@ -491,7 +501,7 @@ abbr {
 /**
 * Classes for multiple grids
 *
-* When using more than one grid, remember to set the numberOfGrids 
+* When using more than one grid, remember to set the numberOfGrids
 * option in the hashgrid.js file.
 */
 #grid.grid-1 div.vert {
