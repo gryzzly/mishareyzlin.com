@@ -4,7 +4,7 @@
     %title
       - if @page
         - pagetitle = @page.metadata('pagetitle') || @page.heading
-      - if pagetitle 
+      - if pagetitle
         = @site_title + ': ' + pagetitle
       - else
         = @site_title
@@ -28,19 +28,20 @@
     %link(href="http://mishareyzlin.com/humans.txt" rel="author" type="text/plain")
   -# get page class and data-action from page metadata
   - if @page
-    - page_class = @page.metadata('pageclass') if @page.metadata('pageclass') 
+    - page_class = @page.metadata('pageclass') if @page.metadata('pageclass')
     - page_action = @page.metadata('pageaction') if @page.metadata('pageaction')
-  %body{:class => (page_class if page_class && !page_class.empty?),  
+  %body{:class => (page_class if page_class && !page_class.empty?),
         :data => { :action => ( page_action if page_action && !page_action.empty? ) } }
     .decoration
     %header.header
       %a.logo(href="/")
-        %img(src="/mr/i/logo.png" alt="mishareyzlin.com logo")
+        <svg version="1.1" baseProfile="full" width="42" height="42" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"> <g transform="translate(7,71)"> <g transform="scale(0.05,-0.05)"> <path d="M35 694q72 210 161 311t203 101q66 0 93.5 -36.5t27.5 -123.5q0 -100 -35 -188l7 -6q190 354 403 354q79 0 124.5 -48.5t45.5 -133.5q0 -50 -35 -174l4 -7q116 195 211.5 279t202.5 84q160 0 160 -178q0 -55 -21.5 -134.5t-81.5 -256.5q-69 -207 -85.5 -265t-16.5 -94 q0 -39 20 -39q60 0 252 240l54 -29q-69 -136 -202.5 -253t-219.5 -117q-51 0 -81 43.5t-30 117.5q0 50 27.5 141t134.5 400q54 152 66 192t12 66q0 32 -9.5 45.5t-31.5 13.5q-55 0 -131 -75t-164 -215q-62 -99 -113 -223t-178 -486h-193l136 412q86 259 116.5 368t30.5 152 q0 67 -51 67q-53 0 -134.5 -78.5t-160 -203.5t-125.5 -252l-172 -465h-180l151 469q78 243 103.5 335.5t25.5 131.5q0 57 -34 57q-45 0 -113.5 -99.5t-112.5 -229.5z" fill="#fff"/> </g> </g> </svg>
+        / %img(src="/mr/i/logo.png" alt="mishareyzlin.com logo")
       = haml :nav, :layout => false, :locals => { :page => @page }
     %section.main
       = yield
       - if @page && @page.metadata('summary') == 'true'
-        .main-notes 
+        .main-notes
           - pages = Nesta::Page.find_articles.paginate(:page => params[:page] ? params[:page] : 1, :per_page => 8)
           = haml :summaries, :layout => false, :locals => { :pages => pages }
         = will_paginate pages
@@ -53,7 +54,7 @@
     - if ENV['ENVIRONMENT'] != 'production'
       %script(src="/mr/js/hashgrid.js")
     %script(src="/mr/js/main.js")
-    -# When a page requires custom scripts, 
+    -# When a page requires custom scripts,
     -# put them in metadata separated by a comma
     - if @page && @page.metadata('scripts')
       - scripts = @page.metadata('scripts').split /, */
@@ -70,4 +71,4 @@
           var pageTracker = _gat._getTracker("UA-11517311-1");
           pageTracker._trackPageview();
         } catch(err) {}
-    
+
