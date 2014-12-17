@@ -40,9 +40,9 @@ This comes in handy when working with Backbone views:
       },
       initialize: function () {
         var events = ['loadeddata', 'ended', 'error'];
-          _.forEach(events, function (eventType) {
-            this.el.addEventListener(eventType, this, false);
-          }, this);
+        _.forEach(events, function (eventType) {
+          this.el.addEventListener(eventType, this, false);
+        }, this);
       }
     });
 
