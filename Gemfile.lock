@@ -18,7 +18,7 @@ GEM
       shotgun (>= 0.8)
       sinatra (= 1.1.2)
     nokogiri (1.4.4)
-    rack (1.2.1)
+    rack (1.6.12)
     rack-force_domain (0.2.0)
     rubypants (0.2.0)
     shotgun (0.8)
