@@ -9,7 +9,7 @@ GEM
   specs:
     RedCloth (4.2.3)
     haml (3.0.25)
-    json (1.5.1)
+    json (2.3.0)
     maruku (0.6.0)
       syntax (>= 1.0.0)
     nesta (0.9.4)
