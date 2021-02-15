@@ -1,0 +1,682 @@
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+<style>
+#admin header {
+  background: #000;
+  color: #fff;
+  height: 1.5em;
+  line-height: 1.5;
+  padding: 0 .5em;
+}
+#authorise-iframe {
+  border:0;
+  padding:0;
+  width:90px;
+  height:26px;
+  overflow:hidden;
+}
+.header-website-link {
+  float: right;
+  display: flex;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+.header-badge {
+  display: inline-block;
+  align-self: center;
+  margin-right: 1em;
+}
+.header-badge-blinking {
+  animation: blink 3s infinite;
+}
+#admin .divider {
+  display: inline-block;
+  margin: 0 .5em;
+}
+#admin ul {
+  padding: 0;
+  margin: 0;
+}
+#admin li {
+  list-style: none;
+  margin-left: 0;
+}
+.admin-content {
+  max-width: 580px;
+}
+.admin-preview {
+  background: rgba(0, 0, 0, .75);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: opacity .25s;
+  opacity: 1;
+  pointer-events: none;
+  display: none;
+  padding-top: 24px;
+}
+.admin-preview-loading {
+  opacity: 0;
+  transition: 0;
+}
+.admin-preview-visible {
+  pointer-events: all;
+  display: block;
+}
+.admin-preview > iframe {
+  background: #fff;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+.admin-preview-close {
+  position: fixed;
+  right: 10px;
+  background: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  top: 12px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+}
+.edit-form__row {
+  display: flex;
+}
+.edit-form__row label {
+  min-width: 5em;
+  align-self: center;
+  text-transform: capitalize;
+}
+.edit-form__input {
+  flex: 1;
+}
+textarea.edit-form__input {
+  min-height: 150px;
+}
+
+.edit-form__button-panel {
+  text-align: right;
+}
+.edit-form__preview {
+  margin: 1em 6.3rem;
+}
+.edit-form__preview > img {
+  max-height: 300px;
+}
+</style>
+</head>
+
+<div id="admin"></div>
+
+<script type="module">
+import {
+  html, render, createContext,
+  useState, useContext, useRef, useEffect,
+  renderToString
+} from "https://npm.reversehttp.com/htm/preact,preact/hooks,preact,preact-render-to-string";
+import { Octokit } from "https://cdn.skypack.dev/pin/@octokit/rest@v18.0.15-891Ti9ZUJGnvNoEzbh6H/min/@octokit/rest.js";
+
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+import {App} from '../index.js';
+import {document as doc} from '../document.js';
+
+const config = {
+  owner: 'gryzzly',
+  repo: 'mishareyzlin.com',
+  contentFile: 'content/content.json',
+  // FIXME:
+  websiteUrl: 'https://static-cms.netlify.app',
+  badgeUrl: 'https://api.netlify.com/api/v1/badges/6f4ba7b6-7c14-4cdd-8128-fcc35b215cc6/deploy-status',
+  // to be filled in from github API on authorisation
+  user: null
+};
+
+// idea behind "collection":
+// these json values go into metalsmith "metadata", meaning that they are
+// available to templates to be marked as required
+const schemas = {
+  menu: {
+    plural: 'Menu',
+    singular: 'Menu Item',
+    titleKey: 'title',
+    fields: {
+      path: '',
+      title: ''
+    }
+  },
+  pages: {
+    plural: 'Pages',
+    singular: 'Page',
+    titleKey: 'title',
+    fields: {
+      path: '',
+      title: '',
+      content: '',
+    },
+    types: {
+      content: 'textarea'
+    },
+  },
+  news: {
+    plural: 'News',
+    singular: 'News Item',
+    titleKey: 'title',
+    fields: {
+      title: '',
+      image: '',
+      content: '',
+      posted: Date,
+    },
+    types: {
+      content: 'textarea'
+    },
+  }
+};
+
+const emptyContents = {};
+Object.keys(schemas).forEach(model => emptyContents[model] = []);
+
+let sha = '';
+
+let persistentStore = {
+  ...Object.keys(schemas).reduce((result, model) => {
+    result[model] = localStorage[model] ? JSON.parse(localStorage[model]) : [];
+    return result;
+  }, {})
+};
+
+function updatePersistentStore(path, entry, toBeRemoved) {
+  let indexToUpdate = -1;
+  persistentStore[path].filter(
+    (persistedEntry, index) => {
+      if (persistedEntry.uuid === entry.uuid) {
+        indexToUpdate = index;
+        return true;
+      }
+    }
+  );
+  if (indexToUpdate !== -1) {
+    if (!toBeRemoved) {
+      persistentStore[path][indexToUpdate] = entry;
+    } else {
+      persistentStore[path].splice(indexToUpdate, 1)
+    }
+
+  } else {
+    entry.uuid = uuidv4();
+    persistentStore[path].push(entry);
+  }
+  localStorage[path] = JSON.stringify(persistentStore[path]);
+}
+
+async function saveToGithub(octokit, content) {
+  octokit.repos.createOrUpdateFileContents({
+    owner: config.owner,
+    repo: config.repo,
+    path: config.contentFile,
+    message: 'Updated contents',
+    content: btoa(content),
+    committer: config.user,
+    author: config.user,
+    sha: sha
+  }).then(result=> {
+    sha = result.data.content.sha;
+  });
+}
+
+const Updater = createContext();
+
+function Badge({now, blink}) {
+  return html`<img
+    class=${`header-badge ${blink ? 'header-badge-blinking' : ''}`}
+    src=${`${config.badgeUrl}?${now}`}
+  />`;
+}
+
+function Admin (props) {
+  const [isAuthorised, setIsAuthorised] =
+      useState(Boolean(localStorage['ghToken']));
+
+  const octokitRef = useRef(null);
+
+  const [store, updateState] = useState({
+    current: isAuthorised ? 'Loading' : null
+  });
+
+  const [justSaved, setJustSaved] = useState(false);
+  const [badgeCacheBuster, setCacheBuster] = useState(Date.now());
+  const [queryingBuildStatus, setQueryingBuildStatus] = useState(false);
+  const badgeInterval = useRef(null);
+
+  useEffect(() => {
+    if (!justSaved) return;
+
+    let updates = 8;
+    setQueryingBuildStatus(true);
+
+    if (badgeInterval.current) {
+      clearInterval(badgeInterval.current);
+    }
+    badgeInterval.current = setInterval(() => {
+      if (updates) {
+        updates--;
+        setCacheBuster(Date.now())
+      } else {
+        clearInterval(badgeInterval.current);
+        setQueryingBuildStatus(false);
+      }
+    }, 5000);
+    setJustSaved(false);
+  }, [justSaved])
+
+  const [isPreviewShowing, setIsPreviewShowing] = useState(false);
+  const [isPreviewLoading, setIsPreviewLoading] = useState(false);
+
+  const previewContainer = useRef();
+  const previewIframe = useRef();
+
+  useEffect(() => {
+
+    (async () => {
+      if (!isAuthorised) return;
+      var octokit = new Octokit({
+        auth: localStorage['ghToken']
+      });
+      octokitRef.current = octokit;
+
+      let contentFile;
+      let user;
+      try {
+        contentFile = await octokit.repos.getContent({
+          owner: config.owner,
+          repo: config.repo,
+          path: config.contentFile
+        });
+        user = await octokit.request("/user");
+        config.user = {
+          email: user.data.email,
+          name: user.data.name
+        };
+      } catch (e) {
+        contentFile = emptyContents;
+
+        // if the file has not been created yet, we only want to init with empty
+        // contents ^
+        if (e.status !== 404) {
+          // otherwise, token is probably invalid:
+          contentFile = emptyContents;
+          setIsAuthorised(false);
+          updateState({current: null});
+          return;
+        }
+      }
+
+      persistentStore = {
+        ...persistentStore,
+        ...JSON.parse(atob(contentFile.data.content))
+      };
+      sha = contentFile.data.sha;
+      Object.keys(schemas).forEach(model => {
+        localStorage[model] = JSON.stringify(
+          persistentStore[model] || []
+        );
+        persistentStore
+      });
+
+      updateState({
+        current: 'ModelsList'
+      });
+
+    })();
+
+  }, [isAuthorised]);
+
+  useEffect(() => {
+    function onMessage (event) {
+      if (event.origin !== 'https://oauth-proxy.vercel.app') {
+        return;
+      }
+      const token = event.data;
+      localStorage['ghToken'] = token;
+      setIsAuthorised(true);
+    }
+    window.addEventListener("message", onMessage);
+    return () => {
+      window.removeEventListener("message", onMessage);
+    };
+  });
+
+  return html`
+  <${Updater.Provider} value=${updateState}>
+    <div>
+      <header>
+        ${isAuthorised ? "Authorised" : html`<iframe id="authorise-iframe" scrolling=no seamleass src="https://oauth-proxy.vercel.app/pages/login.html"></iframe>`}
+        ${isAuthorised ? html`<div class="divider">${` / `}</div>` : null}
+        ${store.current === 'ModelsList' && 'Home'}
+        ${(
+          store.current === 'SelectedModel' || store.current === 'EditModel'
+        ) && schemas[store.selectedModel].plural}
+        ${' '}
+        <a
+          href="${config.websiteUrl}"
+          class="header-website-link"
+          target="_blank"
+        >
+          <${Badge}
+            now=${badgeCacheBuster}
+            blink=${queryingBuildStatus}
+          //>
+          ${'→'}
+          Go to Website
+        </a>
+      </header>
+
+
+
+      <div class="admin-content">
+      ${store.current === 'Loading' && html`<div>Loading…</div>`}
+
+      ${store.current === 'ModelsList' && html`<${ModelsList}
+        models=${Object.entries(schemas)}
+        onSelect=${(model) => updateState(state => {
+          return ({
+          ...state,
+          current: 'SelectedModel',
+          selectedModel: model
+          })
+         })
+        }
+      />`}
+
+      ${store.current === 'SelectedModel' && html`<${SelectedModel}
+        model=${store.selectedModel}
+        onClickBack=${() => updateState(state => ({
+          ...state,
+          current: 'ModelsList',
+          selectedModel: undefined,
+          entry: undefined
+        }))}
+      />`}
+
+      ${store.current === 'EditModel' && html`<${EditForm}
+        model=${store.selectedModel}
+        onClickBack=${() => updateState(state => ({
+          ...state,
+          current: 'SelectedModel',
+          entry: undefined
+        }))}
+        entry=${store.entry}
+        onSave=${async (path, entry, toBeRemoved) => {
+          updateState(state => ({
+            ...state,
+            current: 'SelectedModel',
+            entry: undefined,
+          }));
+
+          setJustSaved(true);
+          // no uuid means it was never saved, so it’s a new item that was
+          // dismissed
+          if (!entry.uuid && toBeRemoved) {
+            return;
+          }
+          updatePersistentStore(path, entry, toBeRemoved);
+          await saveToGithub(octokitRef.current, JSON.stringify(
+            persistentStore,
+            null,
+            2
+          ));
+        }}
+        onPreview=${(content) => {
+          setIsPreviewShowing(true);
+          setIsPreviewLoading(true);
+          previewIframe.current.contentDocument.body.innerHTML = content;
+          setTimeout(() => {
+            setIsPreviewLoading(false);
+          }, 500);
+        }}
+        }
+      />`}
+      </div>
+      <div
+        class="admin-preview ${
+          [
+            isPreviewLoading ? 'admin-preview-loading' : '',
+            isPreviewShowing ? 'admin-preview-visible' : ''
+          ].join(' ')
+        }"
+        ref=${previewContainer}
+      >
+        <iframe ref=${previewIframe} />
+      </div>
+      ${isPreviewShowing && !isPreviewLoading && html`<div
+        class="admin-preview-close"
+        onClick=${() => setIsPreviewShowing(false)}
+      >
+        ✕
+      </div>`}
+    </div>
+  <//>`
+}
+
+function ModelsList({models, onSelect}) {
+  return html`<ul>
+    ${models.map(([model, {plural}]) => html`<li>
+      <button
+        onClick=${() => onSelect(model)}
+      >${plural}</button>
+    </li>`)}
+  </ul>`;
+}
+
+function SelectedModel(props) {
+  const update = useContext(Updater);
+
+  return html`<div>
+    <button onClick=${props.onClickBack}>← back</button>
+    <button onClick=${() => {
+      update(state => ({
+        ...state,
+        current: 'EditModel',
+        entry: {},
+      }));
+    }}>New</button>
+    ${html`<${EntriesList}
+      entries=${persistentStore[props.model]}
+      titleKey=${schemas[props.model].titleKey}
+    />`}
+  </div>`;
+}
+
+function EntriesList({entries, titleKey}) {
+  return html`<ul>
+    ${entries.map(entry => html`<${EntryItem}
+      entry=${entry}
+      titleKey=${titleKey}
+    />`)}
+  </ul>`;
+}
+
+function EntryItem({entry, titleKey}) {
+  const update = useContext(Updater);
+
+  return html`<li>
+    <div onClick=${() => update(state => ({
+      ...state,
+      current: 'EditModel',
+      entry
+    }))}>
+      <button>Edit "${entry[titleKey]}"</button>
+    </div>
+  </li>`
+}
+
+function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
+  const inputRefs = useRef([]);
+  const [inputValues, updateInputValues] = useState(entry);
+
+  useEffect(() => {
+    cloudinaryClient.result.then((imageUrl) => {
+      if (inputRefs.current.image) {
+        inputRefs.current.image.value = imageUrl;
+      }
+      updateInputValues(inputStates => ({
+        ...inputStates,
+        image: imageUrl
+      }));
+    });
+  }, []);
+
+  return html`<div className="edit-form">
+    <button onClick=${onClickBack}>← back</button>
+    <fieldset>
+      <legend>${schemas[model].singular}</legend>
+      ${Object.keys(schemas[model].fields).map((field, index) => {
+        let input;
+        if (schemas[model].types && schemas[model].types[field]) {
+          if (schemas[model].types[field] === 'textarea') {
+            input = 'textarea'
+          }
+        } else {
+          input = `input`;
+        }
+        return html`<div class="edit-form__row">
+          <label for=${`${model}-${field}`}>${field}</label>
+          <${input}
+            placeholder=${field}
+            ref=${ref => inputRefs.current[field] = ref}
+            id=${`${model}-${field}`}
+            name=${field}
+            value=${inputValues[field]}
+            class="edit-form__input"
+            onInput=${(e) => {
+              updateInputValues(inputStates => ({
+                ...inputStates,
+                [field]: e.target.value
+              }));
+            }}
+          />
+          ${field === 'image' && html`<button
+            onClick=${() => cloudinaryClient.widget.open()}
+          >
+            ${inputValues.image ? 'Replace' : 'Upload'} an image
+          </button>`}
+        </div>
+        ${
+          field === 'image' &&
+          inputValues.image &&
+          html`<div class="edit-form__preview">
+            <img src=${inputValues.image} />
+          </div>`
+        }`;
+      })}
+
+      <div class="edit-form__button-panel">
+        <button
+        style=${{opacity: .35}}
+        onClick=${() => {
+          if (confirm('Are you sure you’d like to delete this entry?')) {
+            onSave(
+            model,
+            { ...entry, },
+            true
+          );
+          }
+        }}>Delete</button>
+
+        <button onClick=${() => {
+          const entryData = inputValues;
+          const previewPath = model === 'pages' ? entryData.path : '/';
+
+          // slice to not modify actual store, since we are only previewing
+          const collection = persistentStore[model].slice();
+          let indexToUpdate = collection.length;
+
+          collection.find((item, index) => {
+            const uuidMatch = item.uuid === entry.uuid;
+            if (uuidMatch) {
+              indexToUpdate = index;
+            }
+            return uuidMatch;
+          });
+
+          collection[indexToUpdate] = entryData;
+          const pagesByPath = persistentStore.pages.reduce((result, page) => {
+            result[page.path] = page;
+            return result;
+          }, {});
+
+          const contents = doc(renderToString(html`
+            <${App}
+              url=${previewPath}
+              pages=${{
+                [previewPath]: {
+                  ...persistentStore,
+                  ...(model === 'pages' ? entryData : pagesByPath[previewPath])
+                },
+              }}
+              collections=${{
+                ...persistentStore,
+                [model]: collection
+              }}
+            />
+          `), entryData);
+          onPreview(contents);
+        }}>Preview</button>
+
+        <button onClick=${() => {
+          onSave(
+            model,
+            inputValues
+          );
+        }}>Save</button>
+      </div>
+  </fieldset>
+  </div>`;
+}
+
+render(
+  html`<${Admin} />`,
+  document.querySelector('#admin')
+);
+</script>
+<script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
+<script>
+var cloudinaryPromiseResolve;
+var cloudinaryPromiseReject;
+
+var cloudinaryPromise = new Promise((resolve, reject) => {
+  cloudinaryPromiseResolve = resolve;
+  cloudinaryPromiseReject = reject;
+})
+window.cloudinaryClient = {
+  widget: cloudinary.createUploadWidget({
+    cloudName: 'dcvrycv7k',
+    uploadPreset: 'p7e5gags',
+    folder: 'widgetUpload',
+    cropping: true
+  }, (error, result) => {
+    if (!error && result && result.event === "success") {
+      cloudinaryPromiseResolve(result.info.secure_url);
+    }
+    if (error) {
+      cloudinaryPromiseReject(error);
+    }
+  }),
+  result: cloudinaryPromise
+};
+</script>

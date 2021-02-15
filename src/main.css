@@ -1,0 +1,76 @@
+html {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+h1,h2,h3,h4,h5,h6,hgroup,
+ul,ol,dd,dl,
+p,figure,
+pre,table,fieldset,hr,
+section{
+  margin-bottom:.75rem;
+}
+a {
+  color: blue;
+}
+h1 {
+  font-size: 1.5em; /* 24px */
+  line-height: 1.5; /* 32 px */
+  margin-bottom: .5em;
+}
+section section h1 {
+  font-size: 1.25em; /* 20px */
+  line-height: 1.2em; /* 24px */
+  margin-bottom: .6em; /* 12px */
+}
+
+.root {
+  min-height: 100vh;
+  background: #FFE9E9;
+  overflow: hidden;
+}
+
+#site-header {
+  background: #fff;
+  overflow: hidden;
+  margin: 0 0 .75rem;
+}
+#logo {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  padding: 6px;
+  background: #555;
+  border-radius: 35px;
+  margin: 1.125rem 1rem;
+}
+#logo > svg {
+  width: 100%;
+}
+#logo path {
+  fill: #fff;
+}
+
+#site-nav {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 1rem;
+}
+  #site-nav li {
+    list-style: none;
+    margin-right: .5rem;
+  }
+  #site-nav a {
+    color: #444;
+    text-decoration: none;
+  }
+
+#main {
+  padding: 0 1rem;
+  min-height: 100%;
+}
