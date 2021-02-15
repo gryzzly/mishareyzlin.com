@@ -1,0 +1,20 @@
+{
+  "menu": [
+  ],
+  "pages": [
+    {
+      "path": "/",
+      "title": "Hello",
+      "content": "<p>My name is Misha Reyzlin & I am professional web developer. You may want to take a look at my resume. I use this website to keep my technical notes and to play with all kinds of things.</p>\n<p>Me elsewhere: twitter, github, stackoverflow, jsfiddle, linkedin, friendfeed</p>",
+      "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb634"
+    },
+    {
+      "path": "/notes/index.html",
+      "title": "Technical Notes",
+      "content": ""
+    }
+  ],
+  "notes": [
+
+  ]
+}
