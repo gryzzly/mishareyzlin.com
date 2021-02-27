@@ -11,9 +11,11 @@ import {
   useLocation,
 } from './router.js';
 
+// TODO: think about this some more.
 const contentToHtml = (content) => content.split('\n')
   .filter(Boolean)
   .map(line => `<p>${line}</p>`)
+  .filter(line => line !== '<p></p>')
   .join('');
 
 export const routes = [
@@ -62,7 +64,7 @@ export const routes = [
     component: (props) => {
       return html`<div>
         <div
-          dangerouslySetInnerHTML=${{__html: contentToHtml(props.content)}}>
+          dangerouslySetInnerHTML=${{__html: props.content}}>
         </div>
       </div>`;
     }

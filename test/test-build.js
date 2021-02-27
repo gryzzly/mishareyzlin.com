@@ -1,3 +1,4 @@
+'use strict'
 // So, what is build.js?
 //
 // build.js is a small script that takes a content folder, looks
@@ -71,6 +72,7 @@ async function vmTest(options) {
       return new vm.SourceTextModule(`
         export default {
           dirname: (src) => src,
+          join: function() { return [].slice.call(arguments).join('/')  }
         };
       `, { context: referencingModule.context });
     }
@@ -82,7 +84,7 @@ async function vmTest(options) {
           readFile: (args) => {
             return '${contentJson}';
           },
-          readdir: () => ${JSON.stringify(options.readdir)},
+          readdir: () => ${JSON.stringify(options.readDirResponse)},
           ensureDir: () => {},
           // writtenFiles is provided via context
           writeFileSync: (file, content) => {
@@ -91,7 +93,22 @@ async function vmTest(options) {
               content: content
             });
           },
-          copyFile: () => {}
+          copyFile: () => {},
+          statSync: (filepath) => {
+            return {
+              isDirectory: function() {
+                return filepath.endsWith('/') || filepath.indexOf('.') === -1
+              }
+            }
+          }
+        };
+      `, { context: referencingModule.context });
+    }
+
+    if (specifier === 'snarkdown') {
+      return new vm.SourceTextModule(`
+        export default function snarkdown(src) {
+          return src;
         };
       `, { context: referencingModule.context });
     }
@@ -112,6 +129,7 @@ async function vmTest(options) {
 }
 
 let initialOptions = {
+  readDirResponse: [],
   writtenFiles: [],
   contentJson: {
     pages: [],
@@ -129,7 +147,7 @@ t.before(function () {
 t(
   'Two files were written when we only had two files returned in readdir',
   async function() {
-    options.readdir = ['a.html', 'b.html'];
+    options.readDirResponse = ['a.html', 'b.html'];
     await vmTest(options);
     await timeout();
     assert.equal(options.writtenFiles.length, 2);
@@ -138,7 +156,6 @@ t(
 
 t('Pages are generated from content.json', async function () {
   options = initialOptions;
-  options.readdir = ['a.html', 'b.html'];
   options.contentJson = {
     pages: [{
       path: "/",
@@ -177,8 +194,12 @@ t('Pages are generated from content.json', async function () {
     data.pages['/contact.html'].content
   );
 
-  assert.equal(options.writtenFiles.length, 4);
+  assert.equal(options.writtenFiles.length, 2);
 });
 
-await t.run();
+const success = await t.run();
 
+if (success === false) {
+  process.exitCode = 1;
+  throw new Error('test failed');
+}

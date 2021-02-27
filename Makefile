@@ -1,4 +1,4 @@
-.PHONY: test build
+.PHONY: start test build
 
 start:
 	node start.js & http-server build
@@ -8,4 +8,4 @@ build: test
 
 test:
 	node --experimental-vm-modules test/test-build.js
-	node test/test-router-2.js
+	node test/test-router.js
