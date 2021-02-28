@@ -15,7 +15,7 @@ import vm from 'vm';
 import assert from 'assert';
 import { time } from 'console';
 
-const t = test('build-script');
+const t = test('Testing Build Script');
 
 let buildScript = fs.readFileSync(
   path.resolve(path.resolve(), './build.js'),
@@ -40,6 +40,8 @@ async function vmTest(options) {
       ...console,
       // suppress logs from modules, uncomment to see what is happenning
       log: () => {},
+      // use testLog in the tested file to debug tests
+      testLog: console.log,
     },
     writtenFiles: options.writtenFiles
   });
@@ -78,11 +80,12 @@ async function vmTest(options) {
     }
 
     if (specifier === 'fs-extra') {
-      const contentJson = `${JSON.stringify(options.contentJson)}`;
       return new vm.SourceTextModule(`
         export default {
-          readFile: (args) => {
-            return '${contentJson}';
+          readFile: (filePath) => {
+            const responses =
+                ${JSON.stringify(options.readFileResponse)} || {};
+            return responses[filePath] || "{}";
           },
           readdir: () => ${JSON.stringify(options.readDirResponse)},
           ensureDir: () => {},
@@ -102,7 +105,10 @@ async function vmTest(options) {
             }
           }
         };
-      `, { context: referencingModule.context });
+      `, {
+        identifier: specifier + '.js',
+        context: referencingModule.context
+      });
     }
 
     if (specifier === 'snarkdown') {
@@ -126,9 +132,13 @@ async function vmTest(options) {
   await buildModule.link(linker);
 
   await buildModule.evaluate();
+  // without deferring to the next tick, for some reason
+  // awaiting "evaluate" ^ above is not sufficient
+  await timeout();
 }
 
-let initialOptions = {
+let initialTestOptions = {
+  readFileResponse: "{}",
   readDirResponse: [],
   writtenFiles: [],
   contentJson: {
@@ -141,22 +151,11 @@ let options;
 
 // reset options [that will get modified] before each run
 t.before(function () {
-  options = JSON.parse(JSON.stringify(initialOptions));
+  options = JSON.parse(JSON.stringify(initialTestOptions));
 });
 
-t(
-  'Two files were written when we only had two files returned in readdir',
-  async function() {
-    options.readDirResponse = ['a.html', 'b.html'];
-    await vmTest(options);
-    await timeout();
-    assert.equal(options.writtenFiles.length, 2);
-  }
-);
-
 t('Pages are generated from content.json', async function () {
-  options = initialOptions;
-  options.contentJson = {
+  const contentJson = {
     pages: [{
       path: "/",
       title: "test-title",
@@ -167,8 +166,10 @@ t('Pages are generated from content.json', async function () {
       content: "test-content"
     }]
   };
+  options.readFileResponse = {
+    'content/content.json': contentJson,
+  };
   await vmTest(options);
-  await timeout();
 
   assert.equal(options.writtenFiles[0].file, './build/index.html');
   assert.equal(options.writtenFiles[1].file, './build/contact.html');
@@ -196,6 +197,54 @@ t('Pages are generated from content.json', async function () {
 
   assert.equal(options.writtenFiles.length, 2);
 });
+
+t(
+  'Pages are generated from source html files',
+  async function() {
+    options.readDirResponse = ['a.html', 'b.html'];
+    await vmTest(options);
+    assert.equal(options.writtenFiles.length, 2);
+  }
+);
+
+t.only(
+  'Pages are generated from source markdown files',
+  async function() {
+    options.readFileResponse = {
+      'content/a.md': '# Title A\n\nBody A',
+      'content/b.md': '# Title B\n\nBody B',
+    };
+    options.readDirResponse = ['a.md', 'b.md'];
+    await vmTest(options);
+
+    const {pages} = options.writtenFiles[0].content.data;
+
+    // From two markdwon source files, two files were written
+    assert.equal(options.writtenFiles.length, 2);
+    // content/*.md was transformed to respective /build/*.html
+    assert.equal(options.writtenFiles[0].file, './build/a.html');
+    assert.equal(options.writtenFiles[1].file, './build/b.html');
+    // Titles were correctly extracted from Markdown
+    assert.equal(
+      pages['/a.html'].title,
+      "Title A"
+    );
+    assert.equal(
+      pages['/b.html'].title,
+      "Title B"
+    );
+    // Content was written
+    assert.equal(
+      pages['/a.html'].content,
+      options.readFileResponse['content/a.md']
+    );
+    assert.equal(
+      pages['/b.html'].content,
+      options.readFileResponse['content/b.md']
+    );
+  }
+);
+
 
 const success = await t.run();
 

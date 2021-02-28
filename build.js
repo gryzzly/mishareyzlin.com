@@ -82,6 +82,7 @@ export async function build() {
         .split('\n')
         .find(line => line.startsWith('#'))
         .replace(/^\# /, '');
+
       return {
         path: '/' + markdownFile
           .replace(/^content\//, '')

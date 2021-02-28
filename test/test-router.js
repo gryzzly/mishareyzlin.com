@@ -12,7 +12,7 @@ function NotRenderedComponent({foo}) {
   return html`<div class=${foo}>Home</div>`;
 }
 
-const t = test('router');
+const t = test('Testing router');
 
 t('One route matches with exact string match', function() {
   assert.equal  (renderToString(html`<${Router} url="/">

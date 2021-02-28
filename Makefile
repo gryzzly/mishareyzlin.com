@@ -7,5 +7,5 @@ build: test
 	node build.js run
 
 test:
-	node --experimental-vm-modules test/test-build.js
+	node --experimental-vm-modules --no-warnings test/test-build.js
 	node test/test-router.js
