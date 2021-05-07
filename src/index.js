@@ -2,6 +2,7 @@ import {
   hydrate,
   html,
   renderToString,
+  useEffect,
   Component,
 } from './preact-hooks-htm-render-to-string.js';
 
@@ -9,6 +10,7 @@ import {
   Link,
   Router,
   useLocation,
+  match,
 } from './router.js';
 
 // TODO: think about this some more.
@@ -24,20 +26,11 @@ export const routes = [
     component: (props) => {
       return html`<div>
         <div dangerouslySetInnerHTML=${{__html: contentToHtml(props.content)}}></div>
-        ${props.news && props.news.map(item => html`<div>
-          <h1>${item.title}</h1>
-          <div>
-            <img src=${item.image} />
-          </div>
-          <div dangerouslySetInnerHTML=${{
-            __html: contentToHtml(item.content)
-          }}></div>
-        </div>`)}
       </div>  `;
     }
   },
   {
-    path: '/notes/index.html',
+    path: '/notes/',
     component: (props) => {
       return html`<div>
         <div dangerouslySetInnerHTML=${{__html: contentToHtml(props.content)}}></div>
@@ -51,7 +44,7 @@ export const routes = [
     getData: (pages, collections) => {
       const pagePaths =
           Object.keys(pages).filter(
-            pagePath => /^\/notes\//.test(pagePath) && pagePath !== '/notes/index.html'
+            pagePath => /^\/notes\//.test(pagePath) && pagePath !== '/notes/'
           );
 
       return pagePaths.map(path => pages[path]);
@@ -62,7 +55,40 @@ export const routes = [
   {
     path: /^(?:.*)$/,
     component: (props) => {
-      return html`<div>
+      useEffect(async () => {
+        window.scripts = window.scripts || {};
+        if (props.Scripts) {
+          let scriptsLoaded = 0;
+          const scriptSources = props.Scripts
+            .split(',')
+            .map(scriptSrc => `/${scriptSrc.trim()}`)
+
+          function onLoad() {
+            scriptsLoaded++;
+            if (scriptsLoaded === scriptSources.length) {
+              if (props.PageAction) {
+                window[props.PageAction]()
+              }
+            }
+          }
+          scriptSources.forEach(src => {
+            if (window.scripts[src]) return onLoad();
+
+            const script =
+              window.scripts[src] = document.createElement('script');
+
+            script.setAttribute('src', src);
+
+            script.addEventListener("load", onLoad, false);
+
+            document.body.appendChild(script);
+          })
+        }
+
+      }, []);
+      return html`<div class=${props.PageClass || ''}>
+        <h1>${props.title}</h1>
+        ${props.fileProps && html`<p>Published on ${props.Date}</p>`}
         <div
           dangerouslySetInnerHTML=${{__html: props.content}}>
         </div>
@@ -82,25 +108,15 @@ function Logo() {
 function Nav() {
   return html`<ul id="site-nav">
     <li><${Link} href="/">Hello<//></li>
-    <li><${Link} href="/notes/index.html">Notes<//></li>
-    <li><${Link} href="/works.html">Works<//></li>
-    <li><${Link} href="/cv.html">CV<//></li>
+    <li><${Link} href="/notes/">Notes<//></li>
+    <li><${Link} href="/works">Works<//></li>
+    <li><${Link} href="/cv">CV<//></li>
   </ul>`;
-}
-
-export default class List extends Component {
-  render({contents, notes}) {
-    return contents && html`<div>
-        <div dangerouslySetInnerHTML=${{ __html: contents}}></div>
-        ${notes && notes.map(note => html`<li>
-        <a href="${'/' + `${note.path.replace(/\.md$/, '.html')}`}">${note.title}</a>
-      </li>`)}
-      </div>`;
-  }
 }
 
 export const App = ({url, collections, pages}) => {
   const [location, ] = useLocation(url);
+
   return html`
     <header id="site-header">
       <${Logo} />
@@ -110,7 +126,10 @@ export const App = ({url, collections, pages}) => {
       <${Router}
         url=${location}
       >
-        ${routes.map( route => html`<${route.component}
+        ${routes
+          // think about why I need the router some
+          .filter( route => match( route.path, location ))
+          .map( route => html`<${route.component}
         ...${pages[location]}
           url=${location}
           path=${route.path}

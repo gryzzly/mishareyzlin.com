@@ -2,6 +2,21 @@ import path from 'path';
 import fse from 'fs-extra';
 import snarkdown from 'snarkdown';
 
+// adds <p></p> instead of line breaks to do styling properly
+function snarkdownEnhanced(markdown) {
+  return markdown
+    .split(/(?:\r?\n){2,}/)
+    .map((l) =>
+      [" ", "\t", "#", "-", "*", ">"].some((char) => l.startsWith(char))
+        ? snarkdown(l)
+        : `<p>${snarkdown(l)}</p>`
+    )
+    .join("\n");
+}
+
+// look into adding typography processing to content
+// https://github.com/sapegin/richtypo.js/
+
 import {html, renderToString} from './src/preact-hooks-htm-render-to-string.js';
 
 async function collectFilesDeep(directory, filterFn) {
@@ -42,12 +57,9 @@ export async function build() {
 
   console.log("Collecting contents");
   // parse JSON content
-  const content = JSON.parse(
-    await fse.readFile(
-      new URL('./content/content.json', import.meta.url)
-    )
-  );
+  const content = JSON.parse(await fse.readFile('content/content.json'));
   content.pages = content.pages || [];
+
   content.pages.forEach(page => {
     if (page.path[0] !== '/') {
       page.path = `/${page.path}`;
@@ -63,7 +75,7 @@ export async function build() {
 
   htmlPages = await Promise.all(
     htmlPages.map(async page => ({
-      path: '/' + page.replace(/^content\//, ''),
+      path: '/' + page.replace(/^content\//, '').replace(/.html$/, ''),
       content: (await fse.readFile(page)).toString()
     }))
   );
@@ -77,26 +89,65 @@ export async function build() {
 
   const markdownPages = await Promise.all(
     markdownPagePaths.map(async markdownFile => {
-      const fileContent = (await fse.readFile(markdownFile)).toString();
-      const title = fileContent
+      let fileContent = (await fse.readFile(markdownFile)).toString();
+
+      let firstTitleIndex = -1;
+      const firstTitleLine = fileContent
         .split('\n')
-        .find(line => line.startsWith('#'))
+        .find((line, index) => {
+          if (line.startsWith('#')) {
+            firstTitleIndex = index;
+            return true;
+          }
+        });
+
+      const title = firstTitleLine
         .replace(/^\# /, '');
+
+      const customFrontMatterProps = fileContent
+        .split('\n')
+        .slice(0, firstTitleIndex)
+        .filter(line => line)
+        .reduce((result, line) => {
+          const [key, value] = line.split(':');
+          result[key.trim()] = value.trim();
+          return result;
+        }, {})
+
+      fileContent = fileContent.split('\n').slice(firstTitleIndex + 1).join('\n');
 
       return {
         path: '/' + markdownFile
           .replace(/^content\//, '')
-          .replace(/\.md(own)?$/, '.html'),
-        content: snarkdown(fileContent),
+          // for folder index pages, replace /index.md with /
+          .replace(/index.md(own)?$/, '')
+          .replace(/\.md(own)?$/, ''),
+        content: snarkdownEnhanced(fileContent),
         title,
+        ...customFrontMatterProps
       };
     })
   );
+
+  // sort mutates the list
+  // FIXME: sort by date is very specific to the notes, how can this be
+  // made configurable?
+  markdownPages.sort((a, b) => {
+    const dateA = a.Date ? new Date(a.Date) : new Date()
+    const dateB = b.Date ? new Date(b.Date) : new Date()
+    return (dateB.getTime() - dateA.getTime());
+  })
 
   content.pages = content.pages.concat(markdownPages);
 
   // add htmls to json content
   content.pages = content.pages.concat(htmlPages);
+
+  // build a collection from each folder in content – 
+  // this means, that if there is a folder, like notes, all pages in that
+  // folder should have access to all files in that folder, to allow showing
+  // an index of these files, or to do "next" / "prev" links
+  // TODO
 
   // pick all keys off content that is not collection of "page" objects
   const {pages, ...collections} = content;
@@ -121,6 +172,7 @@ export async function build() {
           `
         ),
         {
+          page,
           pages: pagesByPath,
           collections
         }
@@ -136,6 +188,16 @@ export async function build() {
     if (file.path === '' || file.path === '/') {
       file.path = '/index.html';
     }
+    // directory listing
+    if (file.path.endsWith('/')) {
+      file.path += '/index.html';
+    }
+    // our paths are without extension, to allow for pretty links
+    // but the content files written are always HTML anyway
+    if (!file.path.endsWith('.html')) {
+      file.path += '.html';
+    }
+
     // ensure dirs exist for each fragment of the path
     await fse.ensureDir(`./build${path.dirname(file.path)}`)
     fse.writeFileSync(`./build${file.path}`, Buffer.from((file.content)));

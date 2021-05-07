@@ -1,5 +1,25 @@
 {
   "menu": [
+    {
+      "path": "Home",
+      "title": "/",
+      "uuid": "2af25248-14e9-470c-9896-5874eb920508"
+    },
+    {
+      "path": "/notes/",
+      "title": "Notes",
+      "uuid": "2162a607-bfa5-41b5-ab01-5ebae53bfd51"
+    },
+    {
+      "path": "/works",
+      "title": "Works",
+      "uuid": "e0fc47ef-ae76-40ed-8277-236355f21d03"
+    },
+    {
+      "path": "/cv",
+      "title": "CV",
+      "uuid": "d600ed36-897c-4d92-b3a3-dbd94aaca139"
+    }
   ],
   "pages": [
     {
@@ -9,12 +29,11 @@
       "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb634"
     },
     {
-      "path": "/notes/index.html",
-      "title": "Technical Notes",
-      "content": ""
+      "path": "/test",
+      "title": "TEst",
+      "content": "test test test "
     }
   ],
-  "notes": [
-
-  ]
+  "news": [],
+  "notes": []
 }

@@ -31,8 +31,6 @@ async function vmTest(options) {
     process: {
       argv: [,,'run']
     },
-    // has to be a constructor (not an arrow fn)
-    URL: function(path) { return path; },
     Buffer: {
       from: text => text,
     },
@@ -85,6 +83,7 @@ async function vmTest(options) {
           readFile: (filePath) => {
             const responses =
                 ${JSON.stringify(options.readFileResponse)} || {};
+
             return responses[filePath] || "{}";
           },
           readdir: () => ${JSON.stringify(options.readDirResponse)},
@@ -167,7 +166,7 @@ t('Pages are generated from content.json', async function () {
     }]
   };
   options.readFileResponse = {
-    'content/content.json': contentJson,
+    'content/content.json': JSON.stringify(contentJson),
   };
   await vmTest(options);
 
@@ -178,20 +177,20 @@ t('Pages are generated from content.json', async function () {
   const {data} = options.writtenFiles[0].content;
 
   assert.equal(
-    options.contentJson.pages[0].title,
+    contentJson.pages[0].title,
     data.pages['/'].title
   );
   assert.equal(
-    options.contentJson.pages[0].content,
+    contentJson.pages[0].content,
     data.pages['/'].content
   );
 
   assert.equal(
-    options.contentJson.pages[1].title,
+    contentJson.pages[1].title,
     data.pages['/contact.html'].title
   );
   assert.equal(
-    options.contentJson.pages[1].content,
+    contentJson.pages[1].content,
     data.pages['/contact.html'].content
   );
 
@@ -207,7 +206,7 @@ t(
   }
 );
 
-t.only(
+t(
   'Pages are generated from source markdown files',
   async function() {
     options.readFileResponse = {
@@ -244,6 +243,31 @@ t.only(
     );
   }
 );
+
+t(
+  'Mixing all types of content together works',
+  async () => {
+    options.readFileResponse = {
+      'content/a.md': '# Title A\n\nBody A',
+      'content/b.md': '# Title B\n\nBody B',
+      'content/content.json': JSON.stringify({
+        pages: [{
+          path: "/",
+          title: "test-title",
+          content: "test-content"
+        }, {
+          path: "/contact.html",
+          title: "test-title",
+          content: "test-content"
+        }]
+      })
+    };
+    options.readDirResponse = ['a.md', 'b.md'];
+    await vmTest(options);
+    //  TODO add tests
+    // Also test the situation of mixed collections
+  }
+)
 
 
 const success = await t.run();

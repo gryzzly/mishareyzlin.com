@@ -1,13 +1,13 @@
 Date: 30 October 2011
+Scripts: jquery-1.5.2.min.js, d3.v1.29.1.js, fe-dev-salary.js
 PageClass: salaries
-PageAction: salaries
-Scripts: d3, fed-salary-il
+PageAction: salariesSurvey
 
 # Front-End Developer Salary in Israel, Survey.
 
-Around four months ago I have chatted with a friend of mine about the current state of web development industry in Israel. Of course, as it is an important subject, we have also discussed the average salary offers we were both getting. (We are both front-end developers, that is HTML, CSS, JavaScript and all the surroundings, such as templating engines, web pages loading optimization, cross-browser quirks etc.) Well, two heads are good, but 50 heads are better. 
+Around four months ago I have chatted with a friend of mine about the current state of web development industry in Israel. Of course, as it is an important subject, we have also discussed the average salary offers we were both getting. (We are both front-end developers, that is HTML, CSS, JavaScript and all the surroundings, such as templating engines, web pages loading optimization, cross-browser quirks etc.) Well, two heads are good, but 50 heads are better.
 
-So I have conducted a little survey with a short set of questions (I know it's not too comprehensive, but it was put together rather quick). 
+So I have conducted a little survey with a short set of questions (I know it's not too comprehensive, but it was put together rather quick).
 
 These are the questions that were asked:
 
@@ -24,18 +24,22 @@ I have put the level of expertise in JavaScript as a separate question, as from 
 
 So, here's some of the information:
 
-<div class="canvas"></div>
+<div class="legend-container">
 <div class="legend">
   <p>The white circles represent the developers who have participated in the survey.</p>
   <ul class="controls">
-    <li><span class="first">Current Salary, in NIS</span></li>
-    <li><span class="second">Hourly rate, in USD</span></li>
-    <li><span class="third">Years of exprience</span></li>
-    <li><span class="fourth">Level of expertise in JavaScript</span></li>
+  <li><span class="first">Current Salary, in NIS</span></li>
+  <li><span class="second">Hourly rate, in USD</span></li>
+  <li><span class="third">Years of exprience</span></li>
+  <li><span class="fourth">Level of expertise in JavaScript</span></li>
   </ul>
 </div>
+</div>
 
-Average age is 28.5, most of the applicants are male (only 2 female developers participated). Average salary is around 17500 NIS. 
+<div class="canvas"></div>
+
+
+Average age is 28.5, most of the applicants are male (only 2 female developers participated). Average salary is around 17500 NIS.
 
 19% of the applicants are freelancers who don't have set monthly salary. 81% are employees.
 
@@ -46,7 +50,7 @@ All of the applicants have worked more than 2 years in the field:
 6% have 2-3 years of exp.
 
 As you may have guessed, more years of experience and the better expertise in JS results in the highest salary:
-the average salary among these who has more than 5 years of experience appears to be 21,800. 
+the average salary among these who has more than 5 years of experience appears to be 21,800.
 Among these devs 70% have indicated their knowledge of JavaScript as "professional" (can build web application that will work fast and will be easy to maintain).
 
 This is a bit dated already, well, the times they are a changin’. But in conclusion, if you know JS and you've got about 5 years of experience you shouldn't ask for anything less than ₪22,000. One US Dollar costed 3.43 Israeli shekels at the time of writing, so 22,000 was about $6400 back then (don't forget that's before the taxes!).

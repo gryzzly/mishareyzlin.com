@@ -7,12 +7,16 @@ export function document(content, data) {
       <meta name="description" content="Misha Reyzlin, HTML, CSS, JavaScript Developer" />
       <title>Misha Reyzlin: Hello</title>
 
-      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet" />
       <link href="/main.css" rel="stylesheet" />
 
     </head>
     <body>
       <div id="app">${content}</div>
+      ${/*
+        consider sanitizing data that is printed, since it comes from the content
+        files, an unesacaped closing script tag stored in content, for example,
+        would break the whole page
+      */''}
       ${data && `<script>window.preloadedData = ${JSON.stringify(data)}</script>`}
       <script type="module">
       import {start} from "/index.js";
