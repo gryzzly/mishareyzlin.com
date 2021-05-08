@@ -1,5 +1,5 @@
 html {
-  font-family: 'IBM Plex Serif', serif;
+  font-family: 'IBM Plex Sans', serif;
   font-size: 1em;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -32,7 +32,7 @@ section section h1 {
 
 #app {
   min-height: 100vh;
-  background: #FFE9E9;
+  /* background: #FFE9E9; */
   color: #444;
   overflow: hidden;
 }
@@ -41,6 +41,11 @@ section section h1 {
   background: #fff;
   overflow: hidden;
   margin: 0 0 .75rem;
+  opacity: .75;
+  transition: opacity .35s;
+}
+#site-header:hover {
+  opacity: 1;
 }
 #logo {
   display: flex;
@@ -50,6 +55,7 @@ section section h1 {
   background: #555;
   border-radius: 35px;
   margin: 1.125rem 1rem;
+  opacity: .65;
 }
 #logo > svg {
   width: 100%;
@@ -58,14 +64,14 @@ section section h1 {
   fill: #fff;
 }
 h1, h2, h3 {
-  font-family: 'PT Sans', sans-serif;
+  /* font-family: 'PT Sans', sans-serif; */
   font-weight: 600;
 }
 #site-nav {
   display: flex;
   justify-content: flex-start;
   padding: 0 1rem;
-  font-family: 'PT Sans', sans-serif;
+  /* font-family: 'PT Sans', sans-serif; */
 }
   #site-nav li {
     list-style: none;
@@ -88,24 +94,45 @@ h1, h2, h3 {
 .salaries {
   position: relative
 }
+
 .salaries .canvas {
   position: relative;
   width: 100%;
   height: 478px;
-  margin: 0 0 24px; }
+  margin: 0 0 24px;
+}
+
 .salaries .legend-container {
   position: relative;
 }
+
 .salaries .legend {
   background-color: #ffffff55;
-  left: 100%;
-padding: 1em; }
-  .salaries .legend p {
-    font-style: italic; }
+  padding: .5em;
+}
+@media screen and (min-width:720px) {
+  .salaries .canvas {
+    width: 80%;
+  }
+  .salaries .legend {
+    position: absolute;
+    left: 82%;
+    width: 300px;
+    margin-top: -480px;
+  }
+}
+
+.salaries .legend p {
+  font-style: italic;
+}
+
 .salaries .controls {
-  list-style: none; }
-  .salaries .controls span {
-    cursor: pointer;
-    text-decoration: none;
-    color: #444;
-    border-bottom: 1px dashed #000; }
+  list-style: none;
+}
+
+.salaries .controls span {
+  cursor: pointer;
+  text-decoration: none;
+  color: #444;
+  border-bottom: 1px dashed #000;
+}

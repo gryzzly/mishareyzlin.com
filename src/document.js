@@ -7,6 +7,8 @@ export function document(content, data) {
       <meta name="description" content="Misha Reyzlin, HTML, CSS, JavaScript Developer" />
       <title>Misha Reyzlin: Hello</title>
 
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
       <link href="/main.css" rel="stylesheet" />
 
     </head>

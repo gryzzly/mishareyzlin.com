@@ -24,6 +24,8 @@ I have put the level of expertise in JavaScript as a separate question, as from 
 
 So, here's some of the information:
 
+<div class="canvas"></div>
+
 <div class="legend-container">
 <div class="legend">
   <p>The white circles represent the developers who have participated in the survey.</p>
@@ -35,8 +37,6 @@ So, here's some of the information:
   </ul>
 </div>
 </div>
-
-<div class="canvas"></div>
 
 
 Average age is 28.5, most of the applicants are male (only 2 female developers participated). Average salary is around 17500 NIS.

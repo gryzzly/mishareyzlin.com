@@ -88,7 +88,7 @@ export const routes = [
       }, []);
       return html`<div class=${props.PageClass || ''}>
         <h1>${props.title}</h1>
-        ${props.fileProps && html`<p>Published on ${props.Date}</p>`}
+        ${props.Date && html`<p><em>Published on ${props.Date}</em></p>`}
         <div
           dangerouslySetInnerHTML=${{__html: props.content}}>
         </div>
