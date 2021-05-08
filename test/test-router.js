@@ -52,31 +52,17 @@ t('If there are two matching routes, first one is used', function () {
 });
 
 t('Match all doesn’t have priority over exact match', function() {
-  assert.equal(renderToString(html`<${Router} url="/contact.html">
-    <${HomeComponent} path=${/contact.html$/} foo="contact" />
-    <${NotRenderedComponent} path=${/exact2/} foo="foo" />
-    <${HomeComponent} path=${/.*/} foo="foo" />
-    <${NotRenderedComponent} path=${/exact3/} foo="foo" />
-  <//>`), `<div class="contact">Home</div>`);
-});
-
-
-t('Match all doesn’t have priority over exact match', function () {
-  assert.equal(renderToString(html`<${Router} url="/contact.html">
-    <${HomeComponent} path=${/contact.html$/} foo="contact" />
-    <${NotRenderedComponent} path=${/exact2/} foo="foo" />
-    <${HomeComponent} path=${/.*/} foo="foo" />
-    <${NotRenderedComponent} path=${/exact3/} foo="foo" />
-  <//>`), `<div class="contact">Home</div>`);
-});
-
-t('Match all doesn’t have priority over exact match', function() {
-  assert.equal(renderToString(html`<${Router} url="/contact.html">
-    <${HomeComponent} path=${/contact.html$/} foo="contact" />
-    <${NotRenderedComponent} path=${/exact2/} foo="foo" />
-    <${HomeComponent} path=${/.*/} foo="foo" />
-    <${NotRenderedComponent} path=${/exact3/} foo="foo" />
-  <//>`), `<div class="contact">Home</div>`);
+  assert.equal(
+    renderToString(
+      html`<${Router} url="/contact.html">
+        <${HomeComponent} path=${/contact$/} foo="contact" />
+        <${NotRenderedComponent} path=${/exact2/} foo="foo" />
+        <${HomeComponent} path=${/.*/} foo="foo" />
+         <${NotRenderedComponent} path=${/exact3/} foo="foo" />
+      <//>`
+    ),
+    `<div class="contact">Home</div>`
+  );
 });
 
 !(async function() {

@@ -101,20 +101,54 @@ export async function build() {
           }
         });
 
-      const title = firstTitleLine
-        .replace(/^\# /, '');
+      const title = firstTitleIndex !== -1
+        ? firstTitleLine.replace(/^\# /, '')
+        // one-two-three.md => "One Two Three"
+        : markdownFile
+          .replace(/^content\//, '')
+          .replace(/\.md(own)?$/,'')
+          .split('-')
+          .map(word => word.replace(/^\w/, c => c.toUpperCase()))
+          .join(' ')
 
-      const customFrontMatterProps = fileContent
+      const firstLine = fileContent.split('\n')[0];
+      const hasFrontMatter = firstLine.includes(':');
+
+      const firstEmptyLineIndex = fileContent
         .split('\n')
-        .slice(0, firstTitleIndex)
-        .filter(line => line)
-        .reduce((result, line) => {
-          const [key, value] = line.split(':');
-          result[key.trim()] = value.trim();
-          return result;
-        }, {})
+        .findIndex(line => line === '');
 
-      fileContent = fileContent.split('\n').slice(firstTitleIndex + 1).join('\n');
+      // my troubles come from the non-standard frontmatter
+      const customFrontMatterProps = hasFrontMatter
+        ? fileContent
+          .split('\n')
+          .slice(0, firstEmptyLineIndex)
+          .filter(line => line)
+          .reduce((result, line) => {
+            const [key, value] = line.split(':');
+            result[key.trim()] = value.trim();
+            return result;
+          }, {})
+        : {}
+
+      let sliceIndex = 0;
+
+      // slice content from first empty line (remove frontmatter)
+      if (hasFrontMatter && firstEmptyLineIndex !== -1) {
+        sliceIndex = firstEmptyLineIndex + 1;
+      }
+
+      // if first title is present, cut until after it, order is important
+      // FIXME: this will fail when there is a title in the middle of
+      // the markdown content!
+      if (firstTitleIndex !== -1) {
+        sliceIndex = firstTitleIndex + 1;
+      }
+
+      fileContent = fileContent
+        .split('\n')
+        .slice(sliceIndex)
+        .join('\n');
 
       return {
         path: '/' + markdownFile

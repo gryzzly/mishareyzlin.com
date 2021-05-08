@@ -48,7 +48,7 @@ export const Router = ({url, children}) => {
     }
   }, []);
 
-  url.replace(/index.html$/,'');
+  url.replace(/index.html$/, '');
 
   const handler = children.find(vnode => match(vnode.props.path, url));
   return cloneElement(handler, handler.props);

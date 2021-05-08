@@ -210,37 +210,86 @@ t(
   'Pages are generated from source markdown files',
   async function() {
     options.readFileResponse = {
-      'content/a.md': '# Title A\n\nBody A',
-      'content/b.md': '# Title B\n\nBody B',
+      'content/a.md': '# Title A\nBody A',
+      'content/b.md': 'Body B',
+      'content/c.mdown': 'date: Apr 10 2012\n\nBody C',
+      'content/d.md': 'date: Apr 10 2012\nfoo: bar\n\nBody D',
+      'content/e-dashed-title.md': 'Body E\n\nSome more text',
     };
-    options.readDirResponse = ['a.md', 'b.md'];
+    options.readDirResponse =
+      Object.keys(options.readFileResponse)
+        .map(key => key.replace(/^content\//, ''));
+
     await vmTest(options);
 
     const {pages} = options.writtenFiles[0].content.data;
 
     // From two markdwon source files, two files were written
-    assert.equal(options.writtenFiles.length, 2);
+    assert.equal(options.writtenFiles.length, 5);
     // content/*.md was transformed to respective /build/*.html
     assert.equal(options.writtenFiles[0].file, './build/a.html');
     assert.equal(options.writtenFiles[1].file, './build/b.html');
-    // Titles were correctly extracted from Markdown
+    assert.equal(options.writtenFiles[2].file, './build/c.html');
+    assert.equal(options.writtenFiles[3].file, './build/d.html');
+    assert.equal(options.writtenFiles[4].file, './build/e-dashed-title.html');
+    // Titles was correctly extracted from Markdown
     assert.equal(
-      pages['/a.html'].title,
+      pages['/a'].title,
       "Title A"
     );
+    // Title was generated from Filename when no title is present in Markdown
     assert.equal(
-      pages['/b.html'].title,
-      "Title B"
+      pages['/b'].title,
+      "B"
     );
+    // Frontmatter didn’t break creation of correct title (from filename here)
+    assert.equal(
+      pages['/c'].title,
+      "C"
+    );
+    // dashed-title become Capitalized Title:
+    assert.equal(
+      pages['/e-dashed-title'].title,
+      "E Dashed Title"
+    )
+    // frontmatter correctly parsed
+    assert.equal(
+      pages['/c'].date,
+      'Apr 10 2012'
+    )
+    // two pieces of data in frontmatter
+    assert.equal(
+      pages['/d'].date,
+      'Apr 10 2012'
+    )
+    assert.equal(
+      pages['/d'].foo,
+      'bar'
+    )
     // Content was written
     assert.equal(
-      pages['/a.html'].content,
-      options.readFileResponse['content/a.md']
+      pages['/a'].content,
+      `<p>Body A</p>`
     );
     assert.equal(
-      pages['/b.html'].content,
-      options.readFileResponse['content/b.md']
+      pages['/b'].content,
+      `<p>Body B</p>`
     );
+    assert.equal(
+      pages['/c'].content,
+      `<p>Body C</p>`
+    );
+    assert.equal(
+      pages['/d'].content,
+      `<p>Body D</p>`
+    );
+    assert.equal(
+      pages['/e-dashed-title'].content,
+      `<p>Body E</p>\n<p>Some more text</p>`
+    );
+    // Frontmatter was removed
+    // 'content/c.mdown': 'date: Apr 10 2012\n\nBody C',
+    // 'content/d.md': 'date: Apr 10 2012\nfoo: bar\n\nBody D',
   }
 );
 
