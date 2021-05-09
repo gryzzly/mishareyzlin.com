@@ -102,6 +102,9 @@
 textarea.edit-form__input {
   min-height: 150px;
 }
+.edit-form__row .sun-editor {
+  margin: calc(var(--universal-margin) / 2);
+}
 
 .edit-form__button-panel {
   text-align: right;
@@ -117,9 +120,13 @@ textarea.edit-form__input {
 
 <div id="admin"></div>
 
+<link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+
 <script type="module">
 import {
   html, render, createContext,
+  useCallback,
   useState, useContext, useRef, useEffect,
   renderToString
 } from "https://npm.reversehttp.com/htm/preact,preact/hooks,preact,preact-render-to-string";
@@ -528,6 +535,20 @@ function EntryItem({entry, titleKey}) {
 function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
   const inputRefs = useRef([]);
   const [inputValues, updateInputValues] = useState(entry);
+
+  useEffect(() => {
+    SUNEDITOR.create(inputRefs.current.content, {
+        mode: 'balloon',
+        display: 'block',
+        width: '100%',
+        height: 'auto',
+        popupDisplay: 'full',
+        buttonList: [
+            ['bold', 'italic', 'link', 'undo', 'redo']
+        ],
+        placeholder: 'Start typing something...'
+    });
+  }, [])
 
   useEffect(() => {
     cloudinaryClient.result.then((imageUrl) => {
