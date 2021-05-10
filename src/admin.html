@@ -207,7 +207,7 @@ let persistentStore = {
   }, {})
 };
 
-function updatePersistentStore(path, entry, toBeRemoved) {
+function saveOrAddItemToPersistentStore(path, entry, toBeRemoved) {
   let indexToUpdate = -1;
   persistentStore[path].filter(
     (persistedEntry, index) => {
@@ -254,8 +254,7 @@ function SortableList({
   itemClassName,
   onUpdate,
   onRemove,
-  SortableItem,
-  itemProps
+  SortableItem
 }) {
   const draggedItem = useRef(null);
   const draggedOverItem = useRef(null);
@@ -297,7 +296,6 @@ function SortableList({
           item=${item}
           index=${index}
           onRemove=${onRemove}
-          ...${itemProps}
         />
       </li>`;
     })}
@@ -468,6 +466,8 @@ function Admin (props) {
 
       ${store.current === 'SelectedModel' && html`<${SelectedModel}
         model=${store.selectedModel}
+        sortingUpdated=${store.sortingUpdated}
+        octokitRef=${octokitRef}
         onClickBack=${() => updateState(state => ({
           ...state,
           current: 'ModelsList',
@@ -497,7 +497,7 @@ function Admin (props) {
           if (!entry.uuid && toBeRemoved) {
             return;
           }
-          updatePersistentStore(path, entry, toBeRemoved);
+          saveOrAddItemToPersistentStore(path, entry, toBeRemoved);
           await saveToGithub(octokitRef.current, JSON.stringify(
             persistentStore,
             null,
@@ -546,11 +546,11 @@ function ModelsList({models, onSelect}) {
   </ul>`;
 }
 
-function SelectedModel(props) {
+function SelectedModel({model, sortingUpdated, onClickBack, octokitRef}) {
   const update = useContext(Updater);
 
   return html`<div>
-    <button onClick=${props.onClickBack}>← back</button>
+    <button onClick=${onClickBack}>← back</button>
     <button onClick=${() => {
       update(state => ({
         ...state,
@@ -558,53 +558,66 @@ function SelectedModel(props) {
         entry: {},
       }));
     }}>New</button>
+    ${sortingUpdated && html`<button onClick=${() => {
+      update(state => ({
+        ...state,
+        sortingUpdated: false
+      }))
+      localStorage[model] = JSON.stringify(persistentStore[model]);
+      saveToGithub(octokitRef.current, JSON.stringify(
+        persistentStore,
+        null,
+        2
+      ));
+    }}>Save Sorting</button>`}
     ${html`<${EntriesList}
-      entries=${persistentStore[props.model]}
-      titleKey=${schemas[props.model].titleKey}
+      titleKey=${schemas[model].titleKey}
+      entries=${persistentStore[model]}
+      onOrderUpdate=${({ oldIndex, newIndex }) => {
+        // persistentStore[props.model]
+        // copy of original list
+        const updated = persistentStore[model].slice();
+        // remove the dragged element from its position
+        updated.splice(oldIndex, 1);
+        // insert in position it was dragged over to
+        updated.splice(newIndex, 0, persistentStore[model][oldIndex]);
+        updated.forEach((item, index) => (item.sortIndex = index));
+        persistentStore[model] = updated;
+        update(state => ({
+          ...state,
+          sortingUpdated: true
+        }))
+      }}
     />`}
   </div>`;
 }
 
-function EntriesList({entries, titleKey}) {
-//   SortableList({
-//   items,
-//   listClassName,
-//   itemClassName,
-//   onUpdate,
-//   onRemove,
-//   SortableItem,
-// }
+function EntriesList({entries, titleKey, onOrderUpdate}) {
   return html`<${SortableList}
     items=${entries}
-    SortableItem=${({item, titleKey}) => {
-      debugger;
-      return html`<${EntryItem} entry=${item} titleKey=${titleKey} />`
+    SortableItem=${({item, index}) => {
+      return html`<${EntryItem}
+        entry=${item}
+        index=${index}
+        titleKey=${titleKey}
+      />`
     }}
-    listClassName=${'SortableList'}
-    itemClassName=${'SortableItem'}
-    itemProps=${{ titleKey: titleKey }}
+    onUpdate=${onOrderUpdate}
+    listClassName="SortableList"
+    itemClassName="SortableItem"
   />`;
-  // return html`<ul>
-  //   ${entries.map(entry => html`<${EntryItem}
-  //     entry=${entry}
-  //     titleKey=${titleKey}
-  //   />`)}
-  // </ul>`;
 }
 
-function EntryItem({entry, titleKey}) {
-  console.log(entry, titleKey)
+function EntryItem({entry, titleKey, index}) {
   const update = useContext(Updater);
 
-  return html`<li>
-    <div onClick=${() => update(state => ({
+  return html`<div onClick=${() => update(state => ({
       ...state,
       current: 'EditModel',
       entry
     }))}>
-      <button>Edit "${entry[titleKey]}"</button>
-    </div>
-  </li>`
+      <button><span style=${{fontSize: '.85em'}}>${index + 1}.</span> Edit "${entry[titleKey]}"</button>
+    </div>`
 }
 
 function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
