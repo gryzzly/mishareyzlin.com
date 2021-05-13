@@ -48,6 +48,12 @@
       "sortIndex": 3
     }
   ],
-  "news": [],
+  "news": [
+    {
+      "title": "Homee",
+      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620944471/widgetUpload/300_yppmnd.jpg",
+      "uuid": "f80005dc-6bd2-4acf-b267-bb8cca6222b0"
+    }
+  ],
   "notes": []
 }
