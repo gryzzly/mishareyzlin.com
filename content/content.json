@@ -36,15 +36,15 @@
       "sortIndex": 1
     },
     {
-      "path": "/asdasd",
-      "title": "asdasdasd",
-      "uuid": "5fa106be-c6f6-492e-bcaf-3d7fa8d1387d",
-      "sortIndex": 2
-    },
-    {
       "path": "/253",
       "title": "124323",
       "uuid": "326f43cc-41f5-4bc7-b698-c016b628db5e",
+      "sortIndex": 2
+    },
+    {
+      "path": "/asdasd",
+      "title": "asdasdasd",
+      "uuid": "5fa106be-c6f6-492e-bcaf-3d7fa8d1387d",
       "sortIndex": 3
     }
   ],
