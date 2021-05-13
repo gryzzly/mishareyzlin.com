@@ -99,6 +99,20 @@
 .edit-form__input {
   flex: 1;
 }
+.edit-form__editor {
+  opacity: 0;
+  transition: opacity .35;
+}
+.edit-form__editor + * {
+  opacity: 0;
+  transition: opacity .35s;
+}
+.edit-form__editor-loaded {
+  opacity: 1;
+}
+.edit-form__editor-loaded + * {
+  opacity: 1;
+}
 textarea.edit-form__input {
   min-height: 150px;
 }
@@ -148,7 +162,12 @@ const config = {
   contentFile: 'content/content.json',
   // FIXME:
   websiteUrl: 'https://mishareyzlincom.netlify.app',
+  netlifyWebsiteName: 'mishareyzlincom.netlify.app',
   badgeUrl: 'https://api.netlify.com/api/v1/badges/ede75d73-f2cb-439a-ab93-b6d71b08aa27/deploy-status',
+  netlifyToken: atob(
+    'eGR6QllSb1NhTFhBNElmalV6RXh1MzVFcVpuVm1pTm4tbDNCV0xocEh' +
+    'hZw=='
+  ),
   // to be filled in from github API on authorisation
   user: null
 };
@@ -230,6 +249,38 @@ function saveOrAddItemToPersistentStore(path, entry, toBeRemoved) {
   }
   localStorage[path] = JSON.stringify(persistentStore[path]);
 }
+
+async function getNetlifyStatus(token) {
+  try {
+    let endpoint =
+      `https://api.netlify.com/api/v1/sites/${config.netlifyWebsiteName}/deploys` +
+      '?per_page=1';
+    let result = await fetch(endpoint, {
+      headers: {
+        'Authorization':`Bearer ${token}`
+      }
+    });
+
+    let data = await result.json();
+    // first entry is last deploy
+    let lastDeploy = data[0];
+    // it contains a lot more info then we need
+    let deploy = {
+      state: lastDeploy.state,
+      created_at: lastDeploy.created_at,
+      updated_at: lastDeploy.updated_at,
+      error_message: lastDeploy.error_message,
+      published_at: lastDeploy.published_at,
+      deploy_time: lastDeploy.deploy_time,
+      screeenshot_url: lastDeploy.screeenshot_url
+    };
+
+    return deploy
+  } catch (error) {
+    return { statusCode: 500, body: error.toString() }
+  }
+}
+
 
 async function saveToGithub(octokit, content) {
   octokit.repos.createOrUpdateFileContents({
@@ -316,34 +367,37 @@ function Admin (props) {
   const octokitRef = useRef(null);
 
   const [store, updateState] = useState({
-    current: isAuthorised ? 'Loading' : null
+    current: isAuthorised ? 'Loading' : null,
+    justSaved: false
   });
 
-  const [justSaved, setJustSaved] = useState(false);
   const [badgeCacheBuster, setCacheBuster] = useState(Date.now());
   const [queryingBuildStatus, setQueryingBuildStatus] = useState(false);
   const badgeInterval = useRef(null);
 
   useEffect(() => {
-    if (!justSaved) return;
+    if (!store.justSaved) return;
 
-    let updates = 8;
+    const netlifyToken = config.netlifyToken;
+
     setQueryingBuildStatus(true);
 
-    if (badgeInterval.current) {
-      clearInterval(badgeInterval.current);
-    }
-    badgeInterval.current = setInterval(() => {
-      if (updates) {
-        updates--;
+    badgeInterval.current = setInterval(async () => {
+      const deploy = await getNetlifyStatus(netlifyToken)
+      if (deploy.state !== 'ready') {
         setCacheBuster(Date.now())
       } else {
         clearInterval(badgeInterval.current);
         setQueryingBuildStatus(false);
+        setCacheBuster(Date.now());
       }
-    }, 5000);
-    setJustSaved(false);
-  }, [justSaved])
+    }, 3000);
+
+    updateState(state => ({
+      ...state,
+      justSaved: false
+    }));
+  }, [store.justSaved])
 
   const [isPreviewShowing, setIsPreviewShowing] = useState(false);
   const [isPreviewLoading, setIsPreviewLoading] = useState(false);
@@ -467,27 +521,43 @@ function Admin (props) {
       ${store.current === 'SelectedModel' && html`<${SelectedModel}
         model=${store.selectedModel}
         sortingUpdated=${store.sortingUpdated}
-        onSortingUpdate=${({ oldIndex, newIndex }) => {
-        // copy of original list
-        const updated = persistentStore[model].slice();
-        // remove the dragged element from its position
-        updated.splice(oldIndex, 1);
-        // insert in position it was dragged over to
-        updated.splice(newIndex, 0, persistentStore[model][oldIndex]);
-        updated.forEach((item, index) => (item.sortIndex = index));
-        persistentStore[model] = updated;
-        update(state => ({
-          ...state,
-          sortingUpdated: true
-        }))
-      }}
-        octokitRef=${octokitRef}
+        onOrderUpdate=${({ oldIndex, newIndex }) => {
+          const model = store.selectedModel;
+          // copy of dragged item
+          const draggedItem = persistentStore[model][oldIndex];
+          // copy of original list
+          const updatedList = persistentStore[model].slice();
+          // remove the dragged element from its position
+          updatedList.splice(oldIndex, 1);
+          // insert in position it was dragged over to
+          updatedList.splice(newIndex, 0, draggedItem);
+          updatedList.forEach((item, index) => (item.sortIndex = index));
+          persistentStore[model] = updatedList;
+          updateState(state => ({
+            ...state,
+            sortingUpdated: true
+          }))
+        }}
         onClickBack=${() => updateState(state => ({
           ...state,
           current: 'ModelsList',
           selectedModel: undefined,
           entry: undefined
         }))}
+        onSaveSorting=${() => {
+          const model = store.selectedModel;
+          updateState(state => ({
+            ...state,
+            sortingUpdated: false,
+            justSaved: true
+          }))
+          localStorage[model] = JSON.stringify(persistentStore[model]);
+          saveToGithub(octokitRef.current, JSON.stringify(
+            persistentStore,
+            null,
+            2
+          ));
+        }}
       />`}
 
       ${store.current === 'EditModel' && html`<${EditForm}
@@ -502,15 +572,20 @@ function Admin (props) {
           updateState(state => ({
             ...state,
             current: 'SelectedModel',
-            entry: undefined,
+            entry: undefined
           }));
 
-          setJustSaved(true);
           // no uuid means it was never saved, so it’s a new item that was
           // dismissed
           if (!entry.uuid && toBeRemoved) {
             return;
           }
+
+          updateState(state => ({
+            ...state,
+            justSaved: true
+          }));
+
           saveOrAddItemToPersistentStore(path, entry, toBeRemoved);
           await saveToGithub(octokitRef.current, JSON.stringify(
             persistentStore,
@@ -564,7 +639,8 @@ function SelectedModel({
   model,
   sortingUpdated,
   onClickBack,
-  onOrderUpdate
+  onOrderUpdate,
+  onSaveSorting
 }) {
   const update = useContext(Updater);
 
@@ -577,18 +653,9 @@ function SelectedModel({
         entry: {},
       }));
     }}>New</button>
-    ${sortingUpdated && html`<button onClick=${() => {
-      update(state => ({
-        ...state,
-        sortingUpdated: false
-      }))
-      localStorage[model] = JSON.stringify(persistentStore[model]);
-      saveToGithub(octokitRef.current, JSON.stringify(
-        persistentStore,
-        null,
-        2
-      ));
-    }}>Save Sorting</button>`}
+    ${sortingUpdated &&
+      html`<button onClick=${onSaveSorting}>Save Sorting</button>`
+    }
     ${html`<${EntriesList}
       titleKey=${schemas[model].titleKey}
       entries=${persistentStore[model]}
@@ -628,19 +695,23 @@ function EntryItem({entry, titleKey, index}) {
 function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
   const inputRefs = useRef([]);
   const [inputValues, updateInputValues] = useState(entry);
+  const [editorLoaded, setEditorLoaded] = useState(false);
 
   useEffect(() => {
-    SUNEDITOR.create(inputRefs.current.content, {
+    inputRefs.current.content && SUNEDITOR.create(inputRefs.current.content, {
         mode: 'balloon',
         display: 'block',
         width: '100%',
         height: 'auto',
+        minHeight: 150,
+        maxHeight: 350,
         popupDisplay: 'full',
         buttonList: [
             ['bold', 'italic', 'link', 'undo', 'redo']
         ],
         placeholder: 'Start typing something...'
     });
+    setEditorLoaded(true);
   }, [])
 
   useEffect(() => {
@@ -668,6 +739,13 @@ function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
         } else {
           input = `input`;
         }
+        let inputClasses = [
+          'edit-form__input',
+          field === 'content' ? 'edit-form__editor' : '',
+          field === 'content' && editorLoaded ? 'edit-form__editor-loaded' : ''
+        ]
+          .join(' ')
+          .trim();
         return html`<div class="edit-form__row">
           <label for=${`${model}-${field}`}>${field}</label>
           <${input}
@@ -676,7 +754,7 @@ function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
             id=${`${model}-${field}`}
             name=${field}
             value=${inputValues[field]}
-            class="edit-form__input"
+            class="${inputClasses}"
             onInput=${(e) => {
               updateInputValues(inputStates => ({
                 ...inputStates,
