@@ -467,6 +467,20 @@ function Admin (props) {
       ${store.current === 'SelectedModel' && html`<${SelectedModel}
         model=${store.selectedModel}
         sortingUpdated=${store.sortingUpdated}
+        onSortingUpdate=${({ oldIndex, newIndex }) => {
+        // copy of original list
+        const updated = persistentStore[model].slice();
+        // remove the dragged element from its position
+        updated.splice(oldIndex, 1);
+        // insert in position it was dragged over to
+        updated.splice(newIndex, 0, persistentStore[model][oldIndex]);
+        updated.forEach((item, index) => (item.sortIndex = index));
+        persistentStore[model] = updated;
+        update(state => ({
+          ...state,
+          sortingUpdated: true
+        }))
+      }}
         octokitRef=${octokitRef}
         onClickBack=${() => updateState(state => ({
           ...state,
@@ -546,7 +560,12 @@ function ModelsList({models, onSelect}) {
   </ul>`;
 }
 
-function SelectedModel({model, sortingUpdated, onClickBack, octokitRef}) {
+function SelectedModel({
+  model,
+  sortingUpdated,
+  onClickBack,
+  onOrderUpdate
+}) {
   const update = useContext(Updater);
 
   return html`<div>
@@ -573,21 +592,7 @@ function SelectedModel({model, sortingUpdated, onClickBack, octokitRef}) {
     ${html`<${EntriesList}
       titleKey=${schemas[model].titleKey}
       entries=${persistentStore[model]}
-      onOrderUpdate=${({ oldIndex, newIndex }) => {
-        // persistentStore[props.model]
-        // copy of original list
-        const updated = persistentStore[model].slice();
-        // remove the dragged element from its position
-        updated.splice(oldIndex, 1);
-        // insert in position it was dragged over to
-        updated.splice(newIndex, 0, persistentStore[model][oldIndex]);
-        updated.forEach((item, index) => (item.sortIndex = index));
-        persistentStore[model] = updated;
-        update(state => ({
-          ...state,
-          sortingUpdated: true
-        }))
-      }}
+      onOrderUpdate=${onOrderUpdate}
     />`}
   </div>`;
 }
