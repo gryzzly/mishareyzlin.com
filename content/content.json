@@ -30,15 +30,15 @@
       "sortIndex": 0
     },
     {
-      "path": "/123",
-      "title": "123",
-      "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb635",
-      "sortIndex": 1
-    },
-    {
       "path": "/253",
       "title": "124323",
       "uuid": "326f43cc-41f5-4bc7-b698-c016b628db5e",
+      "sortIndex": 1
+    },
+    {
+      "path": "/123",
+      "title": "123",
+      "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb635",
       "sortIndex": 2
     },
     {
