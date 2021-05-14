@@ -33,7 +33,8 @@
       "path": "/123",
       "title": "123",
       "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb635",
-      "sortIndex": 1
+      "sortIndex": 1,
+      "content": "<p>123</p>"
     },
     {
       "path": "/253",
