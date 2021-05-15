@@ -73,7 +73,8 @@
       "title": "Aasdasd",
       "image": "https://picsum.photos/450/300",
       "date": "2021-05-22",
-      "uuid": "4aed0a44-8338-4e0f-b8f6-c73a5024b918"
+      "uuid": "4aed0a44-8338-4e0f-b8f6-c73a5024b918",
+      "content": "<p>ö und ü</p>"
     }
   ],
   "notes": []
