@@ -41,7 +41,7 @@
       "title": "124323",
       "uuid": "326f43cc-41f5-4bc7-b698-c016b628db5e",
       "sortIndex": 2,
-      "content": "<p>123323</p>"
+      "content": "<p>123323</p><pre>&lt;?php<br>start(with_some_php);<br>?&gt;<br></pre>"
     },
     {
       "path": "/asdasd",
