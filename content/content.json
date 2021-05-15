@@ -67,7 +67,8 @@
       "title": "Testing",
       "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620947563/widgetUpload/300_pwflnl.jpg",
       "date": "2021-05-05",
-      "uuid": "207ed549-ca36-4e3f-a429-c35d0d5ca361"
+      "uuid": "207ed549-ca36-4e3f-a429-c35d0d5ca361",
+      "content": "<h1>Some other code here</h1><pre>async function vmTest(options) {<br>  const buildContext = vm.createContext({<br>&nbsp;&nbsp;})<br>}<br></pre>"
     },
     {
       "title": "Aasdasd",
