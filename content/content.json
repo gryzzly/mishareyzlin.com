@@ -76,6 +76,13 @@
       "date": "2021-05-22",
       "uuid": "4aed0a44-8338-4e0f-b8f6-c73a5024b918",
       "content": "<p>ö und ü</p>"
+    },
+    {
+      "title": "New page",
+      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1621192333/widgetUpload/toa-heftiba-so2xKmYkdxU-unsplash_gyihfk.jpg",
+      "content": "<p>New new new</p>",
+      "date": "2021-05-16",
+      "uuid": "42c4a94a-bf26-417c-bd31-44d7f168f0e2"
     }
   ],
   "notes": []
