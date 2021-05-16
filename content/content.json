@@ -82,20 +82,20 @@
       "sortIndex": 4
     },
     {
+      "sortIndex": null,
+      "title": "asdsd",
+      "image": "https://picsum.photos/400/300",
+      "content": "<p>asdasd</p>",
+      "uuid": "7fb8270c-f9c8-4f7a-b106-1c6a592fdf6c",
+      "date": "2021-05-16"
+    },
+    {
       "title": "Aasdasd",
       "image": "https://picsum.photos/450/300",
       "date": "2021-05-22",
       "uuid": "4aed0a44-8338-4e0f-b8f6-c73a5024b918",
       "content": "<p>ö und ü</p>",
       "sortIndex": 2
-    },
-    {
-      "sortIndex": null,
-      "title": "asdsd",
-      "image": "https://picsum.photos/400/300",
-      "content": "<p>asdasd</p>",
-      "uuid": "7fb8270c-f9c8-4f7a-b106-1c6a592fdf6c",
-      "date": "16/05/2021"
     }
   ],
   "notes": []
