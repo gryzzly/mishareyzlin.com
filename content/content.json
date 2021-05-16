@@ -96,6 +96,14 @@
       "date": "2021-01-14",
       "uuid": "126d25ab-f0fc-41b7-8a9c-2f094d9aa661",
       "sortIndex": 0
+    },
+    {
+      "sortIndex": 5,
+      "title": "A newer item",
+      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1621204392/widgetUpload/300_rbpifc.jpg",
+      "content": "<p>Testing order of newer item</p>",
+      "uuid": "4c14e42e-f2e9-4a03-b49b-d8e4ea7b41b4",
+      "date": "17/05/2021"
     }
   ],
   "notes": []
