@@ -52,6 +52,14 @@
   ],
   "news": [
     {
+      "title": "Aasdasd",
+      "image": "https://picsum.photos/450/300",
+      "date": "2021-05-22",
+      "uuid": "4aed0a44-8338-4e0f-b8f6-c73a5024b918",
+      "content": "<p>ö und ü</p>",
+      "sortIndex": 0
+    },
+    {
       "title": "An older item",
       "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620946722/widgetUpload/200_tgcm9q.jpg",
       "date": "2021-01-14",
@@ -64,14 +72,14 @@
       "date": "2021-05-05",
       "uuid": "207ed549-ca36-4e3f-a429-c35d0d5ca361",
       "content": "<h1>Some other code here</h1><pre>async function vmTest(options) {<br>  const buildContext = vm.createContext({<br>&nbsp;&nbsp;})<br>}<br></pre>",
-      "sortIndex": 3
+      "sortIndex": 2
     },
     {
       "title": "Homee",
       "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620944471/widgetUpload/300_yppmnd.jpg",
       "uuid": "f80005dc-6bd2-4acf-b267-bb8cca6222b0",
       "date": "2021-05-14",
-      "sortIndex": 0
+      "sortIndex": 3
     },
     {
       "title": "New page",
@@ -82,20 +90,12 @@
       "sortIndex": 4
     },
     {
-      "sortIndex": null,
+      "sortIndex": 5,
       "title": "asdsd",
       "image": "https://picsum.photos/400/300",
       "content": "<p>asdasd</p>",
       "uuid": "7fb8270c-f9c8-4f7a-b106-1c6a592fdf6c",
       "date": "2021-05-16"
-    },
-    {
-      "title": "Aasdasd",
-      "image": "https://picsum.photos/450/300",
-      "date": "2021-05-22",
-      "uuid": "4aed0a44-8338-4e0f-b8f6-c73a5024b918",
-      "content": "<p>ö und ü</p>",
-      "sortIndex": 2
     }
   ],
   "notes": []
