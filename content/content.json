@@ -98,5 +98,14 @@
       "sortIndex": 0
     }
   ],
-  "notes": []
+  "notes": [
+    {
+      "sortIndex": -1,
+      "date": "2021-05-23",
+      "path": "/notes/one-two-three",
+      "title": "One two three",
+      "content": "<p>My idea is to avoid dependencies for almost everything.&nbsp;</p><p>Here goes some code:</p><pre>// dates.js<br>const toLocaleUTCDateString = (date, locales, options) =&gt;<br>  new Date(date.valueOf() + (date.getTimezoneOffset() * 6e4))<br>    .toLocaleDateString(locales, options);<br></pre><p><br></p>",
+      "uuid": "2156ba8d-f10b-40d6-ad5c-c3b1fcf300b3"
+    }
+  ]
 }
