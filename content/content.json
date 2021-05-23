@@ -48,6 +48,13 @@
       "title": "asdasdasd",
       "uuid": "5fa106be-c6f6-492e-bcaf-3d7fa8d1387d",
       "sortIndex": 3
+    },
+    {
+      "sortIndex": 3,
+      "path": "/notes/note-from-pages",
+      "title": "Note from pages",
+      "content": "<p>One two three</p>",
+      "uuid": "51b63bb0-ca8f-4296-993f-85c975ec3ace"
     }
   ],
   "news": [
