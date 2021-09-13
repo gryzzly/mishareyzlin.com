@@ -44,12 +44,6 @@
       "content": "<p>123323</p><pre>&lt;?php<br>start(with_some_php);<br>?&gt;<br></pre>"
     },
     {
-      "path": "/asdasd",
-      "title": "asdasdasd",
-      "uuid": "5fa106be-c6f6-492e-bcaf-3d7fa8d1387d",
-      "sortIndex": 3
-    },
-    {
       "sortIndex": 3,
       "path": "/notes/note-from-pages",
       "title": "Note from pages",
