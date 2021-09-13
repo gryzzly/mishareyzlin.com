@@ -1,24 +1,28 @@
 {
   "menu": [
     {
-      "path": "Home",
-      "title": "/",
-      "uuid": "2af25248-14e9-470c-9896-5874eb920508"
-    },
-    {
       "path": "/notes/",
       "title": "Notes",
-      "uuid": "2162a607-bfa5-41b5-ab01-5ebae53bfd51"
+      "uuid": "2162a607-bfa5-41b5-ab01-5ebae53bfd51",
+      "sortIndex": 0
+    },
+    {
+      "path": "Home",
+      "title": "/",
+      "uuid": "2af25248-14e9-470c-9896-5874eb920508",
+      "sortIndex": 1
     },
     {
       "path": "/works",
       "title": "Works",
-      "uuid": "e0fc47ef-ae76-40ed-8277-236355f21d03"
+      "uuid": "e0fc47ef-ae76-40ed-8277-236355f21d03",
+      "sortIndex": 2
     },
     {
       "path": "/cv",
       "title": "CV",
-      "uuid": "d600ed36-897c-4d92-b3a3-dbd94aaca139"
+      "uuid": "d600ed36-897c-4d92-b3a3-dbd94aaca139",
+      "sortIndex": 3
     }
   ],
   "pages": [
