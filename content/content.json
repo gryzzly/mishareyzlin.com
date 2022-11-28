@@ -32,6 +32,11 @@
       "content": "<p>My name is Misha Reyzlin &amp; I am professional web developer. You may want to take a look at my resume. I use this website to keep my technical notes and to play with all kinds of things.</p><p>Me elsewhere: <a href=\"https://twitter.com/gryzzly\">twitter</a>, <a href=\"https://github.com/gryzzly\">github</a>, <a href=\"https://stackoverflow.com/users/236135/misha-reyzlin\">stackoverflow</a>, <a href=\"http://www.linkedin.com/in/mishareyzlin\">linkedin</a></p>",
       "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb634",
       "sortIndex": 0
+    },
+    {
+      "path": "/notes/new-website-2022",
+      "title": "Thanks Heroku for sunsetting the Free Tier",
+      "uuid": "8b2f73f1-ea57-4a71-88d3-1d6a3ee9615b"
     }
   ],
   "news": [
