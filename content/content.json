@@ -46,13 +46,6 @@
       "uuid": "326f43cc-41f5-4bc7-b698-c016b628db5e",
       "sortIndex": 2,
       "content": "<p>123323</p><pre>&lt;?php<br>start(with_some_php);<br>?&gt;<br></pre>"
-    },
-    {
-      "sortIndex": 3,
-      "path": "/notes/note-from-pages",
-      "title": "Note from pages",
-      "content": "<p>One two three</p>",
-      "uuid": "51b63bb0-ca8f-4296-993f-85c975ec3ace"
     }
   ],
   "news": [
