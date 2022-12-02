@@ -36,7 +36,8 @@
     {
       "path": "/notes/new-website-2022",
       "title": "Thanks Heroku for sunsetting the Free Tier",
-      "uuid": "8b2f73f1-ea57-4a71-88d3-1d6a3ee9615b"
+      "uuid": "8b2f73f1-ea57-4a71-88d3-1d6a3ee9615b",
+      "content": "<div>test</div>"
     }
   ],
   "news": [
