@@ -13,6 +13,8 @@ import {
   match,
 } from './router.js';
 
+export const CDN = `https://res.cloudinary.com/dcvrycv7k/image/upload`;
+
 // TODO: think about this some more.
 const contentToHtml = (content) => content.split('\n')
   .filter(Boolean)

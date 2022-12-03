@@ -47,7 +47,7 @@
   margin-left: 0;
 }
 .admin-content {
-  max-width: 580px;
+  max-width: 780px;
 }
 .admin-preview {
   background: rgba(0, 0, 0, .75);
@@ -61,6 +61,7 @@
   pointer-events: none;
   display: none;
   padding-top: 24px;
+  z-index: 1;
 }
 .admin-preview-loading {
   opacity: 0;
@@ -87,9 +88,10 @@
   height: 20px;
   line-height: 20px;
   text-align: center;
+  z-index: 2;
 }
 .edit-form__row {
-  display: flex;
+  /* display: flex; */
 }
 .edit-form__row label {
   min-width: 5em;
@@ -99,7 +101,7 @@
 .edit-form__input {
   flex: 1;
 }
-.edit-form__editor {
+/* .edit-form__editor {
   opacity: 0;
   transition: opacity .35;
 }
@@ -112,7 +114,7 @@
 }
 .edit-form__editor-loaded + * {
   opacity: 1;
-}
+} */
 textarea.edit-form__input {
   min-height: 150px;
 }
@@ -125,17 +127,26 @@ textarea.edit-form__input {
 }
 .edit-form__preview {
   margin: 1em 6.3rem;
+  height: 150px;
+  position: relative
 }
 .edit-form__preview > img {
-  max-height: 300px;
+    height: 100%;
+    width: auto;
 }
 </style>
 </head>
 
 <div id="admin"></div>
 
-<link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+<!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet"> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script> -->
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/squire-rte@1.11.3/build/squire-raw.js"></script> -->
+<!-- <script type="module" src="https://unpkg.com/@papyrs/stylo@latest/dist/stylo/stylo.esm.js"></script> -->
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+<script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
 
 <script type="module">
 import {
@@ -153,8 +164,46 @@ function uuidv4() {
   });
 }
 
-import {App} from '../index.js';
+// From https://stackoverflow.com/a/30106551/236135
+//
+// Encoding UTF8 ⇢ base64
+function b64EncodeUnicode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+        return String.fromCharCode(parseInt(p1, 16))
+    }))
+}
+
+// Decoding base64 ⇢ UTF8
+function b64DecodeUnicode(str) {
+    return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    }).join(''))
+}
+
+
+// Adapted from: https://stackoverflow.com/a/55571869/1762224
+const toLocaleUTCDateString = (date, locales, options) =>
+  new Date(date.valueOf() + (date.getTimezoneOffset() * 6e4))
+    .toLocaleDateString(locales, options);
+
+// https://stackoverflow.com/questions/35843050/return-dd-mm-yyyy-from-date-object
+// 'en-GB' === 'dd/mm/yyyy'
+const formatDate = date =>
+  toLocaleUTCDateString(date, 'en-GB', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  })
+  .replace(/\//g, '-').replace(/,/, '');
+
+
+import {App, CDN} from '../index.js';
 import {document as doc} from '../document.js';
+// export CDN for the use by cloudinary scrip
+window.CDN = CDN;
 
 const config = {
   owner: 'gryzzly',
@@ -247,6 +296,20 @@ function saveOrAddItemToPersistentStore(path, entry, toBeRemoved) {
     entry.uuid = uuidv4();
     persistentStore[path].push(entry);
   }
+  persistentStore[path].sort((a, b) => {
+    return a.sortIndex - b.sortIndex;
+  })
+  if (schemas[path].sort) {
+    persistentStore[path] = persistentStore[path].sort((a, b) => {
+      if (schemas[path].sort === 'date') {
+        // ensure date exists on the item, if not assign "now"
+        [a, b].forEach(
+          item => item.date = item.date || formatDate(new Date())
+        );
+        return new Date(b.date).getTime() - new Date(a.date).getTime()
+      }
+    })
+  }
   localStorage[path] = JSON.stringify(persistentStore[path]);
 }
 
@@ -264,7 +327,7 @@ async function getNetlifyStatus(token) {
     let data = await result.json();
     // first entry is last deploy
     let lastDeploy = data[0];
-    // it contains a lot more info then we need
+    // it contains a lot more info than we need
     let deploy = {
       state: lastDeploy.state,
       created_at: lastDeploy.created_at,
@@ -288,7 +351,7 @@ async function saveToGithub(octokit, content) {
     repo: config.repo,
     path: config.contentFile,
     message: 'Updated contents',
-    content: btoa(content),
+    content: b64EncodeUnicode(content),
     committer: config.user,
     author: config.user,
     sha: sha
@@ -296,8 +359,6 @@ async function saveToGithub(octokit, content) {
     sha = result.data.content.sha;
   });
 }
-
-const Updater = createContext();
 
 function SortableList({
   items,
@@ -360,6 +421,12 @@ function Badge({now, blink}) {
   />`;
 }
 
+const Updater = createContext();
+
+function Editor(props) {
+  return html`<textarea></textarea>`;
+}
+
 function Admin (props) {
   const [isAuthorised, setIsAuthorised] =
       useState(Boolean(localStorage['ghToken']));
@@ -371,6 +438,26 @@ function Admin (props) {
     justSaved: false
   });
 
+  // prevent lost work
+  const [hasUnfinishedWork, setHasUnfinishedWork] = useState(false);
+  const hasUnfinishedWorkRef = useRef(hasUnfinishedWork);
+
+  useEffect(() => {
+    hasUnfinishedWorkRef.current = hasUnfinishedWork;
+  }, [hasUnfinishedWork])
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', (event) => {
+      if (hasUnfinishedWorkRef.current) {
+        event.preventDefault();
+        return event.returnValue = 'You have unfinished changes!';
+      }
+    });
+    return () => {
+      window.removeEventListener('beforeunload');
+    }
+  }, []);
+
   const [badgeCacheBuster, setCacheBuster] = useState(Date.now());
   const [queryingBuildStatus, setQueryingBuildStatus] = useState(false);
   const badgeInterval = useRef(null);
@@ -380,18 +467,19 @@ function Admin (props) {
 
     const netlifyToken = config.netlifyToken;
 
-    setQueryingBuildStatus(true);
-
-    badgeInterval.current = setInterval(async () => {
+    async function queryNetifyStatus () {
       const deploy = await getNetlifyStatus(netlifyToken)
       if (deploy.state !== 'ready') {
         setCacheBuster(Date.now())
+        setQueryingBuildStatus(true);
       } else {
         clearInterval(badgeInterval.current);
         setQueryingBuildStatus(false);
         setCacheBuster(Date.now());
       }
-    }, 3000);
+    }
+
+    badgeInterval.current = setInterval(queryNetifyStatus, 1000);
 
     updateState(state => ({
       ...state,
@@ -416,6 +504,7 @@ function Admin (props) {
 
       let contentFile;
       let user;
+      let email;
       try {
         contentFile = await octokit.repos.getContent({
           owner: config.owner,
@@ -423,9 +512,10 @@ function Admin (props) {
           path: config.contentFile
         });
         user = await octokit.request("/user");
+        email = ((await octokit.request("/user/emails") || [])[0] || {}).email
         config.user = {
-          email: user.data.email,
-          name: user.data.name
+          email: email || 'test@test.com',// FIXME: think more about default email
+          name: user.data.name || user.data.login
         };
       } catch (e) {
         contentFile = emptyContents;
@@ -443,7 +533,7 @@ function Admin (props) {
 
       persistentStore = {
         ...persistentStore,
-        ...JSON.parse(atob(contentFile.data.content))
+        ...JSON.parse(b64DecodeUnicode(contentFile.data.content))
       };
       sha = contentFile.data.sha;
       Object.keys(schemas).forEach(model => {
@@ -475,6 +565,18 @@ function Admin (props) {
       window.removeEventListener("message", onMessage);
     };
   });
+
+  useEffect(() => {
+    function onEscape (event) {
+      if(event.key === "Escape") {
+        setIsPreviewShowing(false)
+      }
+    }
+    document.addEventListener('keydown', onEscape)
+    return () => {
+      document.removeEventListener("keydown", onEscape);
+    };
+  })
 
   return html`
   <${Updater.Provider} value=${updateState}>
@@ -568,6 +670,13 @@ function Admin (props) {
           entry: undefined
         }))}
         entry=${store.entry}
+        onStartEditing=${() => {
+          setHasUnfinishedWork(true);
+        }}
+        onFinishEditing=${() => {
+          setHasUnfinishedWork(false);
+        }}
+        hasUnfinishedWork=${hasUnfinishedWork}
         onSave=${async (path, entry, toBeRemoved) => {
           updateState(state => ({
             ...state,
@@ -640,17 +749,22 @@ function SelectedModel({
   sortingUpdated,
   onClickBack,
   onOrderUpdate,
-  onSaveSorting
+  onSaveSorting,
+  hasUnfinishedWork
 }) {
   const update = useContext(Updater);
 
   return html`<div>
-    <button onClick=${onClickBack}>← back</button>
+    <button onClick=${() => {
+      onClickBack();
+    }}>← back</button>
     <button onClick=${() => {
       update(state => ({
         ...state,
         current: 'EditModel',
-        entry: {},
+        entry: {
+          sortIndex: (persistentStore[model].length)
+        },
       }));
     }}>New</button>
     ${sortingUpdated &&
@@ -660,17 +774,18 @@ function SelectedModel({
       titleKey=${schemas[model].titleKey}
       entries=${persistentStore[model]}
       onOrderUpdate=${onOrderUpdate}
+      sortBy=${schemas[model].sort}
     />`}
   </div>`;
 }
 
-function EntriesList({entries, titleKey, onOrderUpdate}) {
+function EntriesList({entries, titleKey, onOrderUpdate, sortBy}) {
   return html`<${SortableList}
     items=${entries}
     SortableItem=${({item, index}) => {
       return html`<${EntryItem}
         entry=${item}
-        index=${index}
+        index=${sortBy && sortBy === 'date' ? item.date : (index + 1)}
         titleKey=${titleKey}
       />`
     }}
@@ -688,31 +803,23 @@ function EntryItem({entry, titleKey, index}) {
       current: 'EditModel',
       entry
     }))}>
-      <button><span style=${{fontSize: '.85em'}}>${index + 1}.</span> Edit "${entry[titleKey]}"</button>
+      <button><span style=${{fontSize: '.85em'}}>${index}.</span> "${ entry.title || entry[titleKey] || entry.image}"</button>
     </div>`
 }
 
-function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
+function EditForm({
+  model,
+  onClickBack,
+  onSave,
+  onPreview,
+  onStartEditing,
+  onFinishEditing,
+  hasUnfinishedWork,
+  entry = {}
+}) {
   const inputRefs = useRef([]);
   const [inputValues, updateInputValues] = useState(entry);
   const [editorLoaded, setEditorLoaded] = useState(false);
-
-  useEffect(() => {
-    inputRefs.current.content && SUNEDITOR.create(inputRefs.current.content, {
-        mode: 'balloon',
-        display: 'block',
-        width: '100%',
-        height: 'auto',
-        minHeight: 150,
-        maxHeight: 350,
-        popupDisplay: 'full',
-        buttonList: [
-            ['bold', 'italic', 'link', 'undo', 'redo']
-        ],
-        placeholder: 'Start typing something...'
-    });
-    setEditorLoaded(true);
-  }, [])
 
   useEffect(() => {
     cloudinaryClient.result.then((imageUrl) => {
@@ -723,22 +830,43 @@ function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
         ...inputStates,
         image: imageUrl
       }));
+      resetCloudinaryUpload()
     });
   }, []);
 
+  useEffect(() => {
+    inputRefs.current.trix.addEventListener("trix-change", () => {
+      updateInputValues(inputStates => ({
+        ...inputStates,
+        content: inputRefs.current.content.value
+      }));
+    });
+  }, [])
+
+
   return html`<div className="edit-form">
-    <button onClick=${onClickBack}>← back</button>
+    <form onChange=${onStartEditing}>
+      ${/*
+        without "type=button" this button will attempt to act as submit
+        and reload the page
+      */void 0}
+      <button type="button" onClick=${() => {
+        if (!hasUnfinishedWork || confirm('sure?')) {
+          onClickBack();
+          onFinishEditing();
+        }
+      }}>← back</button>
     <fieldset>
       <legend>${schemas[model].singular}</legend>
       ${Object.keys(schemas[model].fields).map((field, index) => {
-        let input;
-        if (schemas[model].types && schemas[model].types[field]) {
-          if (schemas[model].types[field] === 'textarea') {
-            input = 'textarea'
-          }
-        } else {
-          input = `input`;
-        }
+        // let input;
+        // if (schemas[model].types && schemas[model].types[field]) {
+        //   if (schemas[model].types[field] === 'textarea') {
+        //     input = 'textarea'
+        //   }
+        // } else {
+        //   input = `input`;
+        // }
         let inputClasses = [
           'edit-form__input',
           field === 'content' ? 'edit-form__editor' : '',
@@ -748,7 +876,7 @@ function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
           .trim();
         return html`<div class="edit-form__row">
           <label for=${`${model}-${field}`}>${field}</label>
-          <${input}
+          <input
             placeholder=${field}
             ref=${ref => inputRefs.current[field] = ref}
             id=${`${model}-${field}`}
@@ -761,9 +889,19 @@ function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
                 [field]: e.target.value
               }));
             }}
+            type=${field === 'date' ? 'date' : field === 'content' ? 'hidden' : 'text'}
           />
+          ${field === 'content' && html`<div class="edit-form__input">
+            <trix-editor 
+              ref=${ref => inputRefs.current.trix = ref}
+              input=${`${model}-${field}`}
+            ></trix-editor>
+          </div>`}
           ${field === 'image' && html`<button
-            onClick=${() => cloudinaryClient.widget.open()}
+              onClick=${(event) => {
+                event.preventDefault()
+                cloudinaryClient.widget.open()
+              }}
           >
             ${inputValues.image ? 'Replace' : 'Upload'} an image
           </button>`}
@@ -772,7 +910,7 @@ function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
           field === 'image' &&
           inputValues.image &&
           html`<div class="edit-form__preview">
-            <img src=${inputValues.image} />
+              <img src=${`${CDN}${inputValues.image}`} />
           </div>`
         }`;
       })}
@@ -791,7 +929,10 @@ function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
         }}>Delete</button>
 
         <button onClick=${() => {
-          const entryData = inputValues;
+            const entryData = {
+              ...entry,
+              ...inputValues
+            }
           const previewPath = model === 'pages' ? entryData.path : '/';
 
           // slice to not modify actual store, since we are only previewing
@@ -830,14 +971,18 @@ function EditForm({model, onClickBack, onSave, onPreview, entry = {}}) {
           onPreview(contents);
         }}>Preview</button>
 
-        <button onClick=${() => {
+        <button onClick=${(e) => {
+          debugger;
+          e.preventDefault();
           onSave(
             model,
             inputValues
           );
+          onFinishEditing();
         }}>Save</button>
       </div>
   </fieldset>
+    </form>
   </div>`;
 }
 
@@ -850,11 +995,15 @@ render(
 <script>
 var cloudinaryPromiseResolve;
 var cloudinaryPromiseReject;
+var cloudinaryPromise;
 
-var cloudinaryPromise = new Promise((resolve, reject) => {
-  cloudinaryPromiseResolve = resolve;
-  cloudinaryPromiseReject = reject;
-})
+function resetCloudinaryUpload() {
+  window.cloudinaryClient.result = new Promise((resolve, reject) => {
+    cloudinaryPromiseResolve = resolve;
+    cloudinaryPromiseReject = reject;
+  })
+}
+
 window.cloudinaryClient = {
   widget: cloudinary.createUploadWidget({
     cloudName: 'dcvrycv7k',
@@ -863,7 +1012,9 @@ window.cloudinaryClient = {
     cropping: true
   }, (error, result) => {
     if (!error && result && result.event === "success") {
-      cloudinaryPromiseResolve(result.info.secure_url);
+      cloudinaryPromiseResolve(
+        result.info.secure_url.replace(CDN, '')
+      );
     }
     if (error) {
       cloudinaryPromiseReject(error);
@@ -871,4 +1022,13 @@ window.cloudinaryClient = {
   }),
   result: cloudinaryPromise
 };
+
+resetCloudinaryUpload()
+
+document.addEventListener("trix-initialize", function onTrixInitialize(event) {
+  const { toolbarElement } = event.target
+  const inputElement = toolbarElement.querySelector("input[name=href]")
+  inputElement.type = "text"
+  inputElement.pattern = "(https?://|/).+"
+});
 </script>
