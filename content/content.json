@@ -29,30 +29,15 @@
     {
       "path": "/",
       "title": "Hello",
-      "content": "<p>My name is Misha Reyzlin & I am professional web developer. You may want to take a look at my resume. I use this website to keep my technical notes and to play with all kinds of things.</p>\n<p>Me elsewhere: <a href=\"https://twitter.com/gryzzly\">twitter</a>, <a href=\"https://github.com/gryzzly\">github</a>, <a href=\"https://stackoverflow.com/users/236135/misha-reyzlin\">stackoverflow</a>, <a href=\"http://www.linkedin.com/in/mishareyzlin\">linkedin</a></p>",
+      "content": "<div>My name is Misha Reyzlin &amp; I am a professional web developer. You may want to take a look at my <a href=\"/cv\">resume</a>. I use this website to keep my technical notes and to play with all kinds of things.<br><br></div><div>Me elsewhere: <a href=\"https://twitter.com/gryzzly\">twitter</a>, <a href=\"https://github.com/gryzzly\">github</a>, <a href=\"https://stackoverflow.com/users/236135/misha-reyzlin\">stackoverflow</a>, <a href=\"http://www.linkedin.com/in/mishareyzlin\">linkedin</a></div>",
       "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb634",
       "sortIndex": 0
     },
     {
-      "path": "/123",
-      "title": "123",
-      "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb635",
-      "sortIndex": 1,
-      "content": "<p>123</p>"
-    },
-    {
-      "path": "/253",
-      "title": "124323",
-      "uuid": "326f43cc-41f5-4bc7-b698-c016b628db5e",
-      "sortIndex": 2,
-      "content": "<p>123323</p><pre>&lt;?php<br>start(with_some_php);<br>?&gt;<br></pre>"
-    },
-    {
-      "sortIndex": 3,
-      "path": "/notes/note-from-pages",
-      "title": "Note from pages",
-      "content": "<p>One two three</p>",
-      "uuid": "51b63bb0-ca8f-4296-993f-85c975ec3ace"
+      "path": "/notes/new-website-2022",
+      "title": "Thanks Heroku for sunsetting the Free Tier",
+      "uuid": "8b2f73f1-ea57-4a71-88d3-1d6a3ee9615b",
+      "content": "<div>Finally, a new website. Heroku closed its free tier and with that</div><div>I finally had a good enough reason to change hosting and stop</div><div>using ruby.&nbsp;</div><div><br></div><div>Now this is a pre-rendered static site, but I still</div><div>can enjoy a web editing experience, without having to manually&nbsp;</div><div>edit text files, creating and pushing commits – I have realised&nbsp;</div><div>an idea I had for a long time: content is stored in github in&nbsp;</div><div>text files, admin allows to edit the content and all this with just 30 lines of nodejs server code to enable oath authorisation via proxy.&nbsp;</div><div><br></div><div>Once the Gitbub oauth flow is done, admin user is able to pull&nbsp;</div><div>the contents and push changes with a UI based on a content model&nbsp;</div><div>and forms matching the fields in the models.</div>"
     }
   ],
   "news": [
