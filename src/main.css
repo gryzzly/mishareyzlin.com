@@ -1,5 +1,5 @@
 html {
-  font-family: 'IBM Plex Sans', 'Georgia', serif;
+  font-family: 'Georgia', serif;
   font-size: 1em;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -64,14 +64,14 @@ section section h1 {
   fill: #fff;
 }
 h1, h2, h3 {
-  /* font-family: 'PT Sans', sans-serif; */
+  font-family: 'Times New Roman', Times, serif;
   font-weight: 600;
+  font-style: italic;
 }
 #site-nav {
   display: flex;
   justify-content: flex-start;
   padding: 0 1rem;
-  /* font-family: 'PT Sans', sans-serif; */
 }
   #site-nav li {
     list-style: none;
