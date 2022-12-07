@@ -77,10 +77,6 @@ h1, h2, h3 {
     list-style: none;
     margin-right: .5rem;
   }
-  #site-nav a {
-    color: #444;
-    text-decoration: none;
-  }
 
 #main {
   padding: 0 1rem;
