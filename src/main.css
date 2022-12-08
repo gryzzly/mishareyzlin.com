@@ -132,3 +132,9 @@ h1, h2, h3 {
   color: #444;
   border-bottom: 1px dashed #000;
 }
+/* Dark Theme */ 
+@media (prefers-color-scheme: dark) {
+  html {
+    filter: invert();
+  }
+}
