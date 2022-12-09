@@ -21,6 +21,7 @@ export function document(content, data) {
       import {start} from "/index.js";
       start();
       </script>
+      <script data-goatcounter="https://mishareyzlincom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     </body>
   </html>
 `;
