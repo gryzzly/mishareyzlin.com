@@ -39,15 +39,5 @@
       "uuid": "8b2f73f1-ea57-4a71-88d3-1d6a3ee9615b",
       "content": "<div>Finally, a new website. Heroku closed its free tier and with that I finally had a good enough reason to change hosting and stop using ruby.&nbsp;</div><div><br></div><div>Now this is a pre-rendered static site, but I still can enjoy a web editing experience, without having to manually edit text files, creating and pushing commits – I have realised an idea I had for a long time: content is stored in github in text files, admin allows to edit the content and all this with just 30 lines of nodejs server code to enable oath authorisation via proxy.&nbsp;</div><div><br></div><div>Once the Gitbub oauth flow is done, admin user is able to pull the contents and push changes with a UI based on a content model and forms matching the fields in the models.</div>"
     }
-  ],  ],
-  "notes": [
-    {
-      "sortIndex": -1,
-      "date": "2021-05-23",
-      "path": "/notes/one-two-three",
-      "title": "One two three",
-      "content": "<p>My idea is to avoid dependencies for almost everything.&nbsp;</p><p>Here goes some code:</p><pre>// dates.js<br>const toLocaleUTCDateString = (date, locales, options) =&gt;<br>  new Date(date.valueOf() + (date.getTimezoneOffset() * 6e4))<br>    .toLocaleDateString(locales, options);<br></pre><p><br></p>",
-      "uuid": "2156ba8d-f10b-40d6-ad5c-c3b1fcf300b3"
-    }
   ]
 }
