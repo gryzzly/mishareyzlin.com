@@ -36,11 +36,13 @@ export const routes = [
     component: (props) => {
       return html`<div>
         <div dangerouslySetInnerHTML=${{__html: contentToHtml(props.content)}}></div>
-        ${props.data && props.data.map(note => html`
-          <${Link} href=${note.path}>
-          <div dangerouslySetInnerHTML=${{__html: note.title}}></div>
-          <//>
-        `) }
+        <ul style="list-style:none">
+          ${props.data && props.data.map(note => html`
+          <li>
+            <${Link} href=${note.path} dangerouslySetInnerHTML=${{__html: note.title}} />
+          </li>
+          `) }
+        </ul>
       </div>  `;
     },
     getData: (pages, collections) => {
