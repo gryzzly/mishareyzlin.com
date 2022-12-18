@@ -18,6 +18,10 @@ section{
 }
 a {
   color: blue;
+  display: inline-block;
+}
+a:active {
+  transform: translateY(1px)
 }
 h1 {
   font-size: 1.5em; /* 24px */
