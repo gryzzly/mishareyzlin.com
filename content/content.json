@@ -29,7 +29,7 @@
     {
       "path": "/",
       "title": "Hello",
-      "content": "<div>My name is Misha Reyzlin &amp; I am a professional web developer. You may want to take a look at my <a href=\"/cv\">resume</a>. I use this website to keep my technical notes and to play with all kinds of things.</div><div>Me elsewhere: <a href=\"https://mastodon.social/@gryzzly\" rel="me">mastodon</a>, <a href=\"https://github.com/gryzzly\">github</a>, <a href=\"https://stackoverflow.com/users/236135/misha-reyzlin\">stackoverflow</a>, <a href=\"http://www.linkedin.com/in/mishareyzlin\">linkedin</a></div>",
+      "content": "<div>My name is Misha Reyzlin &amp; I am a professional web developer. You may want to take a look at my <a href=\"/cv\">resume</a>. I use this website to keep my technical notes and to play with all kinds of things.</div><div>Me elsewhere: <a href=\"https://mastodon.social/@gryzzly\" rel=\"me\">mastodon</a>, <a href=\"https://github.com/gryzzly\">github</a>, <a href=\"https://stackoverflow.com/users/236135/misha-reyzlin\">stackoverflow</a>, <a href=\"http://www.linkedin.com/in/mishareyzlin\">linkedin</a></div>",
       "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb634",
       "sortIndex": 0
     },
@@ -39,55 +39,7 @@
       "uuid": "8b2f73f1-ea57-4a71-88d3-1d6a3ee9615b",
       "content": "<div>Finally, a new website. Heroku closed its free tier and with that I finally had a good enough reason to change hosting and stop using ruby.&nbsp;</div><div><br></div><div>Now this is a pre-rendered static site, but I still can enjoy a web editing experience, without having to manually edit text files, creating and pushing commits – I have realised an idea I had for a long time: content is stored in github in text files, admin allows to edit the content and all this with just 30 lines of nodejs server code to enable oath authorisation via proxy.&nbsp;</div><div><br></div><div>Once the Gitbub oauth flow is done, admin user is able to pull the contents and push changes with a UI based on a content model and forms matching the fields in the models.</div>"
     }
-  ],
-  "news": [
-    {
-      "title": "Aasdasd",
-      "image": "https://picsum.photos/450/300",
-      "date": "2021-05-22",
-      "uuid": "4aed0a44-8338-4e0f-b8f6-c73a5024b918",
-      "content": "<p>ö und ü</p>",
-      "sortIndex": 5
-    },
-    {
-      "title": "New page",
-      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1621192333/widgetUpload/toa-heftiba-so2xKmYkdxU-unsplash_gyihfk.jpg",
-      "content": "<p>New new new</p>",
-      "date": "2021-05-16",
-      "uuid": "42c4a94a-bf26-417c-bd31-44d7f168f0e2",
-      "sortIndex": 3
-    },
-    {
-      "sortIndex": 4,
-      "title": "asdsd",
-      "image": "https://picsum.photos/400/300",
-      "content": "<p>asdasd</p>",
-      "uuid": "7fb8270c-f9c8-4f7a-b106-1c6a592fdf6c",
-      "date": "2021-05-16"
-    },
-    {
-      "title": "Homee",
-      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620944471/widgetUpload/300_yppmnd.jpg",
-      "uuid": "f80005dc-6bd2-4acf-b267-bb8cca6222b0",
-      "date": "2021-05-14",
-      "sortIndex": 2
-    },
-    {
-      "title": "Testing",
-      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620947563/widgetUpload/300_pwflnl.jpg",
-      "date": "2021-05-05",
-      "uuid": "207ed549-ca36-4e3f-a429-c35d0d5ca361",
-      "content": "<h1>Some other code here</h1><pre>async function vmTest(options) {<br>  const buildContext = vm.createContext({<br>&nbsp;&nbsp;})<br>}<br></pre>",
-      "sortIndex": 1
-    },
-    {
-      "title": "An older item",
-      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620946722/widgetUpload/200_tgcm9q.jpg",
-      "date": "2021-01-14",
-      "uuid": "126d25ab-f0fc-41b7-8a9c-2f094d9aa661",
-      "sortIndex": 0
-    }
-  ],
+  ],  ],
   "notes": [
     {
       "sortIndex": -1,
