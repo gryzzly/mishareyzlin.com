@@ -38,6 +38,61 @@
       "title": "Thanks Heroku for sunsetting the Free Tier",
       "uuid": "8b2f73f1-ea57-4a71-88d3-1d6a3ee9615b",
       "content": "<div>Finally, a new website. Heroku closed its free tier and with that I finally had a good enough reason to change hosting and stop using ruby.&nbsp;</div><div><br></div><div>Now this is a pre-rendered static site, but I still can enjoy a web editing experience, without having to manually edit text files, creating and pushing commits – I have realised an idea I had for a long time: content is stored in github in text files, admin allows to edit the content and all this with just 30 lines of nodejs server code to enable oath authorisation via proxy.&nbsp;</div><div><br></div><div>Once the Gitbub oauth flow is done, admin user is able to pull the contents and push changes with a UI based on a content model and forms matching the fields in the models.</div>"
+    },
+    {
+      "sortIndex": 2,
+      "path": "/notes/tonic-with-signals",
+      "title": "Tonic web components with signals for state sync",
+      "content": "<div>I‘ve been looking into <a href=\"https://tonicframework.dev\">Tonic</a>, a tiny web-components wrapper. Combining it with <a href=\"https://www.npmjs.com/package/@preact/signals-core\">preact core signals</a> to add state synchronisation is just a few lines:&nbsp;</div><pre>export class Component extends Tonic { \n  _set(...args) {\n    effect(() =&gt; {\n      super._set(...args)\n    })\n  }\n}</pre><div><br>Adding an optimised ${value} wrapper that only rerenders the changed value is another extension on the Component class:<br><br></div><pre>...\nhtml(strings, ...values) {\n  const modifiedValues = values;\n  values.forEach((value, index) =&gt; {\n    if (value instanceof Signal) {\n      modifiedValues[index] = super.html`&lt;signal-wrapper signal=${value}&gt;&lt;/signal-wrapper&gt;`;\n    }\n  })\n  return super.html(strings, ...modifiedValues);\n}\n...</pre><div>And then define the &lt;signal-wrapper&gt; component that gets injected in places where signal is passed without .value reads:</div><div><br></div><pre>class SignalWrapper extends Tonic {\n  // don’t render initially, FIXME: do I need it?\n  preventRenderOnReconnect = true\n  \n  render() {\n    return this.html`${this.props.signal.value}`;\n  }\n\n  connected() {\n    this.unsubscribe = effect(() =&gt; {\n      this.props.signal.value;\n      this.reRender();\n    })\n  }\n\n  disconnected() {\n    this.unsubscribe();\n  }\n}\n<br></pre><div><br></div>",
+      "uuid": "75f41f4e-c302-4b9b-82f8-f624f89a975b"
+    }
+  ],
+  "news": [
+    {
+      "title": "Aasdasd",
+      "image": "https://picsum.photos/450/300",
+      "date": "2021-05-22",
+      "uuid": "4aed0a44-8338-4e0f-b8f6-c73a5024b918",
+      "content": "<p>ö und ü</p>",
+      "sortIndex": 5
+    },
+    {
+      "title": "New page",
+      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1621192333/widgetUpload/toa-heftiba-so2xKmYkdxU-unsplash_gyihfk.jpg",
+      "content": "<p>New new new</p>",
+      "date": "2021-05-16",
+      "uuid": "42c4a94a-bf26-417c-bd31-44d7f168f0e2",
+      "sortIndex": 3
+    },
+    {
+      "sortIndex": 4,
+      "title": "asdsd",
+      "image": "https://picsum.photos/400/300",
+      "content": "<p>asdasd</p>",
+      "uuid": "7fb8270c-f9c8-4f7a-b106-1c6a592fdf6c",
+      "date": "2021-05-16"
+    },
+    {
+      "title": "Homee",
+      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620944471/widgetUpload/300_yppmnd.jpg",
+      "uuid": "f80005dc-6bd2-4acf-b267-bb8cca6222b0",
+      "date": "2021-05-14",
+      "sortIndex": 2
+    },
+    {
+      "title": "Testing",
+      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620947563/widgetUpload/300_pwflnl.jpg",
+      "date": "2021-05-05",
+      "uuid": "207ed549-ca36-4e3f-a429-c35d0d5ca361",
+      "content": "<h1>Some other code here</h1><pre>async function vmTest(options) {<br>  const buildContext = vm.createContext({<br>&nbsp;&nbsp;})<br>}<br></pre>",
+      "sortIndex": 1
+    },
+    {
+      "title": "An older item",
+      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620946722/widgetUpload/200_tgcm9q.jpg",
+      "date": "2021-01-14",
+      "uuid": "126d25ab-f0fc-41b7-8a9c-2f094d9aa661",
+      "sortIndex": 0
     }
   ]
 }
