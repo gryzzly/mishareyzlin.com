@@ -36,7 +36,7 @@ section section h1 {
 
 #app {
   min-height: 100vh;
-  /* background: #FFE9E9; */
+  background: #fff;
   color: #444;
   overflow: hidden;
 }
