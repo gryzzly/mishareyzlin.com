@@ -139,6 +139,6 @@ h1, h2, h3 {
 /* Dark Theme */ 
 @media (prefers-color-scheme: dark) {
   html {
-    filter: invert();
+    filter: invert()!important;
   }
 }

@@ -1,4 +1,20 @@
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  .main {
+    position: relative;
+  }
+  .main > header {
+    margin: 0 0 3em;
+  }
+  .quote {
+    text-align: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 header h2 {
   font-size: 1rem;
   margin-top: -.75rem;
@@ -6,20 +22,40 @@ header h2 {
 h2 {
   font-size: 1rem;
 }
-section li {
+@media print, screen and (min-width: 720px) {
+  .main > section:not(.quote) {
+    display: grid;
+    grid-template-columns: 1.4fr 2.5fr;
+  }
+  .employment > .section-content > li {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+li {
   list-style: none;
+}
+.lang li,
+.links li {
   margin-bottom: .75em;
   border-bottom: 1px solid #eee;
+}
+section li li {
+  border-bottom: none;
+  list-style-type: '- ';
+  list-style-position: inside;
 }
 section li:last-child {
   border-bottom: none;
 }
-.exp li {
-  border-bottom: 1px dashed;
+
+:root {
+  --yellow: rgba(255, 255, 0, .15);
 }
 .objective {
-  box-shadow: 0 0 5px white, 0 0 10px white;
-  background: #fff;
+  box-shadow: 0 0 5px var(--yellow), 0 0 10px var(--yellow);
+  background: var(--yellow);
   margin: 0.75em -0.5em;
   padding: .75em .5em .375em;
 }
@@ -31,8 +67,25 @@ section li:last-child {
 }
 .period {
   font-family: 'Times New Roman', Times, serif;
-  opacity: .75;
-  letter-spacing: .5px;
+}
+@media only screen and (min-width: 720px) {
+  .period {
+    max-width: 7em;
+  }
+}
+@media print {
+  #site-header {
+    display: none;
+  }
+  a:not([href^="mailto"])::after{
+    content: " (" attr(href) ") ";
+  }
+  .employment .section-content > li {
+    page-break-inside: avoid;
+  }
+}
+.company,.title {
+  margin-bottom: 0;
 }
 </style>
 </style>
@@ -41,7 +94,7 @@ section li:last-child {
     <hgroup>
       <h1 class='fn' itemprop='fn'>Misha&nbsp;Reyzlin</h1>
       <h2 class='comment'>
-        Web&nbsp;Engineer
+        Senior&nbsp;Web&nbsp;Engineer
       </h2>
     </hgroup>
   </header>
@@ -52,170 +105,22 @@ section li:last-child {
   <section class='contacts'>
     <h1 class='section-title'>Contact&nbsp;Information</h1>
     <dl class='section-content'>
-      <dt>Email</dt>
-      <dd>
-        <a class='email' href='mailto:hello@mishareyzlin.com'>hello@mishareyzlin.com</a>
-      </dd>
+      Email: <a class='email' href='mailto:hello@mishareyzlin.com'>hello@mishareyzlin.com</a>
     </dl>
   </section>
   <section class='objective'>
     <h1 class='section-title'>Career&nbsp;objective</h1>
     <p class='section-content'>
-      Senior Web Engineer responsible for a useful product, working in a
-      team of motivated professionals.
-    </p>
-  </section>
-
-  <section class='employment'>
-    <h1 class='section-title'>Employment&nbsp;history</h1>
-    <ul class='section-content'>
-
-      <li>
-        <p class="period">
-          <time class="dtstart" datetime="2022-06-27">2022/06</time>&#8211;
-          <time class="dtend">Current</time>
-        </p>
-
-        <div class="description">
-          <h2 class="title">Senior&nbsp;Developer</h2>
-          <p class="company"><a href="https://www.shopify.com">Shopify</a></p>
-          <p class="duty">I am working on making the Shopify checkout extension experience better.</p>
-          <p class="tech-used">
-            Javascript, Workers, remote-ui, CSS, React, Nodejs, Rails
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <p class="period">
-          <time class="dtstart" datetime="2021-02-15">2021/02</time>&#8211;
-          <time class="dtend" datetime="2022-05-01">2022/05</time>
-        </p>
-
-        <div class="description">
-          <h2 class="title">Senior&nbsp;Frontend&nbsp;Engineer</h2>
-          <p class="company"><a href="https://www.hier.in">Hier Foods</a></p>
-          <p class="duty">Help the engineering move from MVP to a maintenable product.</p>
-          <p class="tech-used">
-            React Native, Expo, Firebase, Google Cloud Functions
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <p class="period">
-          <time class="dtstart" datetime="2020-07-01">2020/07</time>&#8211;
-          <time class="dtend" datetime="2021-01-31">2021/01</time>
-        </p>
-
-        <div class="description">
-          <h2 class="title">Senior&nbsp;Frontend&nbsp;Engineer</h2>
-          <p class="company"><a href="https://www.dance.co">Dance</a></p>
-          <p class="duty">I was the first in-house engineer and I helped release 
-            the Dance pilot-programme in Berlin – I worked on React Native app
-            for locking and unlocking smart locks, invitation and sign-up flows and the landing pages.
-          </p>
-          <p class="tech-used">
-            React Native, Nextjs, IoT over Bluetooth, dynamodb, graphQL
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <p class="period">
-          <time class="dtstart" datetime="2017-11-01">2017/11</time>&#8211;
-          <time class="dtend" datetime="2020-05-01">2020/05</time>
-        </p>
-
-        <div class="description">
-          <h2 class="title">Senior&nbsp;Frontend&nbsp;Engineer</h2>
-          <p class="company"><a href="https://www.idagio.com">IDAGIO</a></p>
-          <p class="duty">As a Senior product engineer I was responsible for
-            release and maintenance of IDAGIO desktop apps (macOS and Windows).
-            I have also contributed to the development of the web and embedded
-            apps, as well as internal tools.
-          </p>
-          <p class="tech-used">
-            React/Redux, Nodejs, Flow, Server Side Rendering, Electron,
-            React-Static
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <p class="period">
-          <time class="dtstart" datetime="2015-08-01">2015/08</time>&#8211;
-          <time class="dtend" datetime="2017-10-01">2017/10</time>
-        </p>
-
-        <div class="description">
-          <h2 class="title">Frontend&nbsp;Team&nbsp;Lead</h2>
-          <p class="company">Noa</p>
-          <p class="duty">
-            Noa was a hardware startup that built always on GPS-trackers for
-            bicycles. Together with hardware, fleet management system (FMS) was
-            provided to company’s clients. I was leading the team developing
-            the client-side part of the FMS – real-time GIS interface to control
-            fleets of thousands of bicycles.
-          </p>
-          <p class="tech-used">
-            React/Flux/Mobx, Nodejs, Leaflet, Jest
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <p class="period">
-          <time class="dtstart" datetime="2012-08-01">2012/08</time>&#8211;
-          <time class="dtend" datetime="2015-02-28">2015/02</time>
-        </p>
-
-        <div class="description">
-          <h2 class="title">Frontend&nbsp;Engineer</h2>
-          <p class="company"><a href="http://soundcloud.com">SoundCloud</a></p>
-          <p class="duty">Contributing to all major web properties of the company: <span class="caps">HTML5</span> embedded player, desktop site and the mobile web&nbsp;application</p>
-          <p class="tech-used">
-            jQuery, Backbonejs, Nodejs, Server Side Rendering, Karma tests runner
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <p class="period">
-          <time class="dtstart" datetime="2011-12-01">2011/12</time>&#8211;
-          <time class="dtend" datetime="2012-07-31">2012/7</time>
-          <time class="sum">(8 months)</time>
-        </p>
-
-        <div class="description">
-          <h2 class="title">Software&nbsp;Engineer</h2>
-          <p class="company"><a href="http://m.here.com/">Here.com</a> (Nokia&nbsp;business)</p>
-          <p class="duty">GPS navigation maps web application for iOS, Android and other <span class="caps">HTML5</span> enabled mobile&nbsp;devices.</p>
-        </div>
-      </li>
-      <li>
-        <p class="period">
-          <time class="dtstart" datetime="2010-03-01">2010/3</time>&#8211;
-          <time class="dtend" datetime="2011-11-30">2011/11</time>
-          <time class="sum">(1 year 8 months)</time>
-        </p>
-
-        <div class="description">
-          <h2 class="title">Self-employed Software&nbsp;Engineer</h2>
-          <p class="company vcard"><a href="http://mishareyzlin.com">mishareyzlin.com</a></p>
-          <p class="duty">HTML5 apps development, JavaScript consultancy, Mobile Web&nbsp;development</p>
-        </div>
-      </li>
-    </ul>
+      Lead/Staff Web Engineer building useful projects, applying systematic improvements, thinking holistically. Working in a team of motivated professionals.    </p>
   </section>
 
   <section class='specs'>
     <h1 class='section-title'>Specialities</h1>
     <p class='section-content'>
-      JavaScript, <abbr title="HyperText Markup Language">HTML</abbr>, <abbr title="Cascading Style Sheets">CSS</abbr>, <br>Node.js, React, React-Native, Backbone.js, <br>website performance and loading optimization, <br>cross-browser issues, mobile web
+      JavaScript/TypeScript, <abbr title="HyperText Markup Language">HTML</abbr>, <abbr title="Cascading Style Sheets">CSS</abbr>, <br>Node.js, React, React-Native, Backbone.js, <br>website performance and loading optimization, <br>cross-browser issues, mobile web
     </p>
   </section>
-  <section class='exp'>
+  <!-- <section class='exp'>
     <h1 class='section-title'>Experienced&nbsp;with</h1>
     <dl class='section-content'>
       <dt>Technologies</dt>
@@ -227,6 +132,143 @@ section li:last-child {
         Browser developer tools, Git, <br>*nix terminal (vim, ssh, scp, <span class="etc"><span class="amp">&amp;</span>c</span>.), <br>Linux (Debian), Mac <span class="caps">OS</span> X, Windows, <br>Adobe Photoshop, Adobe InDesign, <br>Apache,&nbsp;Nginx
       </dd>
     </dl>
+  </section> -->
+
+  <section class='employment'>
+    <h1 class='section-title'>Employment&nbsp;history</h1>
+    <ul class='section-content'>
+
+      <li>
+        <p class="period">
+          <time class="dtstart" datetime="2022-06-27">2022/06</time>&nbsp;&#8211;
+          <time class="dtend">Current</time>
+        </p>
+
+        <div class="description">
+          <p class="company"><a href="https://www.shopify.com">Shopify</a></p>
+          <h2 class="title">Senior&nbsp;Developer</h2>
+          <ul class="duty">
+            <li>Implemented error reporting for internal and third party use</li>
+            <li>Extended Checkout Extensions API with fetch and query methods</li>
+          </ul>
+          <p class="tech-used">
+            JavaScript/TypeScript, web workers, remote-ui, CSS, React, Node.js, Rails, GraphQL, Jest
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <p class="period">
+          <time class="dtstart" datetime="2021-02-15">2021/02</time>&nbsp;&#8211;
+          <time class="dtend" datetime="2022-05-01">2022/05</time>
+        </p>
+
+        <div class="description">
+          <p class="company"><a href="https://www.hier.in">Hier Foods</a></p>
+          <h2 class="title">Senior&nbsp;Frontend&nbsp;Engineer</h2>
+          <p class="duty">Help the engineering move from MVP to a maintainable product.</p>
+          <p class="tech-used">
+            React Native, Expo, Firebase, Node.js, Google Cloud Functions
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <p class="period">
+          <time class="dtstart" datetime="2020-07-01">2020/07</time>&nbsp;&#8211;
+          <time class="dtend" datetime="2021-01-31">2021/01</time>
+        </p>
+        <div class="description">
+          <p class="company"><a href="https://www.dance.co">Dance</a></p>
+          <h2 class="title">Senior&nbsp;Frontend&nbsp;Engineer</h2>
+          <p class="duty">Helped release the Dance pilot-programme in Berlin – React Native app
+            for controlling smart locks, invitation and sign-up flows and the landing pages.
+          </p>
+          <p class="tech-used">
+            React Native, Next.js, IoT over Bluetooth, Amazon DynamoDB, GraphQL
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <p class="period">
+          <time class="dtstart" datetime="2017-11-01">2017/11</time>&nbsp;&#8211;
+          <time class="dtend" datetime="2020-05-01">2020/05</time>
+        </p>
+
+        <div class="description">
+          <p class="company"><a href="https://www.idagio.com">IDAGIO</a></p>
+          <h2 class="title">Senior&nbsp;Frontend&nbsp;Engineer</h2>
+          <p class="duty">Released and maintained IDAGIO desktop apps (macOS and Windows).
+            Contributed to the development of the web and embedded apps, as well as internal tools.
+          </p>
+          <p class="tech-used">
+            React/Redux, Nodejs, Flow, Server Side Rendering, Electron,
+            React-Static, Mocha
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <p class="period">
+          <time class="dtstart" datetime="2015-08-01">2015/08</time>&nbsp;&#8211;
+          <time class="dtend" datetime="2017-10-01">2017/10</time>
+        </p>
+
+        <div class="description">
+          <p class="company"><a href="https://www.noa.one">Noa</a></p>
+          <h2 class="title">Frontend&nbsp;Team&nbsp;Lead</h2>
+          <p class="duty">
+            I was leading the team developing the client-side part of the Fleet Management System – real-time GIS interface to control
+            fleets of thousands of bicycles.
+          </p>
+          <p class="tech-used">
+            React/Flux/Mobx, Nodejs, Leaflet, Jest
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <p class="period">
+          <time class="dtstart" datetime="2012-08-01">2012/08</time>&nbsp;&#8211;
+          <time class="dtend" datetime="2015-02-28">2015/02</time>
+        </p>
+
+        <div class="description">
+          <h2 class="title">Frontend&nbsp;Engineer</h2>
+          <p class="company"><a href="http://soundcloud.com">SoundCloud</a></p>
+          <p class="duty">Led full rewrite of the mobile web achieving 1.5s to first play. Also worked on the desktop app and HTML5 widget.</p>
+          <p class="tech-used">
+            jQuery, Backbonejs, Nodejs, Server Side Rendering, Karma tests runner
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <p class="period">
+          <time class="dtstart" datetime="2011-12-01">2011/12</time>&nbsp;&#8211;
+          <time class="dtend" datetime="2012-07-31">2012/7</time>
+        </p>
+
+        <div class="description">
+          <h2 class="title">Software&nbsp;Engineer</h2>
+          <p class="company"><a href="http://m.here.com/">Here.com</a> (Nokia&nbsp;business)</p>
+          <p class="duty">GPS navigation maps web application for iOS, Android and other <span class="caps">HTML5</span> enabled mobile&nbsp;devices.</p>
+        </div>
+      </li>
+      <li>
+        <p class="period">
+          <time class="dtstart" datetime="2010-03-01">2010/3</time>&nbsp;&#8211;
+          <time class="dtend" datetime="2011-11-30">2011/11</time>
+        </p>
+
+        <div class="description">
+          <h2 class="title">Self-employed Software&nbsp;Engineer</h2>
+          <p class="company vcard"><a href="http://mishareyzlin.com">mishareyzlin.com</a></p>
+          <p class="duty">HTML5 apps development, JavaScript consultancy, Mobile Web&nbsp;development</p>
+        </div>
+      </li>
+    </ul>
   </section>
 
   <section class='lang'>
