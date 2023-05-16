@@ -1,20 +1,24 @@
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-  }
-  .main {
-    position: relative;
-  }
-  .main > header {
-    margin: 0 0 3em;
-  }
+* {
+  margin: 0;
+  padding: 0;
+}
+.main {
+  position: relative;
+}
+.quote {
+  text-align: right;
+}
+@media only screen and (min-width: 720px) {
   .quote {
-    text-align: right;
     position: absolute;
     top: 0;
     right: 0;
   }
+  .main > header {
+    margin: 0 0 3em;
+  }
+}
 header h2 {
   font-size: 1rem;
   margin-top: -.75rem;
