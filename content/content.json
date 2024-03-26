@@ -37,82 +37,51 @@
       "path": "/notes/new-website-2022",
       "title": "Thanks Heroku for sunsetting the Free Tier",
       "uuid": "8b2f73f1-ea57-4a71-88d3-1d6a3ee9615b",
-      "content": "<div>Finally, a new website. Heroku closed its free tier and with that I finally had a good enough reason to change hosting and stop using ruby.&nbsp;</div><div><br></div><div>Now this is a pre-rendered static site, but I still can enjoy a web editing experience, without having to manually edit text files, creating and pushing commits – I have realised an idea I had for a long time: content is stored in github in text files, admin allows to edit the content and all this with just 30 lines of nodejs server code to enable oath authorisation via proxy.&nbsp;</div><div><br></div><div>Once the Gitbub oauth flow is done, admin user is able to pull the contents and push changes with a UI based on a content model and forms matching the fields in the models.</div>"
+      "content": "<div>Finally, a new website. Heroku closed its free tier and with that I finally had a good enough reason to change hosting and stop using ruby.&nbsp;</div><div><br></div><div>Now this is a pre-rendered static site, but I still can enjoy a web editing experience, without having to manually edit text files, creating and pushing commits – I have realised an idea I had for a long time: content is stored in github in text files, admin allows to edit the content and all this with just 30 lines of nodejs server code to enable oath authorisation via proxy.&nbsp;</div><div><br></div><div>Once the Gitbub oauth flow is done, admin user is able to pull the contents and push changes with a UI based on a content model and forms matching the fields in the models.</div>",
+      "date": "5 December 2022"
     },
     {
       "sortIndex": 2,
       "path": "/notes/tonic-with-signals",
       "title": "Tonic web components with signals for state sync",
       "content": "<div>I‘ve been looking into <a href=\"https://tonicframework.dev\">Tonic</a>, a tiny web-components wrapper. Combining it with <a href=\"https://www.npmjs.com/package/@preact/signals-core\">preact core signals</a> to add state synchronisation is just a few lines:&nbsp;</div><pre>\nexport class Component extends Tonic { \n  _set(...args) {\n    effect(() =&gt; {\n      super._set(...args)\n    })\n  }\n}</pre><div><br>Adding an optimised ${value} wrapper that only rerenders the changed value is another extension on the Component class:<br><br></div><pre>...\nhtml(strings, ...values) {\n  const modifiedValues = values;\n  values.forEach((value, index) =&gt; {\n    if (value instanceof Signal) {\n      modifiedValues[index] = super.html`&lt;signal-wrapper signal=${value}&gt;&lt;/signal-wrapper&gt;`;\n    }\n  })\n  return super.html(strings, ...modifiedValues);\n}\n...</pre><div>And then define the &lt;signal-wrapper&gt; component that gets injected in places where signal is passed without .value reads:</div><div><br></div><pre>class SignalWrapper extends Tonic {\n  // don’t render initially, FIXME: do I need it?\n  preventRenderOnReconnect = true\n  \n  render() {\n    return this.html`${this.props.signal.value}`;\n  }\n\n  connected() {\n    this.unsubscribe = effect(() =&gt; {\n      this.props.signal.value;\n      this.reRender();\n    })\n  }\n\n  disconnected() {\n    this.unsubscribe();\n  }\n}\n<br></pre><div><br></div>",
-      "uuid": "75f41f4e-c302-4b9b-82f8-f624f89a975b"
+      "uuid": "75f41f4e-c302-4b9b-82f8-f624f89a975b",
+      "date": "21 January 2023"
     },
     {
       "sortIndex": 3,
       "path": "/notes/web-components-nested-rerender",
       "title": "Web Components Nested Rerender",
       "content": "<div>I have this idea, that if I build something \"not at work\", but, so to say, \"for kicks\", then I should not use dependencies and implement every little thing myself. Why? Simply because I believe that nothing a simple side project requires is too complicated to write yourself, and because achieving most of the same things that are possible with dependencies without them is a great way to learn the principles and ideas behind the said dependencies.&nbsp;<br><br>For example, I am constantly building and rebuilding a CMS for smaller projects. The idea behind it is to give the website owners (non-programming folks) convenience of Wordpress Admin, but without the owners having to pay for hosting. I am achieving this by building a light admin interface, that allows:</div><ol><li>user authentication and editing access by using a GitHub account</li><li>CRUD on a schema defined data</li></ol><div>For the first version I used Preact and its hooks for data management, but I am not happy with that, as I’d like to implement the component framework myself or not use one at all.&nbsp;<br><br>I want to learn web components and see whether they can allow the things I find ergonomic for writing UI. So, I attempt to rewrite my first version of the admin UI using web components.<br><br>Generally I want an easy way to:&nbsp;</div><ol><li>create a state store&nbsp;</li><li>subscribe to its changes</li><li>rerender the views based on these</li><li>provide the views with a way to trigger changes on the state</li></ol><div>I need to be able to express the following<br><br></div><pre>const state = new Store({ \n  isAuthorised: false,\n  menu: [{ path: '/', title: 'Home', path: '/products', title: 'Products' }],\n  pages: [],\n})\n\nclass AppView extends Component {\n  onAuthorise() {\n    state.isAuthorised = true;\n  }\n  template({isAuthorised}) {\n    // using HTML template could be better,\n    // because that way HTML parser is used and not a simple \n    // string concantenation\n    return `&lt;div&gt;${isAuthorised \n      ? `auth’d` \n      : `&lt;button&gt;&lt;/button&gt;`\n    }&lt;/div&gt;`\n  }\n  events: {\n    'onClick button': this.buttonOnClick\n  },\n}\nconst view = new View(state);\n\nstate.on('datachange', (event) =&gt; {\n  view.rerender(event.changed);\n});</pre><div><br><br></div>",
-      "uuid": "2315734a-042c-4812-ade1-1529cff79bb8"
+      "uuid": "2315734a-042c-4812-ade1-1529cff79bb8",
+      "date": "26 July 2023"
     },
     {
       "sortIndex": 4,
       "path": "/notes/get-image-dimensions-node-deno",
       "content": "<div>I was building a pre-rendered website recently. The client (my dad) could upload images and I needed a way to use their width and height in the HTML. I am trying to not use npm and rather write all the code by hand (and yes, also copying and pasting bits from various <a href=\"https://github.com/nodeca/probe-image-size\">open source projects</a>) so that I have at least attentively read every line. The thinking I have is always – what’s the minimum amount of straightforward code that can achieve what I need, with API that makes sense for my work, and ideally using platform features so I learn more about the standard environment in which my code runs.&nbsp;<br><br>So here’s the `util/get-image-dimensions.js` that works for JPEG, PNG, GIF and WebP image formats:</div><pre>import fs from 'node:fs';\n\n// Permission is hereby granted, free of charge, to any person\n// obtaining a copy of this software and associated documentation\n// files (the \"Software\"), to deal in the Software without\n// restriction, including without limitation the rights to use,\n// copy, modify, merge, publish, distribute, sublicense, and/or sell\n// copies of the Software, and to permit persons to whom the\n// Software is furnished to do so, subject to the following\n// conditions:\n\n// The above copyright notice and this permission notice shall be\n// included in all copies or substantial portions of the Software.\n\n// THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES\n// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\n// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT\n// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,\n// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING\n// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\n// OTHER DEALINGS IN THE SOFTWARE.\nexport function getImageDimensions(imagePath) {\n  const data = fs.readFileSync(imagePath);\n  const header = data.toString('hex', 0, 12);\n  const type = getImageType(header);\n\n  let width, height;\n  switch (type) {\n    case 'jpeg':\n      const dimensions = getJpegDimensions(data);\n      width = dimensions.width;\n      height = dimensions.height;\n      break;\n    case 'png':\n      width = data.readUInt32BE(16);\n      height = data.readUInt32BE(20);\n      break;\n    case 'gif':\n      width = data.readUInt16LE(6);\n      height = data.readUInt16LE(8);\n      break;\n    case 'webp':\n      const vp8Header = data.slice(12, 16).toString('hex');\n      if (vp8Header === '9d012a') {\n        width = data.readUIntLE(26, 2);\n        height = data.readUIntLE(28, 2);\n      } else if (vp8Header === '2a012a') {\n        const alphaOffset = data.indexOf('414c4641', 20, 'hex');\n        if (alphaOffset !== -1) {\n          width = data.readUIntLE(26, 2);\n          height = data.readUIntLE(alphaOffset + 16, 2);\n        }\n      }\n      break;\n    default:\n      throw new Error('Unsupported image type');\n  }\n\n  return { width, height, type };\n}\n\nfunction getImageType(header) {\n  if (header.startsWith('ffd8')) {\n    return 'jpeg';\n  } else if (header.startsWith('89504e470d0a1a0a')) {\n    return 'png';\n  } else if (header.startsWith('47494638')) {\n    return 'gif';\n  } else if (header.startsWith('52494646') &amp;&amp; header.endsWith('57454250')) {\n    return 'webp';\n  } else {\n    throw new Error('Unsupported image type');\n  }\n}\n\n// Copyright (c) 2015 Vitaly Puzrin.\n\n// Permission is hereby granted, free of charge, to any person\n// obtaining a copy of this software and associated documentation\n// files (the \"Software\"), to deal in the Software without\n// restriction, including without limitation the rights to use,\n// copy, modify, merge, publish, distribute, sublicense, and/or sell\n// copies of the Software, and to permit persons to whom the\n// Software is furnished to do so, subject to the following\n// conditions:\n\n// The above copyright notice and this permission notice shall be\n// included in all copies or substantial portions of the Software.\n\n// THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES\n// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\n// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT\n// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,\n// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING\n// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\n// OTHER DEALINGS IN THE SOFTWARE.\n// \n// Following is extract from probe-image-size library\nfunction getJpegDimensions(data) {\n  if (data.length &lt; 2) return;\n\n  // first marker of the file MUST be 0xFFD8,\n  // following by either 0xFFE0, 0xFFE2 or 0xFFE3\n  if (data[0] !== 0xFF || data[1] !== 0xD8 || data[2] !== 0xFF) return;\n\n  var offset = 2;\n\n  for (;;) {\n    // skip until we see 0xFF, see https://github.com/nodeca/probe-image-size/issues/68\n    for (;;) {\n      if (data.length - offset &lt; 2) return;\n      if (data[offset++] === 0xFF) break;\n    }\n\n    var code = data[offset++];\n    var length;\n\n    // skip padding bytes\n    while (code === 0xFF) code = data[offset++];\n\n    // standalone markers, according to JPEG 1992,\n    // http://www.w3.org/Graphics/JPEG/itu-t81.pdf, see Table B.1\n    if ((0xD0 &lt;= code &amp;&amp; code &lt;= 0xD9) || code === 0x01) {\n      length = 0;\n    } else if (0xC0 &lt;= code &amp;&amp; code &lt;= 0xFE) {\n      // the rest of the unreserved markers\n      if (data.length - offset &lt; 2) return;\n\n      length = readUInt16BE(data, offset) - 2;\n      offset += 2;\n    } else {\n      // unknown markers\n      return;\n    }\n\n    if (code === 0xD9 /* EOI */ || code === 0xDA /* SOS */) {\n      // end of the datastream\n      return;\n    }\n\n    if (length &gt;= 5 &amp;&amp;\n        (0xC0 &lt;= code &amp;&amp; code &lt;= 0xCF) &amp;&amp;\n        code !== 0xC4 &amp;&amp; code !== 0xC8 &amp;&amp; code !== 0xCC) {\n\n      if (data.length - offset &lt; length) return;\n\n      var result = {\n        width:  readUInt16BE(data, offset + 3),\n        height: readUInt16BE(data, offset + 1),\n      };\n\n      return result;\n    }\n\n    offset += length;\n  }\n}\n\nfunction readUInt16BE(data, offset) {\n  return data[offset + 1] | (data[offset] &lt;&lt; 8);\n};</pre><div><br></div>",
       "title": "Get Image dimensions without dependencies – node or deno",
-      "uuid": "eb814ba1-12f8-4b1d-a5e0-6513141abbf5"
+      "uuid": "eb814ba1-12f8-4b1d-a5e0-6513141abbf5",
+      "date": "28 November 2023"
     },
     {
       "sortIndex": 5,
       "path": "/notes/use-animation",
       "title": "a hook wrapping a simple requestAnimationFrame based animation function (with an option to dynamically update the duration)",
       "content": "<pre>import { useEffect, useRef } from 'react';\n\n<strong>type</strong> draw = (fraction: number) <strong>=&gt;</strong> void;\n<strong>type</strong> duration = number;\n\n<strong>const</strong> useAnimation = (duration: duration, draw: draw) <strong>=&gt;</strong> {\n  <strong>const</strong> updateDurationRef = useRef&lt;null | ((newDuration: number) <strong>=&gt;</strong> void)&gt;(null);\n  <strong>const</strong> currentAnimationIdRef = useRef(0);\n  <strong>const</strong> elapsedTimeRef = useRef(0);\n\n  useEffect(() <strong>=&gt;</strong> {\n    <strong>const</strong> animate = (duration: duration, draw: draw) <strong>=&gt;</strong> {\n      <strong>let</strong> start: number | null = null;\n\n      <strong>const</strong> animation = (timestamp: number) <strong>=&gt;</strong> {\n        if (!start) start = timestamp;\n        elapsedTimeRef.current = timestamp - start;\n        <strong>const</strong> percentage = Math.min(elapsedTimeRef.current / duration, 1);\n\n        draw(percentage);\n\n        if (elapsedTimeRef.current &lt; duration) {\n          currentAnimationIdRef.current = requestAnimationFrame(animation);\n        } else {\n          start = null;\n          currentAnimationIdRef.current = requestAnimationFrame(animation);\n        }\n      };\n\n      <strong>const</strong> updateDuration = (newDuration: number) <strong>=&gt;</strong> {\n        <strong>const</strong> currentProgress = elapsedTimeRef.current / duration;\n        start = performance.now() - newDuration * currentProgress;\n        duration = newDuration;\n        cancelAnimationFrame(currentAnimationIdRef.current);\n        currentAnimationIdRef.current = requestAnimationFrame(animation);\n      };\n\n      currentAnimationIdRef.current = requestAnimationFrame(animation);\n\n      return updateDuration;\n    };\n\n    updateDurationRef.current = animate(duration, draw);\n\n    return () <strong>=&gt;</strong> {\n      cancelAnimationFrame(currentAnimationIdRef.current);\n    };\n  }, [duration, draw]);\n\n  return updateDurationRef.current;\n};\n\nexport { useAnimation };\n<br></pre>",
-      "uuid": "db7db469-b055-4d59-9a9d-0d95ea5ebf8e"
+      "uuid": "db7db469-b055-4d59-9a9d-0d95ea5ebf8e",
+      "date": "4 March 2024"
     },
     {
       "sortIndex": 6,
       "path": "/notes/weekly-notes-march-26",
       "title": "Week 13",
       "content": "<div>I have recently started listening to audio books while walking the dog. My wife gave me that advice, as she apparently did it for a while now (we got Bandito a bit over 2 years ago, 10 days before Russia started its terrorirst assault on Ukraine). <br><br>The first book I listened to was Anna Karenina by Leo Tolstoy. What an amazing book it is. I am now convinced this is the best book ever written. I tried reading it several times in my life every time getting to about 25-35% of the book and then not getting back to it. Not sure why that was. Somehow, while discussing dramatic events the book is not gloomy and not depressive, it’s filled with hope and curiosity and love for life. The book discusses almost any subject imaginable, from marriage and family to how to be a business owner or how to do work, and what work is worth it. I enjoyed it very much. I keep thinking about it daily. It’s inspiring and fun, and educating etc. etc.<br><br>I had then listened to Roadside Picnic by Strugatsky Brothers. 8/10<br><br>I then listened to Fathers and Sons by Turgenev. 10/10<br><br>After that I picked Gogol’s \"Evenings on a Farm Near Dikanka\" - something I remembered as being more humorous than scary from being a kid. Well, I remembered wrong, it’s quite scary and bloody and terrifying. 9/10 <br><br>I have then listened to an abridged version of \"<a href=\"https://en.wikipedia.org/wiki/Three_Men_in_a_Boat\">Three Men in a Boat</a>\" read by Hugh Laurie. Fun but too bad it’s not the full thing.&nbsp;<br><br>I’m almost done listening to Frankenstein read by Christopher Lee – great listen as well. What a sad story.&nbsp;</div>",
-      "uuid": "92f7397e-02f1-49c8-a546-6d4e7ddaaa89"
+      "uuid": "92f7397e-02f1-49c8-a546-6d4e7ddaaa89",
+      "date": "26 March 2024"
     }
   ],
   "news": [
-    {
-      "title": "An older item",
-      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620946722/widgetUpload/200_tgcm9q.jpg",
-      "date": "2021-01-14",
-      "uuid": "126d25ab-f0fc-41b7-8a9c-2f094d9aa661",
-      "sortIndex": 0
-    },
-    {
-      "title": "Testing",
-      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620947563/widgetUpload/300_pwflnl.jpg",
-      "date": "2021-05-05",
-      "uuid": "207ed549-ca36-4e3f-a429-c35d0d5ca361",
-      "content": "<h1>Some other code here</h1><pre>async function vmTest(options) {<br>  const buildContext = vm.createContext({<br>&nbsp;&nbsp;})<br>}<br></pre>",
-      "sortIndex": 1
-    },
-    {
-      "title": "Homee",
-      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1620944471/widgetUpload/300_yppmnd.jpg",
-      "uuid": "f80005dc-6bd2-4acf-b267-bb8cca6222b0",
-      "date": "2021-05-14",
-      "sortIndex": 2
-    },
-    {
-      "title": "New page",
-      "image": "https://res.cloudinary.com/dcvrycv7k/image/upload/v1621192333/widgetUpload/toa-heftiba-so2xKmYkdxU-unsplash_gyihfk.jpg",
-      "content": "<p>New new new</p>",
-      "date": "2021-05-16",
-      "uuid": "42c4a94a-bf26-417c-bd31-44d7f168f0e2",
-      "sortIndex": 3
-    },
-    {
-      "sortIndex": 4,
-      "title": "asdsd",
-      "image": "https://picsum.photos/400/300",
-      "content": "<p>asdasd</p>",
-      "uuid": "7fb8270c-f9c8-4f7a-b106-1c6a592fdf6c",
-      "date": "2021-05-16"
-    }
+    
   ]
 }

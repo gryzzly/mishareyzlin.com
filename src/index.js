@@ -34,14 +34,27 @@ export const routes = [
   {
     path: '/notes/',
     component: (props) => {
-      return html`<div>
+      return html`<div class="notes-list">
+        <style>
+          .notes-list li {
+            list-style: none;
+            display: inline-block;
+          }
+        </style>
         <div dangerouslySetInnerHTML=${{__html: contentToHtml(props.content)}}></div>
-        <ul style="list-style:none">
-          ${props.data && props.data.map(note => html`
-          <li>
-            <${Link} href=${note.path} dangerouslySetInnerHTML=${{__html: note.title}} />
+        <ul>
+          ${props.data && props.data.map(note => {
+            const date = new Date(note.date || note.Date)
+              .toLocaleDateString(
+                'en-CA', 
+                { year: 'numeric', month: '2-digit', day: '2-digit' }
+              ).replace(/\//g, '-');
+            return html`
+          <li key="${date}">
+            <span style="font-family: times">${date}</span>\u00A0<${Link} href=${note.path} dangerouslySetInnerHTML=${{__html: note.title}}/>
           </li>
-          `) }
+          `
+          })}
         </ul>
       </div>  `;
     },
@@ -51,7 +64,15 @@ export const routes = [
             pagePath => /^\/notes\//.test(pagePath) && pagePath !== '/notes/'
           );
 
-      return pagePaths.map(path => pages[path]);
+      const notePages = pagePaths.map(path => pages[path]);
+
+      notePages.sort((pageA, pageB) => {
+        const pageBdate = new Date(pageB.date || pageB.Date);
+        const pageAdate = new Date(pageA.date || pageA.Date);
+        return pageBdate.getTime() - pageAdate.getTime();
+      });
+
+      return notePages;
     }
   },
   // order is important,
@@ -92,7 +113,7 @@ export const routes = [
       }, []);
       return html`<div class=${props.PageClass || ''}>
         <h1>${props.title}</h1>
-        ${props.Date && html`<p><em>Published on ${props.Date}</em></p>`}
+        ${(props.date || props.Date) && html`<p><em>Published on ${(props.date || props.Date)}</em></p>`}
         <div
           dangerouslySetInnerHTML=${{__html: props.content}}>
         </div>
