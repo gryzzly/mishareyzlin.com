@@ -38,7 +38,6 @@ export const routes = [
         <style>
           .notes-list li {
             list-style: none;
-            display: inline-block;
           }
         </style>
         <div dangerouslySetInnerHTML=${{__html: contentToHtml(props.content)}}></div>

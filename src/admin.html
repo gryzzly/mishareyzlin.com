@@ -164,6 +164,14 @@ function uuidv4() {
   });
 }
 
+function toDateFormat(dateString) {
+  return new Date(dateString)
+              .toLocaleDateString(
+                'en-CA', 
+                { year: 'numeric', month: '2-digit', day: '2-digit' }
+              ).replace(/\//g, '-')
+}
+
 // From https://stackoverflow.com/a/30106551/236135
 //
 // Encoding UTF8 ⇢ base64
@@ -882,7 +890,7 @@ function EditForm({
             ref=${ref => inputRefs.current[field] = ref}
             id=${`${model}-${field}`}
             name=${field}
-            value=${inputValues[field]}
+            value=${field === 'date' ? toDateFormat(inputValues[field]) : inputValues[field]}
             class="${inputClasses}"
             onInput=${(e) => {
               updateInputValues(inputStates => ({
