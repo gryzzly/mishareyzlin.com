@@ -2,16 +2,59 @@ import path from 'path';
 import fse from 'fs-extra';
 import snarkdown from 'snarkdown';
 
-// adds <p></p> instead of line breaks to do styling properly
-function snarkdownEnhanced(markdown) {
-  return markdown
-    .split(/(?:\r?\n){2,}/)
-    .map((l) =>
-      [" ", "\t", "#", "-", "*", ">"].some((char) => l.startsWith(char))
-        ? snarkdown(l)
-        : `<p>${snarkdown(l)}</p>`
-    )
-    .join("\n");
+function snarkdownEnhanced(md) {
+	// Run snarkdown
+	let out = snarkdown(md);
+
+	// Add opening <p>
+	if (!out.trim().startsWith('<')) {
+		out = `<p>${out}`;
+	}
+
+	out = out
+		// Replace e.g. "</h5>The..." with "</h5><p>The..."
+		.replace(/(<(\/(h(\d))|em|strong|s|div|pre)>)([\s\r\n]){0,}([\w\d])/g, match => {
+			const chars = [
+				match.slice(0, match.length - 1),
+				match.slice(match.length - 1)
+			];
+			return `${chars[0]}<p>${chars[1]}`
+		})
+
+		// Replace <br> with </p><p>
+		.replace(/<br \/>/g, '</p><p>')
+
+		// Ensure paragraphs before h-tags end with </p>
+		.replace(/([\w\d.:;])([\r\n]){1,}(<((h(\d))|em|strong|s|div|pre)>)/g, (match, paraChars, space, followingEl) => {
+			return `${paraChars || ''}</p>${space || ''}${followingEl || ''}`
+		})
+
+		// Div fix
+		.replace(/<\/p><p><div/g, '</p><div')
+		.replace(/<\/div><\/p>/g, '</div>')
+
+		// Strong, em fix
+		.replace(/<strong><p>/g, '<strong>')
+		.replace(/<em><p>/g, '<em>')
+
+		// Pre fix
+		.replace(/<p><pre/g, '<pre')
+		.replace(/<\/pre><\/p>/g, '</pre>')
+
+		// Ul fix
+		.replace(/<p><ul/g, '<ul')
+		.replace(/<\/ul><\/p>/g, '</ul>')
+
+		// Ol fix
+		.replace(/<p><ol/g, '<ol')
+		.replace(/<\/ol><\/p>/g, '</ol>')
+
+	// Add closing </p>
+	if (!out.trim().endsWith('>')) {
+		out = `${out}</p>`;
+	}
+
+	return out;
 }
 
 // look into adding typography processing to content

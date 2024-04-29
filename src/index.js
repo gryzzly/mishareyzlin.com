@@ -1,9 +1,6 @@
 import {
   hydrate,
   html,
-  renderToString,
-  useEffect,
-  Component,
 } from './preact-hooks-htm-render-to-string.js';
 
 import {
@@ -34,12 +31,26 @@ export const routes = [
   {
     path: '/notes/',
     component: (props) => {
-      return html`<div class="notes-list">
-        <style>
-          .notes-list li {
-            list-style: none;
-          }
-        </style>
+      return html`
+      <style>
+        .notes-list li {
+          list-style: none;
+          position: relative;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+        .notes-list li::after {
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          width: 100px;
+          background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+          pointer-events: none;
+          content: \'\';
+        }
+      </style>
+      <div class="notes-list">
         <div dangerouslySetInnerHTML=${{__html: contentToHtml(props.content)}}></div>
         <ul>
           ${props.data && props.data.map(note => {
@@ -50,7 +61,7 @@ export const routes = [
               ).replace(/\//g, '-');
             return html`
           <li key="${date}">
-            <span style="font-family: times">${date}</span>\u00A0<${Link} href=${note.path} dangerouslySetInnerHTML=${{__html: note.title}}/>
+            <span style="font-family: times">${date}</span>\u00A0<${Link} href=${note.path} title=${note.title} dangerouslySetInnerHTML=${{__html: note.title}}/>
           </li>
           `
           })}
@@ -79,43 +90,19 @@ export const routes = [
   {
     path: /^(?:.*)$/,
     component: (props) => {
-      useEffect(async () => {
-        window.scripts = window.scripts || {};
-        if (props.Scripts) {
-          let scriptsLoaded = 0;
-          const scriptSources = props.Scripts
-            .split(',')
-            .map(scriptSrc => `/${scriptSrc.trim()}`)
-
-          function onLoad() {
-            scriptsLoaded++;
-            if (scriptsLoaded === scriptSources.length) {
-              if (props.PageAction) {
-                window[props.PageAction]()
-              }
-            }
-          }
-          scriptSources.forEach(src => {
-            if (window.scripts[src]) return onLoad();
-
-            const script =
-              window.scripts[src] = document.createElement('script');
-
-            script.setAttribute('src', src);
-
-            script.addEventListener("load", onLoad, false);
-
-            document.body.appendChild(script);
-          })
-        }
-
-      }, []);
+      let scripts = props.Scripts ? props.Scripts.split(',').map(scriptSrc => {
+        return `<script src="/${scriptSrc.trim()}"></script>`
+      }).join('') : '';
+      if (props.PageAction) {
+        scripts += `<script>window['${props.PageAction}']()</script>`
+      }
       return html`<div class=${props.PageClass || ''}>
         <h1>${props.title}</h1>
         ${(props.date || props.Date) && html`<p><em>Published on ${(props.date || props.Date)}</em></p>`}
         <div
           dangerouslySetInnerHTML=${{__html: props.content}}>
         </div>
+        <div dangerouslySetInnerHTML=${{__html: scripts }}></div>
       </div>`;
     }
   }

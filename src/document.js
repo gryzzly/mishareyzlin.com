@@ -16,11 +16,6 @@ export function document(content, data) {
         files, an unescaped closing script tag stored in content, for example,
         would break the whole page
       */''}
-      ${data && `<script>window.preloadedData = ${JSON.stringify(data).replace(/<\/script>/g, '<\\/script>')}</script>`}
-      <script type="module">
-      import {start} from "/index.js";
-      start();
-      </script>
       <script data-goatcounter="https://mishareyzlincom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     </body>
   </html>

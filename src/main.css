@@ -9,6 +9,12 @@ html {
   padding: 0;
   box-sizing: border-box;
 }
+pre {
+  white-space: pre-wrap;
+}
+code {
+  tab-size: 2;
+}
 h1,h2,h3,h4,h5,h6,hgroup,
 ul,ol,dd,dl,
 p,figure,
@@ -86,6 +92,10 @@ h1, h2, h3 {
   padding: 0 1rem;
   min-height: 100%;
   max-width: 720px;
+}
+
+#main li {
+  list-style-position: inside;
 }
 
 
