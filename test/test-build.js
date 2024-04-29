@@ -285,7 +285,7 @@ t(
     );
     assert.equal(
       pages['/e-dashed-title'].content,
-      `<p>Body E</p>\n<p>Some more text</p>`
+      `<p>Body E\n\nSome more text</p>`
     );
     // Frontmatter was removed
     // 'content/c.mdown': 'date: Apr 10 2012\n\nBody C',
