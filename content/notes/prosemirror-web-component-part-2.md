@@ -21,7 +21,7 @@ In the part two, we’ll wrap a minimal prosemirror editor in a custom element. 
 	  });
 	</script>
 
-Prosemirror is a library to create a rich editing experience.  It provides concepts and tools that allow to build a robust editor with only the features you need, fully customisable to your specific needs. I recommend reading through the Prosemirror guide here – https://prosemirror.net/docs/guide/. It touches on everything this library has to offer and provides a lot of examples. My series explores an example integration of this library with HTML Custom Element API, which I think is a perfect match to build a self-contained wrapper around the specific editor setup you might need to build.
+Prosemirror is a library to create a rich editing experience.  It provides concepts and tools that allow to build a robust editor with only the features you need, fully customisable to your specific needs. I recommend reading through the Prosemirror guide [here](https://prosemirror.net/docs/guide/). It touches on everything this library has to offer and provides a lot of examples. My series explores an example integration of this library with HTML Custom Element API, which I think is a perfect match to build a self-contained wrapper around the specific editor setup you might need to build.
 
 ## Schema
 
