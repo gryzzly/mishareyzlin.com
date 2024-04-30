@@ -148,7 +148,7 @@ We are doing a couple of things here:
 
 With the code above, we can see the editor with the initial state rendered on the page and we can do basic editing of the text (note that in the embedded example below we also initialise the component in the HTML and add the ProseMirror CSS rules):
 
-<iframe height="300" style="width: 100%;" scrolling="no" title="ProseMirror Web Component step 2.1" src="https://codepen.io/gryzzly/embed/preview/gOyJbMV?default-tab=js%2Cresult&theme-id=light" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+<iframe height="300" style="width: 100%;" scrolling="no" title="ProseMirror Web Component step 2.1" src="https://codepen.io/gryzzly/embed/gOyJbMV?default-tab=js%2Cresult&theme-id=light" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href="https://codepen.io/gryzzly/pen/gOyJbMV">
   ProseMirror Web Component step 2.1</a> by Misha Reyzlin (<a href="https://codepen.io/gryzzly">@gryzzly</a>)
   on <a href="https://codepen.io">CodePen</a>.
@@ -266,7 +266,7 @@ toggle.addEventListener('click', () => {
 
 Nice! Try selecting some text and then press the “Toggle link” button – you should be able to set the target for the link.
 
-<iframe height="300" style="width: 100%;" scrolling="no" title="ProseMirror Web Component setup 2.2" src="https://codepen.io/gryzzly/embed/preview/dyLEPjE?default-tab=js%2Cresult&theme-id=light" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+<iframe height="300" style="width: 100%;" scrolling="no" title="ProseMirror Web Component setup 2.2" src="https://codepen.io/gryzzly/embed/dyLEPjE?default-tab=js%2Cresult&theme-id=light" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href="https://codepen.io/gryzzly/pen/dyLEPjE">
   ProseMirror Web Component setup 2.2</a> by Misha Reyzlin (<a href="https://codepen.io/gryzzly">@gryzzly</a>)
   on <a href="https://codepen.io">CodePen</a>.
