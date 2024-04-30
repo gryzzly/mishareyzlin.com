@@ -1,8 +1,8 @@
 Date: 22 April 2024
 
-# Prosemirror Web Component Part 2
+# ProseMirror Web Component Part 2
 
-In the [first part of this series](https://mishareyzlin.com/notes/prose-mirror-web-component-step-1), we have set up import maps for prosemirror packages to enable build-less development for our web component.
+In the [first part of this series](https://mishareyzlin.com/notes/prose-mirror-web-component-step-1), we have set up import maps for ProseMirror packages to enable build-less development for our web component.
 
 In the part two, we’ll wrap a minimal prosemirror editor in a custom element. We’ll be using our editor like this:
 
