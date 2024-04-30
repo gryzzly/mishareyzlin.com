@@ -5,7 +5,7 @@ export function document(content, data) {
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content="Misha Reyzlin, HTML, CSS, JavaScript Developer" />
-      <title>Misha Reyzlin: Hello</title>
+      <title>Misha Reyzlin: ${data.page.title || "Hello"}</title>
       <link href="/main.css" rel="stylesheet" />
 
     </head>

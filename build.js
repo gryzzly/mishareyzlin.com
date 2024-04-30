@@ -238,6 +238,7 @@ export async function build() {
   const files = pages.map(page => {
     return {
       path: page.path,
+      title: page.title,
       content: document(
         renderToString(
           html`
