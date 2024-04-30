@@ -29,7 +29,7 @@
     {
       "path": "/",
       "title": "Hello",
-      "content": "<p>My name is Misha Reyzlin &amp; I am a professional web developer. You may want to take a look at my <a href=\"/cv\">resume</a>. I use this website to keep my technical notes and to play with all kinds of things.</p><p>Me elsewhere: <a href=\"https://mastodon.social/@gryzzly\" rel=\"me\">mastodon</a>, <a href=\"https://github.com/gryzzly\">github</a>, <a href=\"https://stackoverflow.com/users/236135/misha-reyzlin\">stackoverflow</a>, <a href=\"http://www.linkedin.com/in/mishareyzlin\">linkedin</a></p>",
+      "content": "<div><br>My name is Misha Reyzlin &amp; I am a professional web developer. You may want to take a look at my <a href=\"/cv\">resume</a>. I use this website to keep my <a href=\"/notes\">technical notes</a> and to play with all kinds of things.<br><br></div><div><br>Me elsewhere: <a href=\"https://mastodon.social/@gryzzly\">mastodon</a>, <a href=\"https://github.com/gryzzly\">github</a>, <a href=\"https://stackoverflow.com/users/236135/misha-reyzlin\">stackoverflow</a>, <a href=\"http://www.linkedin.com/in/mishareyzlin\">linkedin<br></a><br></div>",
       "uuid": "c40fdfef-6315-4f05-9f5c-fe9984dcb634",
       "sortIndex": 0
     },
