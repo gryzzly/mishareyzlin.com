@@ -96,6 +96,7 @@ h1, h2, h3 {
 
 #main li {
   list-style-position: inside;
+  text-size-adjust: 100%;/* prevent iOS from increasing the font size when elements are wider than screen */ 
 }
 
 
