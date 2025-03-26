@@ -1,126 +1,150 @@
 <style>
-* {
-  margin: 0;
-  padding: 0;
-}
-.main {
-  position: relative;
-}
-.quote {
-  text-align: right;
-}
-@media only screen and (min-width: 720px) {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  .main {
+    position: relative;
+  }
   .quote {
-    position: absolute;
-    top: 0;
-    right: 0;
+    text-align: right;
   }
-  .main > header {
-    margin: 0 0 3em;
+  @media only screen and (min-width: 720px) {
+    .quote {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    .main > header {
+      margin: 0 0 3em;
+    }
   }
-}
-header h2 {
-  font-size: 1rem;
-  margin-top: -.75rem;
-}
-h2 {
-  font-size: 1rem;
-}
-@media print, screen and (min-width: 720px) {
-  .main > section:not(.quote) {
-    display: grid;
-    grid-template-columns: 1.4fr 2.5fr;
+  header h2 {
+    font-size: 1rem;
+    margin-top: -0.75rem;
   }
-  .employment > .section-content > li {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+  h2 {
+    font-size: 1rem;
   }
-}
+  @media screen and (min-width: 720px) {
+    /* .main > section:not(.quote) {
+            display: grid;
+            grid-template-columns: 1.4fr 2.5fr;
+        }
+        .employment > .section-content > li {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+        } */
+  }
+  @media print, screen and (min-width: 720px) {
+    /* .main > section:not(.quote) {
+            display: grid;
+            grid-template-columns: 1.4fr 2.5fr;
+        } */
+    .employment > .section-content > li {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+    }
+  }
 
-li {
-  list-style: none;
-}
-.lang li,
-.links li {
-  margin-bottom: .75em;
-  border-bottom: 1px solid #eee;
-}
-section li li {
-  border-bottom: none;
-  list-style-type: '- ';
-  list-style-position: inside;
-}
-section li:last-child {
-  border-bottom: none;
-}
+  li {
+    list-style: none;
+  }
+  .lang li,
+  .links li {
+    margin-bottom: 0.75em;
+    border-bottom: 1px solid #eee;
+  }
+  section li li {
+    border-bottom: none;
+    list-style-type: "- ";
+    list-style-position: inside;
+  }
+  section li:last-child {
+    border-bottom: none;
+  }
 
-:root {
-  --yellow: rgba(255, 255, 0, .15);
-}
-.objective {
-  box-shadow: 0 0 5px var(--yellow), 0 0 10px var(--yellow);
-  background: var(--yellow);
-  margin: 0.75em -0.5em;
-  padding: .75em .5em .375em;
-}
-.tech-used {
-  font-size: .875em;
-  font-style: italic;
-  line-height: 1.714em;
-  margin-bottom: 1.714em;
-}
-.period {
-  font-family: 'Times New Roman', Times, serif;
-}
-@media only screen and (min-width: 720px) {
+  :root {
+    --yellow: rgba(255, 255, 0, 0.15);
+  }
+  .objective {
+    box-shadow:
+      0 0 5px var(--yellow),
+      0 0 10px var(--yellow);
+    background: var(--yellow);
+    margin: 0.75em -0.5em;
+    padding: 0.75em 0.5em 0.375em;
+  }
+  .tech-used {
+    font-size: 0.875em;
+    font-style: italic;
+    line-height: 1.714em;
+    margin-bottom: 1.714em;
+  }
   .period {
-    max-width: 7em;
+    font-family: "Times New Roman", Times, serif;
   }
-}
-@media print {
-  #site-header {
-    display: none;
+  @media only screen and (min-width: 720px) {
+    .period {
+      max-width: 7em;
+    }
   }
-  a:not([href^="mailto"])::after{
-    content: " (" attr(href) ") ";
+  @media print {
+    #site-header {
+      display: none;
+    }
+    a:not([href^="mailto"])::after {
+      content: " (" attr(href) ") ";
+    }
+    .employment .section-content > li {
+      page-break-inside: avoid;
+    }
   }
-  .employment .section-content > li {
-    page-break-inside: avoid;
+  .company,
+  .title {
+    margin-bottom: 0;
   }
-}
-.company,.title {
-  margin-bottom: 0;
-}
 </style>
-<section class='main'>
-  <header itemscope='itemscope'>
+<section class="main">
+  <header itemscope="itemscope">
     <hgroup>
-      <h1 class='fn' itemprop='fn'>Misha&nbsp;Reyzlin</h1>
-      <h2 class='comment'>
-        Senior&nbsp;Web&nbsp;Engineer
-      </h2>
+      <h1 class="fn" itemprop="fn">Misha&nbsp;Reyzlin</h1>
+      <h2 class="comment">Senior&nbsp;Web&nbsp;Engineer</h2>
     </hgroup>
   </header>
-  <section class='quote'>
-    <blockquote cite='http://www.python.org/dev/peps/pep-0020/'>Special cases aren’t special enough to break the rules.<br>Although practicality beats purity.</blockquote>
+  <section class="quote">
+    <blockquote cite="http://www.python.org/dev/peps/pep-0020/">
+      Special cases aren’t special enough to break the rules.<br />Although
+      practicality beats purity.
+    </blockquote>
     <cite>Tim Peters, The Zen of Python</cite>
   </section>
-  <section class='contacts'>
-    <h1 class='section-title'>Contact&nbsp;Information</h1>
-    <dl class='section-content'>
-      Email: <a class='email' href='mailto:hello@mishareyzlin.com'>hello@mishareyzlin.com</a>
+  <section class="contacts">
+    <h1 class="section-title">Contact&nbsp;Information</h1>
+    <dl class="section-content">
+      Email:
+      <a class="email" href="mailto:hello@mishareyzlin.com"
+        >hello@mishareyzlin.com</a
+      >
     </dl>
   </section>
-  <section class='objective'>
-    <h1 class='section-title'>Career&nbsp;objective</h1>
-    <p class='section-content'>
-      Lead/Staff Web Engineer building useful projects, applying systematic improvements, thinking holistically. Working in a team of motivated professionals.    </p>
+  <section class="objective">
+    <h1 class="section-title">Career&nbsp;objective</h1>
+    <p class="section-content">
+      Lead/Staff Web Engineer building useful projects, applying systematic
+      improvements, thinking holistically. Working in a team of motivated
+      professionals.
+    </p>
   </section>
 
-  <section class='specs'>
-    <h1 class='section-title'>Specialities</h1>
-    <p class='section-content'>
-      JavaScript/TypeScript, <abbr title="HyperText Markup Language">HTML</abbr>, <abbr title="Cascading Style Sheets">CSS</abbr>, <br>Node.js, React, React-Native, Backbone.js, <br>website performance and loading optimization, <br>cross-browser issues, mobile web
+  <section class="specs">
+    <h1 class="section-title">Specialities</h1>
+    <p class="section-content">
+      JavaScript/TypeScript,
+      <abbr title="HyperText Markup Language">HTML</abbr>,
+      <abbr title="Cascading Style Sheets">CSS</abbr>, <br />Node.js, React,
+      React-Native, Backbone.js, <br />website performance and loading
+      optimization, <br />cross-browser issues, mobile web
     </p>
   </section>
   <!-- <section class='exp'>
@@ -137,21 +161,26 @@ section li:last-child {
     </dl>
   </section> -->
 
-  <section class='employment'>
-    <h1 class='section-title'>Employment&nbsp;history</h1>
-    <ul class='section-content'>
-
+  <section class="employment">
+    <h1 class="section-title">Employment&nbsp;history</h1>
+    <ul class="section-content">
       <li>
         <p class="period">
-          <time class="dtstart" datetime="2022-09-01">2023/09</time>&nbsp;&#8211;
+          <time class="dtstart" datetime="2022-09-01">2023/09</time
+          >&nbsp;&#8211;
           <time class="dtend">current</time>
         </p>
 
         <div class="description">
-          <p class="company"><a href="https://www.universalmusic.com/">Universal Music Group</a></p>
+          <p class="company">
+            <a href="https://www.universalmusic.com/">Universal Music Group</a>
+          </p>
           <h2 class="title">Senior Frontend Developer</h2>
           <ul class="duty">
-            <li>Building Stage Plus, video and audio streaming service of Deutsche Grammophon</li>
+            <li>
+              Building Stage Plus, video and audio streaming service of Deutsche
+              Grammophon
+            </li>
           </ul>
           <p class="tech-used">
             JavaScript/TypeScript, Next.js, GraphQL, Tailwind
@@ -161,34 +190,51 @@ section li:last-child {
 
       <li>
         <p class="period">
-          <time class="dtstart" datetime="2022-06-27">2022/06</time>&nbsp;&#8211;
+          <time class="dtstart" datetime="2022-06-27">2022/06</time
+          >&nbsp;&#8211;
           <time class="dtend" datetime="2023-06-01">2023/06</time>
         </p>
 
         <div class="description">
-          <p class="company"><a href="https://www.shopify.com">Shopify</a></p>
+          <p class="company">
+            <a href="https://www.shopify.com">Shopify</a>
+          </p>
           <h2 class="title">Senior&nbsp;Developer</h2>
           <ul class="duty">
-            <li>Implemented error reporting for Checkout Extensions for internal and third party use</li>
-            <li>Extended Checkout Extensions API with fetch and query methods</li>
-            <li>Ensured smooth function of Checkout Extensions API in 1-page-layout</li>
+            <li>
+              Implemented error reporting for Checkout Extensions for internal
+              and third party use
+            </li>
+            <li>
+              Extended Checkout Extensions API with fetch and query methods
+            </li>
+            <li>
+              Ensured smooth function of Checkout Extensions API in
+              1-page-layout
+            </li>
           </ul>
           <p class="tech-used">
-            JavaScript/TypeScript, web workers, remote-ui, CSS, React, Node.js, Rails, GraphQL, Jest
+            JavaScript/TypeScript, web workers, remote-ui, CSS, React, Node.js,
+            Rails, GraphQL, Jest
           </p>
         </div>
       </li>
 
       <li>
         <p class="period">
-          <time class="dtstart" datetime="2021-02-15">2021/02</time>&nbsp;&#8211;
+          <time class="dtstart" datetime="2021-02-15">2021/02</time
+          >&nbsp;&#8211;
           <time class="dtend" datetime="2022-05-01">2022/05</time>
         </p>
 
         <div class="description">
-          <p class="company"><a href="https://www.hier.in">Hier Foods</a></p>
+          <p class="company">
+            <a href="https://www.hier.in">Hier Foods</a>
+          </p>
           <h2 class="title">Senior&nbsp;Frontend&nbsp;Engineer</h2>
-          <p class="duty">Help the engineering move from MVP to a maintainable product.</p>
+          <p class="duty">
+            Help the engineering move from MVP to a maintainable product.
+          </p>
           <p class="tech-used">
             React Native, Expo, Firebase, Node.js, Google Cloud Functions
           </p>
@@ -197,14 +243,19 @@ section li:last-child {
 
       <li>
         <p class="period">
-          <time class="dtstart" datetime="2020-07-01">2020/07</time>&nbsp;&#8211;
+          <time class="dtstart" datetime="2020-07-01">2020/07</time
+          >&nbsp;&#8211;
           <time class="dtend" datetime="2021-01-31">2021/01</time>
         </p>
         <div class="description">
-          <p class="company"><a href="https://www.dance.co">Dance</a></p>
+          <p class="company">
+            <a href="https://www.dance.co">Dance</a>
+          </p>
           <h2 class="title">Senior&nbsp;Frontend&nbsp;Engineer</h2>
-          <p class="duty">Helped release the Dance pilot-programme in Berlin – React Native app
-            for controlling smart locks, invitation and sign-up flows and the landing pages.
+          <p class="duty">
+            Helped release the Dance pilot-programme in Berlin – React Native
+            app for controlling smart locks, invitation and sign-up flows and
+            the landing pages.
           </p>
           <p class="tech-used">
             React Native, Next.js, IoT over Bluetooth, Amazon DynamoDB, GraphQL
@@ -214,15 +265,20 @@ section li:last-child {
 
       <li>
         <p class="period">
-          <time class="dtstart" datetime="2017-11-01">2017/11</time>&nbsp;&#8211;
+          <time class="dtstart" datetime="2017-11-01">2017/11</time
+          >&nbsp;&#8211;
           <time class="dtend" datetime="2020-05-01">2020/05</time>
         </p>
 
         <div class="description">
-          <p class="company"><a href="https://www.idagio.com">IDAGIO</a></p>
+          <p class="company">
+            <a href="https://www.idagio.com">IDAGIO</a>
+          </p>
           <h2 class="title">Senior&nbsp;Frontend&nbsp;Engineer</h2>
-          <p class="duty">Released and maintained IDAGIO desktop apps (macOS and Windows).
-            Contributed to the development of the web and embedded apps, as well as internal tools.
+          <p class="duty">
+            Released and maintained IDAGIO desktop apps (macOS and Windows).
+            Contributed to the development of the web and embedded apps, as well
+            as internal tools.
           </p>
           <p class="tech-used">
             React/Redux, Nodejs, Flow, Server Side Rendering, Electron,
@@ -233,7 +289,8 @@ section li:last-child {
 
       <li>
         <p class="period">
-          <time class="dtstart" datetime="2015-08-01">2015/08</time>&nbsp;&#8211;
+          <time class="dtstart" datetime="2015-08-01">2015/08</time
+          >&nbsp;&#8211;
           <time class="dtend" datetime="2017-10-01">2017/10</time>
         </p>
 
@@ -241,81 +298,104 @@ section li:last-child {
           <p class="company"><a href="https://www.noa.one">Noa</a></p>
           <h2 class="title">Frontend&nbsp;Team&nbsp;Lead</h2>
           <p class="duty">
-            I was leading the team developing the client-side part of the Fleet Management System – real-time GIS interface to control
-            fleets of thousands of bicycles.
+            I was leading the team developing the client-side part of the Fleet
+            Management System – real-time GIS interface to control fleets of
+            thousands of bicycles.
           </p>
-          <p class="tech-used">
-            React/Flux/Mobx, Nodejs, Leaflet, Jest
-          </p>
+          <p class="tech-used">React/Flux/Mobx, Nodejs, Leaflet, Jest</p>
         </div>
       </li>
 
       <li>
         <p class="period">
-          <time class="dtstart" datetime="2012-08-01">2012/08</time>&nbsp;&#8211;
+          <time class="dtstart" datetime="2012-08-01">2012/08</time
+          >&nbsp;&#8211;
           <time class="dtend" datetime="2015-02-28">2015/02</time>
         </p>
 
         <div class="description">
+          <p class="company">
+            <a href="http://soundcloud.com">SoundCloud</a>
+          </p>
           <h2 class="title">Frontend&nbsp;Engineer</h2>
-          <p class="company"><a href="http://soundcloud.com">SoundCloud</a></p>
-          <p class="duty">Led full rewrite of the mobile web achieving 1.5s to first play. Also worked on the desktop app and HTML5 widget.</p>
+          <p class="duty">
+            Led full rewrite of the mobile web achieving 1.5s to first play.
+            Also worked on the desktop app and HTML5 widget.
+          </p>
           <p class="tech-used">
-            jQuery, Backbonejs, Nodejs, Server Side Rendering, Karma tests runner
+            jQuery, Backbonejs, Nodejs, Server Side Rendering, Karma tests
+            runner
           </p>
         </div>
       </li>
 
       <li>
         <p class="period">
-          <time class="dtstart" datetime="2011-12-01">2011/12</time>&nbsp;&#8211;
+          <time class="dtstart" datetime="2011-12-01">2011/12</time
+          >&nbsp;&#8211;
           <time class="dtend" datetime="2012-07-31">2012/7</time>
         </p>
 
         <div class="description">
+          <p class="company">
+            <a href="http://m.here.com/">Here.com</a>
+            (Nokia&nbsp;business)
+          </p>
           <h2 class="title">Software&nbsp;Engineer</h2>
-          <p class="company"><a href="http://m.here.com/">Here.com</a> (Nokia&nbsp;business)</p>
-          <p class="duty">GPS navigation maps web application for iOS, Android and other <span class="caps">HTML5</span> enabled mobile&nbsp;devices.</p>
+          <p class="duty">
+            GPS navigation maps web application for iOS, Android and other
+            <span class="caps">HTML5</span> enabled mobile&nbsp;devices.
+          </p>
         </div>
       </li>
       <li>
         <p class="period">
-          <time class="dtstart" datetime="2010-03-01">2010/03</time>&nbsp;&#8211;
+          <time class="dtstart" datetime="2010-03-01">2010/03</time
+          >&nbsp;&#8211;
           <time class="dtend" datetime="2011-11-30">2011/11</time>
         </p>
 
         <div class="description">
+          <p class="company vcard">
+            <a href="http://mishareyzlin.com">mishareyzlin.com</a>
+          </p>
           <h2 class="title">Self-employed Software&nbsp;Engineer</h2>
-          <p class="company vcard"><a href="http://mishareyzlin.com">mishareyzlin.com</a></p>
-          <p class="duty">HTML5 apps development, JavaScript consultancy, Mobile Web&nbsp;development</p>
+          <p class="duty">
+            HTML5 apps development, JavaScript consultancy, Mobile
+            Web&nbsp;development
+          </p>
         </div>
       </li>
     </ul>
   </section>
 
-  <section class='lang'>
-    <h1 class='section-title'>Languages</h1>
-    <ul class='section-content'>
+  <section class="lang">
+    <h1 class="section-title">Languages</h1>
+    <ul class="section-content">
       <li>Russian – native&nbsp;speaker</li>
       <li>Hebrew – native level&nbsp;proficiency</li>
       <li>English – full professional&nbsp;proficiency</li>
       <li>German – limited working&nbsp;proficiency</li>
     </ul>
   </section>
-  <section class='links'>
-    <h1 class='section-title'>Links</h1>
-    <ul class='section-content'>
+  <section class="links">
+    <h1 class="section-title">Links</h1>
+    <ul class="section-content">
       <li>
-        <a class='url' href='https://mastodon.social/@gryzzly'>Mastodon</a>
+        <a class="url" href="https://mastodon.social/@gryzzly">Mastodon</a>
       </li>
       <li>
-        <a class='url' href='https://github.com/gryzzly'>Github</a>
+        <a class="url" href="https://github.com/gryzzly">Github</a>
       </li>
       <li>
-        <a class='url' href='https://stackoverflow.com/users/236135/gryzzly'>StackOverflow</a>
+        <a class="url" href="https://stackoverflow.com/users/236135/gryzzly"
+          >StackOverflow</a
+        >
       </li>
       <li>
-        <a class='url' href='https://www.linkedin.com/in/mishareyzlin'>LinkedIn</a>
+        <a class="url" href="https://www.linkedin.com/in/mishareyzlin"
+          >LinkedIn</a
+        >
       </li>
     </ul>
   </section>
